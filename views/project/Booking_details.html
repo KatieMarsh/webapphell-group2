@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking details</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/project/Booking_details.css">
+    <script src="/public/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand navbar-dark bg-danger ">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto"> <!-- Added ms-auto class here -->
+                    <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link active" href="#">My Booking</a>
+                    </li>
+                    <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px">
+                    <li class="nav-item"><a class="nav-link active" href="#">John Doe
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid p-3">
+
+        <h1>Booking details</h1>
+
+        <div class="registration-form">
+
+            <form id="register-form" class="form-inline">
+
+                <div class="form-group">
+
+                    <p class="fw-bold">Booking name: John Doe</p>
+                    <div class="inputwrapper my-4">Date <input value=" " type="date" id="date"class="form-control form-control-inline" required/></div>
+                    <div class="inputwrapper my-4">Time <input value=" " type="time" id="time"class="form-control form-control-inline" required/></div>
+                    <div class="inputwrapper my-4">Meeting Agenda <input value=" " type="text" class="form-control form-control-inline" required/></div>
+
+
+                </div>
+                
+                <div class="container-fluid">
+                    <div class="row">
+                        <button class="btn btn-success">Book</button>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

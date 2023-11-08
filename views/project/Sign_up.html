@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <script src="/public/js/bootstrap.bundle.min.js"></script>
+    <title>Sign Up</title>
+    <style>
+        .color {
+            background: #9A1212;
+        }
+
+        .border {
+            border: 2px solid black;
+            border-radius: 12px;
+            padding: 5px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-sm navbar d-flex justify-content-center shadow color">
+            <a href="#" class="ms-auto pe-3 nav-link text-white">Back</a>
+        </nav>
+    </div>
+
+    <h1 class="mt-4 text-center">Sign Up</h1>
+    <div class="container-fluid  col-sm-5">
+        <p>Email</p>
+        <input class="border col-12" type="text" name="mail" id="mail">
+        <p>Password</p>
+        <input class="border col-12" type="password" name="pass" id="password">
+        <p>Confrim Password</p>
+        <input class="border col-12" type="password" name="cpass" id="confirmpassword">
+    </div>
+    <hr>
+    <div class="container-fluid col-sm-5">
+        <p>Student ID</p>
+        <input class="border col-12" type="text" name="fname" id="stuid">
+        <p>First Name</p>
+        <input class="border col-12" type="text" name="fname" id="ftname">
+        <p>Last Name</p>
+        <input class="border col-12" type="text" name="lname" id="ltname">
+        <p>Phone Number</p>
+        <input class="border col-12" type="text" name="phonenum" id="phone"> <br>
+    </div>
+    <div class="container-fluid  d-flex justify-content-center">
+        <button id="submit" class="mt-3 btn btn-warning col-3">Register</button> <br>
+    </div>
+    <div class="container-fluid  d-flex justify-content-center">
+        <button class="mt-3 btn btn-danger ml-3 col-sm-3" id="cancel">Cancel</button>
+    </div>
+
+    <script>
+        const submitButton = document.getElementById('submit');
+
+submitButton.onclick = async function () {
+    try {
+        const email = document.getElementById('mail').value;
+        const stuid = document.getElementById('stuid').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmpassword').value;
+        const firstname = document.getElementById('ftname').value;
+        const lastname = document.getElementById('ltname').value;
+        const phone = document.getElementById('phone').value;
+
+        const options = {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ "user_id": stuid, "email": email, "password": password, "conpassword":confirmPassword, "name": firstname +' ' + lastname  , "phone": phone,}),
+        };
+
+        const response = await fetch('/sign-up', options);
+        if (response.ok) {
+            const data = await response.text();
+            // document.getElementById('/sign-up').reset();
+            // uncomment this to make it go to the next page
+            // window.location.replace(data); 
+            alert('OK');
+        } else if (response.status == 401) {
+            const data = await response.text();
+            throw Error(data);
+        } else {
+            const data = await response.text();
+            throw Error(data);
+        }
+    } catch (err) {
+        console.error(err);
+        alert(err);
+    }
+};
+    </script>
+
+   
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/project/Booking_details.css">
+    <script src="/public/js/bootstrap.bundle.min.js"></script>
+    <script src="/public/js/notiflix-aio-3.2.6.min.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-sm navbar d-flex justify-content-center shadow bg-danger">
+        <h3 class="text-warning ms-auto">|</h3>
+        <h3 class="navbar-brand text-white">Login</h3>
+        <a href="#" class="ms-auto nav-link pe-3 text-white">Back</a>
+    </nav>
+    <div class="container-fluid">
+
+
+        <div class="row justify-content-center">
+
+            <div class="col-2 shadow rounded p-3 text-center m-5">
+                <img class="avatar rounded-circle" src="/public/images/mfu_logo.png" height="200px">
+                <div class="container text-start">
+                    <h5 class="text-center my-3">Meeting Room Reservation System</h5>
+                    <form id="formLogin">
+                        <input type="text" class="form-control mt-3" name="txtUsername" placeholder="Email" required>
+                        <input type="password" class="form-control my-2" name="txtPassword" placeholder="Password" required>
+                        <button type="submit" class="btn btn-success">Login</button>
+                        <a class="text-end register" href="register">register</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+
+    </div>
+    <script>
+        const formLogin = document.querySelector('#formLogin');
+        formLogin.onsubmit = async function (e) {
+            e.preventDefault();
+            const username = formLogin['txtUsername'].value;
+            const password = formLogin['txtPassword'].value;
+
+            console.log(username, password);
+            try {
+                const options = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "username": username, "password": password }),
+                };
+                const response = await fetch('/login', options);
+                if (response.ok) {
+                    const data = await response.text();
+                    // alert(data);
+                    Notiflix.Report.success('Success', data, 'OK');
+                }
+                else if (response.status == 401) {
+                    const data = await response.text();
+                    throw Error(data);
+                }
+                else {
+                    throw Error('Connection error');
+                }
+            } catch (err) {
+                console.error(err.message);
+                // alert(err.message);
+                Notiflix.Report.failure('Error', err.message, 'Close');
+            }
+        }
+        // document.querySelector('.register').onclick = function (){
+        //     window.location.replace('register');
+        //     alert("go to register");
+        // }
+    </script>
+</body>
+
+</html>

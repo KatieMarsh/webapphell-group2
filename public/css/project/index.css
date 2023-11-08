@@ -1,0 +1,634 @@
+#myframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 300px; /* ปรับค่าสูงตามที่คุณต้องการ */
+}
+.red-vertical-line {
+  border-left: 2px solid red; /* ใส่เส้นแดงแนวตั้ง */
+  height: 100px; /* ปรับความสูงตามที่คุณต้องการ */
+  margin: 0 10px; /* ปรับระยะห่างแนวนอน */
+}
+
+.profilebutton-container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+.profilebutton-dummy-container {
+  width: 100%;
+  height: 900px;
+}
+.profilebutton-profilebutton {
+  width: 100%;
+  height: 1080px;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  align-items: flex-start;
+  flex-shrink: 0;
+  background-color: rgba(255, 255, 255, 1);
+}
+.profilebutton-rectangle1 {
+  top: 1px;
+  left: 390px;
+  width: 1140px;
+  height: 51px;
+  position: absolute;
+}
+.profilebutton-footer {
+  top: 843px;
+  left: 0px;
+  width: 1920px;
+  height: 240px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+  background-color: rgba(154, 18, 18, 1);
+}
+.profilebutton-text {
+  top: 25.933765411376953px;
+  left: 789.9999389648438px;
+  color: rgba(255, 255, 255, 1);
+  width: 106px;
+  height: auto;
+  position: absolute;
+  font-size: 20px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-text02 {
+  top: 26.131818771362305px;
+  left: 475.9999694824219px;
+  color: rgba(255, 255, 255, 1);
+  width: 119px;
+  height: auto;
+  position: absolute;
+  font-size: 20px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-text04 {
+  top: 54.15481185913086px;
+  left: 789.9999389648438px;
+  color: rgba(255, 255, 255, 1);
+  width: 275px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-text11 {
+  top: 54.32662582397461px;
+  left: 475.9999694824219px;
+  color: rgba(255, 255, 255, 1);
+  width: 162px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-rectangle7 {
+  top: 935px;
+  left: 871px;
+  width: 169px;
+  height: 45px;
+  position: absolute;
+}
+.profilebutton-info {
+  top: 210.99998474121094px;
+  left: 863px;
+  width: 465px;
+  height: 194.6243896484375px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.profilebutton-student-id {
+  top: 0px;
+  left: 0px;
+  width: 457px;
+  height: 27px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.profilebutton-text13 {
+  top: 4.547473508864641e-13px;
+  left: 92.94915008544922px;
+  color: rgba(0, 0, 0, 1);
+  width: 364px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Anek Devanagari;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-text15 {
+  color: rgba(0, 0, 0, 1);
+  width: 77px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Anek Devanagari;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-inputusername {
+  top: 42px;
+  left: 0px;
+  width: 236px;
+  height: 27px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.profilebutton-text17 {
+  left: 48px;
+  color: rgba(0, 0, 0, 1);
+  width: 188px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Anek Devanagari;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-text19 {
+  color: rgba(0, 0, 0, 1);
+  width: 40px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Anek Devanagari;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-inputusername1 {
+  top: 103.00004577636719px;
+  left: 0px;
+  width: 62px;
+  height: 27px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.profilebutton-text21 {
+  color: rgba(0, 0, 0, 1);
+  width: 62px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Anek Devanagari;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-inputusername2 {
+  top: 101px;
+  left: 121px;
+  width: 344px;
+  height: 27px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.profilebutton-text23 {
+  top: 1px;
+  left: 303px;
+  color: rgba(0, 0, 0, 1);
+  width: 41px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: Regular;
+  text-align: center;
+  font-family: Anek Devanagari;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-text25 {
+  top: 1px;
+  color: rgba(0, 0, 0, 1);
+  width: 41px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: Regular;
+  text-align: center;
+  font-family: Anek Devanagari;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-text27 {
+  left: 142px;
+  color: rgba(0, 0, 0, 1);
+  width: 76px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Anek Devanagari;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-inputusername3 {
+  top: 167.6493682861328px;
+  left: 0px;
+  width: 154px;
+  height: 26.97502326965332px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.profilebutton-inputusername4 {
+  top: 0px;
+  left: 0px;
+  width: 154px;
+  height: 26.97502326965332px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.profilebutton-text29 {
+  top: 0.3413238525390625px;
+  left: 71px;
+  color: rgba(0, 0, 0, 1);
+  width: 83px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Anek Devanagari;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-text31 {
+  color: rgba(0, 0, 0, 1);
+  width: 85px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Anek Devanagari;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-menubar {
+  top: 160.85105895996094px;
+  left: 494px;
+  width: 189.5px;
+  height: 551.4893798828125px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.profilebutton-group28button {
+  top: 89.916748046875px;
+  left: 0px;
+  width: 146px;
+  height: 32.96940612792969px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.profilebutton-text33 {
+  top: 5.994384765625px;
+  left: 55.890625px;
+  color: rgba(154, 18, 18, 1);
+  width: 90px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Roboto;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-group {
+  top: 0px;
+  left: 0px;
+  width: 47.863525390625px;
+  height: 29.44160270690918px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.profilebutton-vector {
+  top: 0px;
+  left: 0px;
+  width: 48px;
+  height: 29px;
+  position: absolute;
+}
+.profilebutton-vector01 {
+  top: 3.45947265625px;
+  left: 3.983659267425537px;
+  width: 22px;
+  height: 19px;
+  position: absolute;
+}
+.profilebutton-vector02 {
+  top: 6.939697265625px;
+  left: 27.921398162841797px;
+  width: 12px;
+  height: 2px;
+  position: absolute;
+}
+.profilebutton-vector03 {
+  top: 12.134033203125px;
+  left: 27.921154022216797px;
+  width: 12px;
+  height: 2px;
+  position: absolute;
+}
+.profilebutton-vector04 {
+  top: 17.328369140625px;
+  left: 27.921398162841797px;
+  width: 12px;
+  height: 2px;
+  position: absolute;
+}
+.profilebutton-group29button {
+  top: 146.14892578125px;
+  left: 0px;
+  width: 188px;
+  height: 36px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.profilebutton-frameiconlockkey {
+  top: 0px;
+  left: 0px;
+  width: 34px;
+  height: 33.96854782104492px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.profilebutton-vector05 {
+  top: 7.548665523529053px;
+  left: 9.444488525390625px;
+  width: 15px;
+  height: 19px;
+  position: absolute;
+}
+.profilebutton-vector06 {
+  top: 0px;
+  left: 0px;
+  width: 34px;
+  height: 34px;
+  position: absolute;
+}
+.profilebutton-text35 {
+  top: 9px;
+  left: 56px;
+  color: rgba(0, 0, 0, 1);
+  width: 132px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Roboto;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-group30button {
+  top: 208.14892578125px;
+  left: 0px;
+  width: 153px;
+  height: 33.97502136230469px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.profilebutton-text37 {
+  top: 7px;
+  left: 56px;
+  color: rgba(0, 0, 0, 1);
+  width: 97px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Anek Devanagari;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-frameiconpasteclipboard {
+  top: 0px;
+  left: 0px;
+  width: 25px;
+  height: 32.78214645385742px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.profilebutton-vector07 {
+  top: 4.683121681213379px;
+  left: 0px;
+  width: 25px;
+  height: 28px;
+  position: absolute;
+}
+.profilebutton-vector08 {
+  top: 0px;
+  left: 6.25px;
+  width: 12px;
+  height: 9px;
+  position: absolute;
+}
+.profilebutton-group31button {
+  top: 264.14898681640625px;
+  left: 0px;
+  width: 142px;
+  height: 31.97502326965332px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.profilebutton-frameiconlogout {
+  top: 0px;
+  left: 0px;
+  width: 24.867639541625977px;
+  height: 31.94310188293457px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.profilebutton-vector09 {
+  top: 10.64792251586914px;
+  left: 12.43377685546875px;
+  width: 12px;
+  height: 11px;
+  position: absolute;
+}
+.profilebutton-vector10 {
+  top: 0px;
+  left: 0px;
+  width: 25px;
+  height: 32px;
+  position: absolute;
+}
+.profilebutton-text39 {
+  top: 5px;
+  left: 56px;
+  color: rgba(0, 0, 0, 1);
+  width: 86px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Anek Devanagari;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-line3 {
+  top: 0px;
+  left: 189.5px;
+  width: 551px;
+  height: 1px;
+  position: absolute;
+}
+.profilebutton-headbar {
+  top: 0px;
+  left: 5px;
+  width: 1920px;
+  height: 118.8899154663086px;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  flex-shrink: 1;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a shadow here */
+}
+
+.profilebutton-text41 {
+  top: 37.964847564697266px;
+  left: 692px;
+  color: rgba(0, 0, 0, 1);
+  width: 132px;
+  height: auto;
+  position: absolute;
+  font-size: 24px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Roboto;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-text43 {
+  top: 39px;
+  left: 1420px;
+  color: rgba(0, 0, 0, 1);
+  width: 88px;
+  height: auto;
+  position: absolute;
+  font-size: 24px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Roboto;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.profilebutton-line31 {
+  top: 23.977798461914062px;
+  left: 678px;
+  width: 71px;
+  height: 1px;
+  position: absolute;
+}
