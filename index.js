@@ -86,7 +86,11 @@ app.get('/', function (req, res) {
 // Register service
 app.get('/register', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Sign_up.html'));
-}); 
+});
+// // Register service
+// app.get('/register', function (req, res) {
+//     res.sendFile(path.join(__dirname, 'views/project/Sign_up.html'));
+// });
 
 const port = 3000;
 app.listen(port, function () {
