@@ -77,6 +77,19 @@ app.post('/register', function (req,res) {
             })
         }) 
 });
+// GET dashboard info
+app.get('/getdashboard', function (_req, res){
+    const sql = 'SELECT time_slot_1, time_slot_2, time_slot_3, time_slot_4 FROM room';
+    con.query(sql, function (err, results){
+        if (err) {
+            console.error(err);
+            res.status(500).send('DB error');
+        }
+        else {
+            res.join(results);
+        }
+    })
+});
 
 
 // Root service
