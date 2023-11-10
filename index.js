@@ -87,7 +87,7 @@ app.get('/', function (req, res) {
 app.get('/register', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Sign_up.html'));
 });
-// Register service
+// Dashboard service
 app.get('/dashboard', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/dashboard.html'));
 });
