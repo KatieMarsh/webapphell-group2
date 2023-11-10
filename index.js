@@ -42,7 +42,7 @@ app.post('/login', function (req, res) {
 });
 
 // ---------- Register -----------
-app.post('/sign-up', function (req,res) {
+app.post('/register', function (req,res) {
     const {user_id,email,password,conpassword,name,phone} = req.body;
         bcrypt.hash(password, 10 ,function (err,hash) {
             console.log(hash);
@@ -84,7 +84,7 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Login.html'));
 });
 // Register service
-app.get('/register', function (req, res) {
+app.get('/sign-up', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Sign_up.html'));
 });
 // Dashboard service
