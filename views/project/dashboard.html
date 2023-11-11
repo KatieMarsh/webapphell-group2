@@ -63,21 +63,21 @@
     </div>
 
     <script>
-        // Run the function
+        // Run the functions
         getTime();
-
+        getDashboard();
+        getHistory();
         // Select tables
         const table_dashboard = document.querySelector('#table_dashboard');
         const table_history = document.querySelector('#table_history');
         const datetime = document.querySelector('#datetime');
 
         // mock-up data
-        const json_data = '[{"time":"08:00-10:00","available":"10","reserved":"10","disabled":"2"},{"time":"10:00-12:00","available":"20","reserved":"0","disabled":"2"},{"time":"13:00-15:00","available":"8","reserved":"12","disabled":"2"},{"time":"15:00-17:00","available":"5","reserved":"15","disabled":"2"}]';
-        const json_history = '[{"room":"Study room 1","agenda":"Group study","date":"24/11/2023","time_slot_1":"0","time_slot_2":"0","time_slot_3":"0","time_slot_4":"1","whoBook":"John Doe","whoApprove":"Arjarn Surapong"},{"room":"Study room 1","agenda":"Group study","date":"24/11/2023","time_slot_1":"1","time_slot_2":"0","time_slot_3":"0","time_slot_4":"0","whoBook":"Jane Doe","whoApprove":"Arjarn Surapong"},{"room":"Study room 1","agenda":"Group study","date":"24/11/2023","time_slot_1":"0","time_slot_2":"1","time_slot_3":"0","time_slot_4":"0","whoBook":"John Doe","whoApprove":"Arjarn Surapong"}]';
+        // const json_data = '[{"time":"08:00-10:00","free_rooms_time_slot_1":"10","reserved_rooms_time_slot_1":"10","disabled_rooms_time_slot_1":"2"},]';
         
         // Parse JSON to JS objects
-        const data = JSON.parse(json_data);
-        const history = JSON.parse(json_history);
+        // const data = JSON.parse(json_data);
+        // const history = JSON.parse(json_history);
 
         // Date Time
         function getTime(){
@@ -94,73 +94,96 @@
                 console.error(error);
             });
         }
-
         // Dashboard
-        let rows = '';
-        data.forEach(function(d){
-            rows += `<tr>`;
-            rows += `<td>${d.time}</td>`;
-            rows += `<td>${d.available}</td>`;
-            rows += `<td>${d.reserved}</td>`;
-            rows += `<td>${d.disabled}</td>`;
-            rows += `</tr>`;
-        });
+        function getDashboard(){
+        fetch('/dashboard/getdashboard')
+            .then(function(response){
+                if (response.ok) {
+                    return response.json();
+                }
+                throw Error('Bad response');
+            })
+            .then(function(data){
+                let rows = '';
+                data.forEach(function (d){
+                    rows += `<tr>`;
+                    rows += `<td>"08:00-10:00"</td>`;
+                    rows += `<td>${d.free_rooms_time_slot_1}</td>`;
+                    rows += `<td>${d.reserved_rooms_time_slot_1}</td>`;
+                    rows += `<td>${d.disabled_rooms_time_slot_1}</td>`;
+                    rows += `</tr>`;
+                    rows += `<tr>`;
+                    rows += `<td>"10:00-12:00"</td>`;
+                    rows += `<td>${d.free_rooms_time_slot_2}</td>`;
+                    rows += `<td>${d.reserved_rooms_time_slot_2}</td>`;
+                    rows += `<td>${d.disabled_rooms_time_slot_2}</td>`;
+                    rows += `</tr>`;
+                    rows += `<tr>`;
+                    rows += `<td>"13:00-15:00"</td>`;
+                    rows += `<td>${d.free_rooms_time_slot_3}</td>`;
+                    rows += `<td>${d.reserved_rooms_time_slot_3}</td>`;
+                    rows += `<td>${d.disabled_rooms_time_slot_3}</td>`;
+                    rows += `</tr>`;
+                    rows += `<tr>`;
+                    rows += `<td>"15:00-17:00"</td>`;
+                    rows += `<td>${d.free_rooms_time_slot_4}</td>`;
+                    rows += `<td>${d.reserved_rooms_time_slot_4}</td>`;
+                    rows += `<td>${d.disabled_rooms_time_slot_4}</td>`;
+                    rows += `</tr>`;
+                });    
         table_dashboard.innerHTML = rows;
-
+            })
+            .catch(function(err){
+                console.error(err);
+                alert(err);
+            });
+        }
         // History
-        let rows_history = '';
-        history.forEach(function(h){
-            rows_history += '<tr>';
-            rows_history += `<td>${h.room}</td>`;
-            rows_history += `<td>${h.agenda}</td>`;
-            rows_history += `<td>${h.date}</td>`;
-            if(h.time_slot_1 == "1"){
-                rows_history += `<td>08:00 - 10:00</td>`;
-            }
-            else if (h.time_slot_2 == "1")
-            {
-                rows_history += `<td>10:00 - 12:00</td>`;
-            }
-            else if (h.time_slot_3 == "1")
-            {
-                rows_history += `<td>13:00 - 15:00</td>`;
-            }
-            else if (h.time_slot_4 == "1")
-            {
-                rows_history += `<td>15:00 - 17:00</td>`;
-            }
-            else{
-                rows_history += `<td>Error</td>`;
-            }
-            rows_history += `<td>${h.whoBook}</td>`;
-            rows_history += `<td>${h.whoApprove}</td>`;
-            rows_history += '</tr>';
-        });
-        table_history.innerHTML = rows_history;
-
-        // console.log(rows);
-        
-
-        // GET dashboard
-        // async function getDashboard(){
-        //     try {
-        //         const response = await fetch('/getdashboard');
-        //         if (response.ok) {
-        //             const data = await response.json();
-        //             let rows = '';
-        //             data.forEach(function (room){
-
-        //             });
-        //         }
-        //         else if (response.status == 500){
-        //             const data = response.text();
-        //             throw Error(data);
-        //         }
-        //     } catch (err) {
-        //         console.error(err.message);
-        //         Notifix.Report.failure('Error',err.message,'Close');
-        //     }
-        // }
+        function getHistory(){
+        fetch('/dashboard/gethistory')
+            .then(function(response){
+                if (response.ok) {
+                    return response.json();
+                }
+                throw Error('Bad response');
+            })
+            .then(function(data){
+                console.log(data);
+                let rows_history = '';
+                data.forEach(function (h){
+                    rows_history += '<tr>';
+                    rows_history += `<td>${h.room_name}</td>`;
+                    rows_history += `<td>${h.agenda}</td>`;
+                    rows_history += `<td>${h.formatted_date}</td>`;
+                    if(h.time_slot_1 == "1"){
+                        rows_history += `<td>08:00 - 10:00</td>`;
+                    }
+                    else if (h.time_slot_2 == "1")
+                    {
+                        rows_history += `<td>10:00 - 12:00</td>`;
+                    }
+                    else if (h.time_slot_3 == "1")
+                    {
+                        rows_history += `<td>13:00 - 15:00</td>`;
+                    }
+                    else if (h.time_slot_4 == "1")
+                    {
+                        rows_history += `<td>15:00 - 17:00</td>`;
+                    }
+                    else{
+                        rows_history += `<td>Error</td>`;
+                    }
+                    rows_history += `<td>${h.whoBook}</td>`;
+                    rows_history += `<td>${h.whoApprove}</td>`;
+                    rows_history += '</tr>';
+                });    
+                table_history.innerHTML = rows_history;
+            })
+            .catch(function(err){
+                console.error(err);
+                alert(err);
+            });
+        }
     </script>
 
 </body>
