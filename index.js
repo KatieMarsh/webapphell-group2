@@ -110,7 +110,7 @@ app.get('/confirm', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/confirm.html'));
 });
 // Update booking status service
-app.post('/update_booking_status/:id', function (req,res) {
+app.post('/update_booking_status', function (req,res) {
     const  booking_id = req.params.id;
     const status = req.params.status;
     const sql = `UPDATE booking SET status=? WHERE booking_id = ?`;
