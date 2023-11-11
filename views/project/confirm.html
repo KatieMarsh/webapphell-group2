@@ -57,22 +57,28 @@
     </div>
 
     <script>
+        // calling functions
+        getConfirmTable();
+        // selecting table
         const table_approve = document.querySelector('#table_approve');
 
-        // mock-up data
-        const json_data = '[{"room":"Study room 1","agenda":"Group study","date":"24/11/2023","time_slot_1":"0","time_slot_2":"0","time_slot_3":"0","time_slot_4":"1","whoBook":"John Doe","whoApprove":"Arjarn Surapong"},{"room":"Study room 1","agenda":"Group study","date":"24/11/2023","time_slot_1":"1","time_slot_2":"0","time_slot_3":"0","time_slot_4":"0","whoBook":"Jane Doe","whoApprove":"Arjarn Surapong"},{"room":"Study room 1","agenda":"Group study","date":"24/11/2023","time_slot_1":"0","time_slot_2":"1","time_slot_3":"0","time_slot_4":"0","whoBook":"John Doe","whoApprove":"Arjarn Surapong"}]';
-        // <td><button class="btn btn-danger" onclick="deleteProduct(${p.id})">Delete</button></td>
-
-        // JSON to JS object
-        const data = JSON.parse(json_data);
-
         // confirm table
+        function getConfirmTable(){
+        fetch('/confirm/getconfirm')
+            .then(function(response){
+                if (response.ok) {
+                    return response.json();
+                }
+                throw Error('Bad response');
+            })
+            .then(function(data){
+                // console.log(data)
         let rows = '';
         data.forEach(function (d) {
             rows += `<tr>`;
-            rows += `<td>${d.room}</td>`;
+            rows += `<td>${d.room_name}</td>`;
             rows += `<td>${d.agenda}</td>`;
-            rows += `<td>${d.date}</td>`;
+            rows += `<td>${d.formatted_date}</td>`;
             if (d.time_slot_1 == "1") {
                 rows += `<td>08:00 - 10:00</td>`;
             }
@@ -89,10 +95,44 @@
                 rows += `<td>Error</td>`;
             }
             rows += `<td>${d.whoBook}</td>`;
-            rows += `<td><button class="btn btn-success me-3">Approve</button><button class="btn btn-danger">Reject</button></td>`
+            rows += `<td><button class="btn btn-success me-3" onclick=updateBooking(${d.booking_id},'${encodeURIComponent("Arjarn Surapong")}',"approved")>Approve</button>
+                <button class="btn btn-danger" onclick=updateBooking(${d.booking_id},'${encodeURIComponent("Arjarn Surapong")}',"rejected")>Reject</button></td>`
             rows += `</tr>`;
         });
         table_approve.innerHTML = rows;
+            })
+            .catch(function(err){
+                console.error(err);
+                alert(err);
+            });
+        }
+        async function updateBooking(booking_id,whoApprove,status){
+            try {
+                const options = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "booking_id": booking_id, "whoApprove": whoApprove, "status":status }),
+                };
+                const response = await fetch('/confirm/update_booking_status', options);
+                if (response.ok) {
+                    const data = await response.text();
+                    getConfirmTable();
+                    // alert(data);
+                    // Notiflix.Report.success('Success', data, 'OK');
+                }
+                else if (response.status == 401) {
+                    const data = await response.text();
+                    throw Error(data);
+                }
+                else {
+                    throw Error('Connection error');
+                }
+            } catch (err) {
+                console.error(err.message);
+                // alert(err.message);
+                Notiflix.Report.failure('Error', err.message, 'Close');
+            }
+        }
 
         
 

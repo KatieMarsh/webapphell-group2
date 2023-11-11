@@ -126,7 +126,7 @@ app.get('/confirm', function (req, res) {
 });
 // GET confirm info
 app.get("/confirm/getconfirm", function(_req, res){
-    const sql = "SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.status = 'approved';";
+    const sql = "SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.status = 'pending';";
     con.query(sql, function (err, results){
         if (err) {
             console.error(err);
@@ -139,12 +139,12 @@ app.get("/confirm/getconfirm", function(_req, res){
 });
 // Update booking status service
 app.post('/confirm/update_booking_status', function (req,res) {
-    const {booking_id,status} = req.body;
+    const {booking_id,whoApprove,status} = req.body;
     // const  booking_id = req.params.id;
     // const status = req.params.status;
     // UPDATE `booking` SET `status` = 'approved' WHERE `booking`.`booking_id` = 1
-    const sql = `UPDATE booking SET status = ? WHERE booking.booking_id = ?`;
-    con.query(sql,[status,booking_id] ,function (err,results) {
+    const sql = `UPDATE booking SET status = ?, whoApprove = ? WHERE booking.booking_id = ?`;
+    con.query(sql,[status,whoApprove,booking_id] ,function (err,results) {
         if(err) {
             console.error(err);
             res.status(500).send("Server error update data!");
