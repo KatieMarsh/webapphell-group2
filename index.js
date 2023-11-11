@@ -77,6 +77,9 @@ app.post('/register', function (req,res) {
             })
         }) 
 });
+
+
+// ===== Dasboard =====
 // GET dashboard info
 app.get('/getdashboard', function (_req, res){
     const sql = 'SELECT time_slot_1, time_slot_2, time_slot_3, time_slot_4 FROM room';
@@ -90,6 +93,38 @@ app.get('/getdashboard', function (_req, res){
         }
     })
 });
+// Dashboard service
+app.get('/dashboard', function (req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/dashboard.html'));
+});
+// Datetime service
+app.get("/now", function(_req, res){
+    const dt = new Date().toLocaleString();
+    res.send(dt);
+});
+
+
+// ===== confirm =====
+// Confirm service
+app.get('/confirm', function (req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/confirm.html'));
+});
+// Update booking status service
+app.post('/update_booking_status/:id', function (req,res) {
+    const  booking_id = req.params.id;
+    const status = req.params.status;
+    const sql = `UPDATE booking SET status=? WHERE booking_id = ?`;
+    con.query(sql,[status,booking_id] ,function (err,results) {
+        if(err) {
+            console.error(err);
+            res.status(500).send("Server error update data!");
+        }
+        else {
+            res.send("update success")
+        }
+    
+    })
+});
 
 
 // Root service
@@ -100,10 +135,9 @@ app.get('/', function (req, res) {
 app.get('/sign-up', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Sign_up.html'));
 });
-// Dashboard service
-app.get('/dashboard', function (req, res) {
-    res.sendFile(path.join(__dirname, 'views/project/dashboard.html'));
-});
+
+
+
 
 const port = 3000;
 app.listen(port, function () {

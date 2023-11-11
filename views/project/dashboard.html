@@ -32,13 +32,14 @@
     </nav>
     <div class="mx-5">
         <h1 class="text-black">Dashboard</h1>
+        <h3 id="datetime">Date & Time</h3>
         <table class="table table-striped">
             <thead>
                 <tr><th>Time slot</th> <th>Available</th> <th>Reserved</th> <th>Disabled</th></tr>
             </thead>
             <tbody id="table_dashboard">
             </tbody>
-        </table
+        </table>
 
         <!-- History -->
         <h1 class="text-black">History</h1>
@@ -62,9 +63,13 @@
     </div>
 
     <script>
+        // Run the function
+        getTime();
+
         // Select tables
         const table_dashboard = document.querySelector('#table_dashboard');
         const table_history = document.querySelector('#table_history');
+        const datetime = document.querySelector('#datetime');
 
         // mock-up data
         const json_data = '[{"time":"08:00-10:00","available":"10","reserved":"10","disabled":"2"},{"time":"10:00-12:00","available":"20","reserved":"0","disabled":"2"},{"time":"13:00-15:00","available":"8","reserved":"12","disabled":"2"},{"time":"15:00-17:00","available":"5","reserved":"15","disabled":"2"}]';
@@ -73,6 +78,22 @@
         // Parse JSON to JS objects
         const data = JSON.parse(json_data);
         const history = JSON.parse(json_history);
+
+        // Date Time
+        function getTime(){
+            fetch('/now').then(function(response){
+                if(response.ok){
+                    return response.text();
+                }
+                throw Error('Server Time error');
+            })
+            .then(function(data){
+                datetime.innerText = data;
+            })
+            .catch(function(error){
+                console.error(error);
+            });
+        }
 
         // Dashboard
         let rows = '';

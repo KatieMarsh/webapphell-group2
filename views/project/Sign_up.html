@@ -74,7 +74,7 @@ submitButton.onclick = async function () {
             body: JSON.stringify({ "user_id": stuid, "email": email, "password": password, "conpassword":confirmPassword, "name": firstname +' ' + lastname  , "phone": phone,}),
         };
 
-        const response = await fetch('/sign-up', options);
+        const response = await fetch('/register', options);
         if (response.ok) {
             const data = await response.text();
             // document.getElementById('/sign-up').reset();
