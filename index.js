@@ -9,6 +9,7 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
 // ---------- login -----------
 app.post('/login', function (req, res) {
     const {username, password} = req.body;
@@ -51,8 +52,9 @@ app.post('/login', function (req, res) {
     })
 });
 
+
 // ---------- Register -----------
-app.post('/sign-up', function (req,res) {
+app.post('/register', function (req,res) {
     const {user_id,email,password,conpassword,name,phone} = req.body;
         bcrypt.hash(password, 10 ,function (err,hash) {
             console.log(hash);
@@ -89,14 +91,90 @@ app.post('/sign-up', function (req,res) {
 });
 
 
+// ===== Dasboard =====
+// Dashboard service
+app.get('/dashboard', function (req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/dashboard.html'));
+});
+// Datetime service
+app.get("/now", function(_req, res){
+    const dt = new Date().toLocaleString();
+    res.send(dt);
+});
+// GET dashboard info
+app.get('/dashboard/getdashboard', function (_req, res){
+    const sql = "SELECT SUM(CASE WHEN time_slot_1 = 0 AND status <> 'disabled' THEN 1 ELSE 0 END) AS free_rooms_time_slot_1,SUM(CASE WHEN time_slot_1 = 1 AND status <> 'disabled' THEN 1 ELSE 0 END) AS reserved_rooms_time_slot_1,SUM(CASE WHEN status = 'disabled' THEN 1 ELSE 0 END) AS disabled_rooms_time_slot_1,SUM(CASE WHEN time_slot_2 = 0 AND status <> 'disabled' THEN 1 ELSE 0 END) AS free_rooms_time_slot_2,SUM(CASE WHEN time_slot_2 = 1 AND status <> 'disabled' THEN 1 ELSE 0 END) AS reserved_rooms_time_slot_2,SUM(CASE WHEN status = 'disabled' THEN 1 ELSE 0 END) AS disabled_rooms_time_slot_2,SUM(CASE WHEN time_slot_3 = 0 AND status <> 'disabled' THEN 1 ELSE 0 END) AS free_rooms_time_slot_3,SUM(CASE WHEN time_slot_3 = 1 AND status <> 'disabled' THEN 1 ELSE 0 END) AS reserved_rooms_time_slot_3,SUM(CASE WHEN status = 'disabled' THEN 1 ELSE 0 END) AS disabled_rooms_time_slot_3,SUM(CASE WHEN time_slot_4 = 0 AND status <> 'disabled' THEN 1 ELSE 0 END) AS free_rooms_time_slot_4,SUM(CASE WHEN time_slot_4 = 1 AND status <> 'disabled' THEN 1 ELSE 0 END) AS reserved_rooms_time_slot_4,SUM(CASE WHEN status = 'disabled' THEN 1 ELSE 0 END) AS disabled_rooms_time_slot_4 FROM room;";
+    con.query(sql, function (err, results){
+        if (err) {
+            console.error(err);
+            res.status(500).send('DB error');
+        }
+        else {
+            res.send(results);
+        }
+    })
+});
+// GET history info
+app.get("/dashboard/gethistory", function(_req, res){
+    const sql = "SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.status = 'approved';";
+    con.query(sql, function (err, results){
+        if (err) {
+            console.error(err);
+            res.status(500).send('DB error');
+        }
+        else {
+            res.send(results);
+        }
+    })
+});
+
+
+// ===== confirm =====
+// Confirm service
+app.get('/confirm', function (req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/confirm.html'));
+});
+// GET confirm info
+app.get("/confirm/getconfirm", function(_req, res){
+    const sql = "SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.status = 'pending';";
+    con.query(sql, function (err, results){
+        if (err) {
+            console.error(err);
+            res.status(500).send('DB error');
+        }
+        else {
+            res.send(results);
+        }
+    })
+});
+// Update booking status service
+app.post('/confirm/update_booking_status', function (req,res) {
+    const {booking_id,whoApprove,status} = req.body;
+    // const  booking_id = req.params.id;
+    // const status = req.params.status;
+    // UPDATE `booking` SET `status` = 'approved' WHERE `booking`.`booking_id` = 1
+    const sql = `UPDATE booking SET status = ?, whoApprove = ? WHERE booking.booking_id = ?`;
+    con.query(sql,[status,whoApprove,booking_id] ,function (err,results) {
+        if(err) {
+            console.error(err);
+            res.status(500).send("Server error update data!");
+        }
+        else {
+            res.send("update success")
+        }
+    
+    })
+});
+
+
 // Root service
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Login.html'));
 });
 // Register service
-app.get('/register', function (req, res) {
+app.get('/sign-up', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Sign_up.html'));
-}); 
+});
 
 const port = 3000;
 app.listen(port, function () {
