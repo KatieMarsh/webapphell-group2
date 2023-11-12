@@ -1,13 +1,13 @@
-const express = require('express');
-const path = require('path');
-const bcrypt = require("bcrypt");
-const con = require('./config/db');
+ const express = require('express');
+ const path = require('path');
+ const bcrypt = require("bcrypt");
+ const con = require('./config/db');
 
-const app = express();
-app.use("/public", express.static(path.join(__dirname, "public")));
-//for JS exchange
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+ const app = express();
+ app.use("/public", express.static(path.join(__dirname, "public")));
+ //for JS exchange
+ app.use(express.json());
+ app.use(express.urlencoded({ extended: true }));
 
 // ---------- login -----------
 app.post('/login', function (req, res) {
@@ -84,7 +84,7 @@ app.post('/sign-up', function (req,res) {
 // API endpoint สำหรับการดึงข้อมูลห้อง
 app.get('/room', (req, res) => {
   // ดึงข้อมูลห้องจากฐานข้อมูล
-  connection.query('SELECT * FROM room', (err, results) => {
+  con.query('SELECT * FROM room', (err, results) => {
     if (err) {
       console.error('เกิดข้อผิดพลาดในการดึงข้อมูลห้องจากฐานข้อมูล:', err);
       res.status(500).json({ success: false, message: 'Internal Server Error' });
@@ -104,7 +104,7 @@ app.get('/register', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Sign_up.html'));
 }); 
 
-const port = 3000;
-app.listen(port, function () {
-    console.log('Server is ready at' + port);
+ const port = 3000;
+ app.listen(port, function () {
+     console.log('Server is ready at' + port);
 });

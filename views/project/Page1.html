@@ -12,8 +12,10 @@
 
 <body>
 
+
+
     <body>
-        <!-- header -->
+        
 
         <!-- navbar -->
         <nav class="navbar navbar-expand navbar-dark bg-danger ">
@@ -266,9 +268,18 @@
                 // ทำการเปลี่ยนหน้าไปยัง "book_detail.html" หรือไฟล์ที่คุณต้องการ
                 window.location.href = 'Booking_details.html';
             }
+            function redirectToBrowseroom() {
+            // ทำการเรียกใช้งาน PHP เพื่อดึงข้อมูล
+            fetch('backend.php') // ให้ชื่อไฟล์ PHP ตรงนี้
+                .then(response => response.json())
+                .then(data => {
+                    // ทำตามต้องการกับข้อมูลที่ได้รับ
+                    console.log(data);
+                })
+                .catch(error => console.error('Error:', error));
+        }
         </script>
 
     </body>
 
 </html>
-<!-- new code -->
