@@ -38,19 +38,28 @@
                 <div class="form-group">
 
                     <p class="fw-bold">Booking name: John Doe</p>
-                    <div class="inputwrapper my-4">Date <input value=" " type="date" id="date"class="form-control form-control-inline" required/></div>
-                    <div class="inputwrapper my-4">Time <input value=" " type="time" id="time"class="form-control form-control-inline" required/></div>
-                    <div class="inputwrapper my-4">Meeting Agenda <input value=" " type="text" class="form-control form-control-inline" required/></div>
+                    <div class="inputwrapper my-4">Time <input value=" " type="time" id="time" class="form-control form-control-inline" required /></div>
+                    
+                    <label for="time">Choose your time :</label>
+
+                    <select name="time" id="time">
+                        <option value="">8:00-10:00</option>
+                        <option value="">10:00-12:00</option>
+                        <option value="">13:00-15:00</option>
+                        <option value="">15:00-17:00</option>
+                    </select>
+
+                    <div class="inputwrapper my-4">Meeting Agenda <input value=" " type="text" class="form-control form-control-inline" required /></div>
 
 
                 </div>
-                
+
                 <div class="container-fluid">
                     <div class="row">
                         <button class="btn btn-success">Book</button>
                     </div>
                 </div>
-                
+
             </form>
         </div>
     </div>
