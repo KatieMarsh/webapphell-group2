@@ -92,3 +92,12 @@ const port = 3000;
 app.listen(port, function () {
     console.log('Server is ready at' + port);
 });
+
+app.get('/addroom', function (req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/addroom.html'));
+});
+
+app.get('/accout', function (req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/accout.html'));
+});
+
