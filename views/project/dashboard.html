@@ -23,7 +23,7 @@
                     </li>
                     <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px">
                     <li class="nav-item"><a class="nav-link active" href="#">| John Doe
-                    </a>
+                        </a>
                     </li>
                 </ul>
 
@@ -31,134 +31,160 @@
         </div>
     </nav>
     <div class="mx-5">
-        
-        <div class="container-fluid py-5">
-                <h3 class="text-black">Dashboard</h3>
-            <div class="row justify-content-center">
+        <h1 class="text-black">Dashboard</h1>
+        <h3 id="datetime">Date & Time</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr><th>Time slot</th> <th>Available</th> <th>Reserved</th> <th>Disabled</th></tr>
+            </thead>
+            <tbody id="table_dashboard">
+            </tbody>
+        </table>
 
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-warning shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="h3 mb-0  text-gray-800">5</div>
-                                    <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">Available Rooms</div>
-                                    
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-success shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="h3 mb-0  text-gray-800">20</div>
-                                    <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">Reserved Rooms</div>
-                                    
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                 
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-danger shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="h3 mb-0  text-gray-800">2</div>
-                                    <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">Disabled</div>
-                                    
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="row justify-content-between">
-                <div class="col-11"><h3 class="text-black">History</h3></div>
-                <div class="col-1 text-end"><a class="btn btn-body border border-primary border-3 text-primary" href="#">Filter</a>
-            </div></div> 
-            <hr class="border border-dark border-2 opacity-50">
-            <div class="table-responsive">
-                <table class="table table-hover table-striped">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Room</th>
-                            <th>Meeting agenda</th>
-                            <th>Date</th>
-                            <th>Start Time</th>
-                            <th>End Time</th>
-                            <th>Who booked</th>
-                            <th>Who approved</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-light">
-                        <tr>
-                            <td>E4A Pradudang 1</td>
-                            <td>Group study</td>
-                            <td>24/11/2023</td>
-                            <td>11:30</td>
-                            <td>12:30</td>
-                            <td>John Doe</td>
-                            <td>Arjarn Surapong</td>
-                        </tr>
-                        <tr>
-                            <td>E4A Pradudang 1</td>
-                            <td>Group study</td>
-                            <td>24/11/2023</td>
-                            <td>11:30</td>
-                            <td>12:30</td>
-                            <td>John Doe</td>
-                            <td>Arjarn Surapong</td>
-                        </tr>
-                        <tr>
-                            <td>E4A Pradudang 1</td>
-                            <td>Group study</td>
-                            <td>24/11/2023</td>
-                            <td>11:30</td>
-                            <td>12:30</td>
-                            <td>John Doe</td>
-                            <td>Arjarn Surapong</td>
-                        </tr>
-                        <tr>
-                            <td>E4A Pradudang 1</td>
-                            <td>Group study</td>
-                            <td>24/11/2023</td>
-                            <td>11:30</td>
-                            <td>12:30</td>
-                            <td>John Doe</td>
-                            <td>Arjarn Surapong</td>
-                        </tr>
-                        <tr>
-                            <td>E4A Pradudang 1</td>
-                            <td>Group study</td>
-                            <td>24/11/2023</td>
-                            <td>11:30</td>
-                            <td>12:30</td>
-                            <td>John Doe</td>
-                            <td>Arjarn Surapong</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <!-- History -->
+        <h1 class="text-black">History</h1>
+        <hr class="border border-dark border-2 opacity-50">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead class="table-light">
+                    <tr>
+                        <th>Room</th>
+                        <th>Meeting Agenda</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Who Book</th>
+                        <th>Who Approved</th>
+                    </tr>
+                </thead>
+                <tbody class="table-light" id="table_history">
+                </tbody>
+            </table>
         </div>
-        
-        
     </div>
+
+    <script>
+        // Run the functions
+        getTime();
+        getDashboard();
+        getHistory();
+        // Select tables
+        const table_dashboard = document.querySelector('#table_dashboard');
+        const table_history = document.querySelector('#table_history');
+        const datetime = document.querySelector('#datetime');
+
+        // mock-up data
+        // const json_data = '[{"time":"08:00-10:00","free_rooms_time_slot_1":"10","reserved_rooms_time_slot_1":"10","disabled_rooms_time_slot_1":"2"},]';
+        
+        // Parse JSON to JS objects
+        // const data = JSON.parse(json_data);
+        // const history = JSON.parse(json_history);
+
+        // Date Time
+        function getTime(){
+            fetch('/now').then(function(response){
+                if(response.ok){
+                    return response.text();
+                }
+                throw Error('Server Time error');
+            })
+            .then(function(data){
+                datetime.innerText = data;
+            })
+            .catch(function(error){
+                console.error(error);
+            });
+        }
+        // Dashboard
+        function getDashboard(){
+        fetch('/dashboard/getdashboard')
+            .then(function(response){
+                if (response.ok) {
+                    return response.json();
+                }
+                throw Error('Bad response');
+            })
+            .then(function(data){
+                let rows = '';
+                data.forEach(function (d){
+                    rows += `<tr>`;
+                    rows += `<td>"08:00-10:00"</td>`;
+                    rows += `<td>${d.free_rooms_time_slot_1}</td>`;
+                    rows += `<td>${d.reserved_rooms_time_slot_1}</td>`;
+                    rows += `<td>${d.disabled_rooms_time_slot_1}</td>`;
+                    rows += `</tr>`;
+                    rows += `<tr>`;
+                    rows += `<td>"10:00-12:00"</td>`;
+                    rows += `<td>${d.free_rooms_time_slot_2}</td>`;
+                    rows += `<td>${d.reserved_rooms_time_slot_2}</td>`;
+                    rows += `<td>${d.disabled_rooms_time_slot_2}</td>`;
+                    rows += `</tr>`;
+                    rows += `<tr>`;
+                    rows += `<td>"13:00-15:00"</td>`;
+                    rows += `<td>${d.free_rooms_time_slot_3}</td>`;
+                    rows += `<td>${d.reserved_rooms_time_slot_3}</td>`;
+                    rows += `<td>${d.disabled_rooms_time_slot_3}</td>`;
+                    rows += `</tr>`;
+                    rows += `<tr>`;
+                    rows += `<td>"15:00-17:00"</td>`;
+                    rows += `<td>${d.free_rooms_time_slot_4}</td>`;
+                    rows += `<td>${d.reserved_rooms_time_slot_4}</td>`;
+                    rows += `<td>${d.disabled_rooms_time_slot_4}</td>`;
+                    rows += `</tr>`;
+                });    
+        table_dashboard.innerHTML = rows;
+            })
+            .catch(function(err){
+                console.error(err);
+                alert(err);
+            });
+        }
+        // History
+        function getHistory(){
+        fetch('/dashboard/gethistory')
+            .then(function(response){
+                if (response.ok) {
+                    return response.json();
+                }
+                throw Error('Bad response');
+            })
+            .then(function(data){
+                console.log(data);
+                let rows_history = '';
+                data.forEach(function (h){
+                    rows_history += '<tr>';
+                    rows_history += `<td>${h.room_name}</td>`;
+                    rows_history += `<td>${h.agenda}</td>`;
+                    rows_history += `<td>${h.formatted_date}</td>`;
+                    if(h.time_slot_1 == "1"){
+                        rows_history += `<td>08:00 - 10:00</td>`;
+                    }
+                    else if (h.time_slot_2 == "1")
+                    {
+                        rows_history += `<td>10:00 - 12:00</td>`;
+                    }
+                    else if (h.time_slot_3 == "1")
+                    {
+                        rows_history += `<td>13:00 - 15:00</td>`;
+                    }
+                    else if (h.time_slot_4 == "1")
+                    {
+                        rows_history += `<td>15:00 - 17:00</td>`;
+                    }
+                    else{
+                        rows_history += `<td>Error</td>`;
+                    }
+                    rows_history += `<td>${h.whoBook}</td>`;
+                    rows_history += `<td>${h.whoApprove}</td>`;
+                    rows_history += '</tr>';
+                });    
+                table_history.innerHTML = rows_history;
+            })
+            .catch(function(err){
+                console.error(err);
+                alert(err);
+            });
+        }
+    </script>
 
 </body>
 
