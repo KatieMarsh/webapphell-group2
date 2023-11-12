@@ -44,7 +44,7 @@ app.post('/login', function (req, res) {
 
 
 // ---------- Register -----------
-app.post('/register', function (req,res) {
+app.post('/sign-up/register', function (req,res) {
     const {user_id,email,password,conpassword,name,phone} = req.body;
         bcrypt.hash(password, 10 ,function (err,hash) {
             console.log(hash);
@@ -78,6 +78,10 @@ app.post('/register', function (req,res) {
                 }
             })
         }) 
+});
+// ===== adroom =====
+app.get('/addroom', function (req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/addroom.html'));
 });
 
 
