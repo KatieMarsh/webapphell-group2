@@ -9,7 +9,9 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
+app.get('/home', function (req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
+});
 // ---------- login -----------
 app.post('/login', function (req, res) {
     const {username, password} = req.body;
@@ -30,7 +32,7 @@ app.post('/login', function (req, res) {
                     res.status(500).send('Password compare error');
                 }
                 else{
-                    
+                    res.send('/home');
                     // if(same){
                     //     // res.send('Login successfully');
                     //     req.session.username = username;
