@@ -86,7 +86,7 @@ app.get('/room', (req, res) => {
   // ดึงข้อมูลห้องจากฐานข้อมูล
   con.query('SELECT * FROM room', (err, results) => {
     if (err) {
-      console.error('เกิดข้อผิดพลาดในการดึงข้อมูลห้องจากฐานข้อมูล:', err);
+      console.error('เกิดข้อผิดพลาดในการดึงข้อมูลห้องจากฐานข้อมูล:',err);
       res.status(500).json({ success: false, message: 'Internal Server Error' });
     } else {
       res.json(results);
