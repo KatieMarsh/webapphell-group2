@@ -78,32 +78,13 @@ app.post('/sign-up', function (req,res) {
         }) 
 });
 
-// Browse Room For User and Anmin
 
-app.use(bodyParser.json());
-
-// กำหนดการเชื่อมต่อกับ MySQL
-const connection = mysql.createConnection({
-  host: 'your-mysql-host',
-  user: 'your-mysql-username',
-  password: 'your-mysql-password',
-  database: 'your-database-name',
-});
-
-// ทดสอบการเชื่อมต่อ
-connection.connect((err) => {
-  if (err) {
-    console.error('เกิดข้อผิดพลาดในการเชื่อมต่อกับ MySQL:', err);
-  } else {
-    console.log('เชื่อมต่อกับ MySQL สำเร็จ');
-  }
-});
 
 
 // API endpoint สำหรับการดึงข้อมูลห้อง
 app.get('/web/room', (req, res) => {
   // ดึงข้อมูลห้องจากฐานข้อมูล
-  connection.query('SELECT * FROM rooms', (err, results) => {
+  connection.query('SELECT * FROM room', (err, results) => {
     if (err) {
       console.error('เกิดข้อผิดพลาดในการดึงข้อมูลห้องจากฐานข้อมูล:', err);
       res.status(500).json({ success: false, message: 'Internal Server Error' });
@@ -112,70 +93,6 @@ app.get('/web/room', (req, res) => {
     }
   });
 });
-
-// API endpoint สำหรับการจองห้อง
-app.post('/web/booking', (req, res) => {
-  const { roomId, timeslot } = req.body;
-
-  // ค้นหาห้องในข้อมูล
-  connection.query('SELECT * FROM rooms WHERE id = ?', [roomId], (err, results) => {
-    if (err) {
-      console.error('เกิดข้อผิดพลาดในการค้นหาห้องจากฐานข้อมูล:', err);
-      res.status(500).json({ success: false, message: 'Internal Server Error' });
-      return;
-    }
-
-    const room = results[0];
-
-    if (!room) {
-      return res.status(404).json({ success: false, message: 'Room not found' });
-    }
-
-    // ตรวจสอบว่า timeslot ว่างหรือไม่
-    if (!room.timeslots) {
-      room.timeslots = [];
-    }
-
-    if (room.timeslots.includes(timeslot)) {
-      return res.status(400).json({ success: false, message: 'Timeslot is already booked' });
-    }
-
-    // จอง timeslot
-    room.timeslots.push(timeslot);
-
-    // อัปเดตข้อมูล (ในแอปพลิเคชันจริงคุณต้องอัปเดตฐานข้อมูล)
-    connection.query('UPDATE rooms SET timeslots = ? WHERE id = ?', [JSON.stringify(room.timeslots), roomId], (err) => {
-      if (err) {
-        console.error('เกิดข้อผิดพลาดในการอัปเดตข้อมูลห้อง:', err);
-        res.status(500).json({ success: false, message: 'Internal Server Error' });
-        return;
-      }
-
-      res.json({ success: true, message: 'Room booked successfully' });
-    });
-  });
-});
-
-// API endpoint สำหรับการเพิ่มห้องใหม่
-app.post('//addroom', (req, res) => {
-  const { name, capacity, location } = req.body;
-
-  // เพิ่มโลจิกของคุณเพื่อเพิ่มห้องใหม่ลงในฐานข้อมูล
-  connection.query('INSERT INTO rooms (name, capacity, location) VALUES (?, ?, ?)', [name, capacity, location], (err) => {
-    if (err) {
-      console.error('เกิดข้อผิดพลาดในการเพิ่มห้องใหม่:', err);
-      res.status(500).json({ success: false, message: 'Internal Server Error' });
-      return;
-    }
-
-    res.json({ success: true, message: 'Room added successfully' });
-  });
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
-
 
 
 // Root service
