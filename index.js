@@ -82,7 +82,7 @@ app.post('/sign-up', function (req,res) {
 
 
 // API endpoint สำหรับการดึงข้อมูลห้อง
-app.get('/web/room', (req, res) => {
+app.get('/room', (req, res) => {
   // ดึงข้อมูลห้องจากฐานข้อมูล
   connection.query('SELECT * FROM room', (err, results) => {
     if (err) {
