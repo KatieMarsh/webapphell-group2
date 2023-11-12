@@ -29,12 +29,22 @@ app.post('/login', function (req, res) {
                     res.status(500).send('Password compare error');
                 }
                 else{
-                    if(same){
-                        res.send('Login successfully');
-                    }
-                    else{
-                        res.status(401).send('wrong password');
-                    }
+                    
+                    // if(same){
+                    //     // res.send('Login successfully');
+                    //     req.session.username = username;
+                    //     req.session.userID = results[0].id;
+                    //     req.session.role = results[0].role;
+                    //     if(results[0].role == 1){
+                    //         res.send('/welcome');
+                    //     }
+                    //     else if (results[0].role == 2){
+                    //         res.send('/shop');
+                    //     }
+                    // }
+                    // else{
+                    //     res.status(401).send('wrong password');
+                    // }
                 }
             })
         }
