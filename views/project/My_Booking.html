@@ -123,5 +123,39 @@
           </footer>
         
     </div>
+
+    <script>
+        //
+        const tblBooking = document.querySelector('#tblBooking');
+        //
+        getBooking();
+
+        // GET BOOKING
+        async function getBooking() {
+
+            try {
+                const response = await fetch('/booking');
+                if (response.ok) {
+                    const data = await response.json();
+                    let rows = '';
+                    data.forEach(function (booking) {
+                        rows += `<tr><td>${booking.date}</td>`
+                        rows += `<td>${booking.room}</td>`
+                        rows += `<td>${booking.time}</td>`
+                        rows += `<td>${booking.status === 0 ? 'Pending' : booking.status}</td></tr>`;
+                    });
+                    tblBooking.innerHTML = rows;
+                }
+                else if(response.status == 500) {
+                    const data = await response.text();
+                    throw Error(data);
+                } 
+             } catch (err) {
+                    console.error(err.message);
+                    alert(err);
+                }
+            };
+    </script>
+
 </body>
 </html>
