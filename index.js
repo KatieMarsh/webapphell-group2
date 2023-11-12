@@ -95,6 +95,24 @@ app.get('/room', (req, res) => {
 });
 
 
+app.post('/update_room_status', function (req,res) {
+    const {room_id,status} = req.body;
+    // const  booking_id = req.params.id;
+    // const status = req.params.status;
+    // UPDATE `booking` SET `status` = 'approved' WHERE `booking`.`booking_id` = 1
+    const sql = `UPDATE booking SET status = ? WHERE room.room_id = ?`;
+    con.query(sql,[status,room_id] ,function (err,results) {
+        if(err) {
+            console.error(err);
+            res.status(500).send("Server error update data!");
+        }
+        else {
+            res.send("update success")
+        }
+    })
+});
+
+
 // Root service
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Login.html'));
