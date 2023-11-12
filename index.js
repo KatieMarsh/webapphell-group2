@@ -11,28 +11,28 @@ app.use(express.urlencoded({ extended: true }));
 
 // ---------- login -----------
 app.post('/login', function (req, res) {
-    const {username, password} = req.body;
+    const { username, password } = req.body;
     const sql = 'SELECT user_id, email, password, role FROM user WHERE email=?';
-    con.query(sql, [username],function(err, results){
-        if(err){
+    con.query(sql, [username], function (err, results) {
+        if (err) {
             console.error(err);
             res.status(500).send('DB error');
         }
-        else if(results.length != 1){
+        else if (results.length != 1) {
             res.status(401).send('Username not found');
         }
-        else{
+        else {
             // raw: password
             // hash: results[0].password
-            bcrypt.compare(password, results[0].password, function(err, same){
-                if(err){
+            bcrypt.compare(password, results[0].password, function (err, same) {
+                if (err) {
                     res.status(500).send('Password compare error');
                 }
-                else{
-                    if(same){
+                else {
+                    if (same) {
                         res.send('Login successfully');
                     }
-                    else{
+                    else {
                         res.status(401).send('wrong password');
                     }
                 }
@@ -42,40 +42,75 @@ app.post('/login', function (req, res) {
 });
 
 // ---------- Register -----------
-app.post('/sign-up', function (req,res) {
-    const {user_id,email,password,conpassword,name,phone} = req.body;
-        bcrypt.hash(password, 10 ,function (err,hash) {
-            console.log(hash);
-            if(err) {
-                return res.status(500).send("Hash error!");
+app.post('/register', function (req, res) {
+    const { user_id, email, password, conpassword, name, phone } = req.body;
+    bcrypt.hash(password, 10, function (err, hash) {
+        console.log(hash);
+        if (err) {
+            return res.status(500).send("Hash error!");
+        }
+        const findemail = 'SELECT email FROM user WHERE email = ?'
+        con.query(findemail, [email], function (err, results) {
+            if (err) {
+                console.error(err);
+                res.status(500).send("Server error!");
             }
-            const findemail = 'SELECT email FROM user WHERE email = ?'
-            con.query(findemail,[email], function(err,results){
-                if (err) {
-                    console.error(err);
-                    res.status(500).send("Server error!");
-                } 
-                else if (results.length > 0) {
-                    res.status(401).send("Email has already used!");
+            else if (results.length > 0) {
+                res.status(401).send("Email has already used!");
+            }
+            else {
+                if (password !== conpassword) {
+                    return res.status(401).send('Password miss match!')
                 }
-                else {
-                    if(password !== conpassword) {
-                        return res.status(401).send('Password miss match!')
+                const sql = `INSERT INTO user (user_id, email, password, name, phone, role) VALUES(?,?,?,?,?,1)`;
+                con.query(sql, [user_id, email, hash, name, phone,], function (err, results) {
+                    if (err) {
+                        console.error(err);
+                        res.status(500).send("Server error insert data!");
                     }
-                    const sql = `INSERT INTO user (user_id, email, password, name, phone, role) VALUES(?,?,?,?,?,1)`;
-                    con.query(sql,[user_id,email,hash,name,phone,] ,function (err,results) {
-                        if(err) {
-                            console.error(err);
-                            res.status(500).send("Server error insert data!");
-                        }
-                        else {
-                            res.send("project")
-                        }
-                    
-                    })
-                }
-            })
-        }) 
+                    else {
+                        res.send("project")
+                    }
+
+                })
+            }
+        })
+    })
+});
+
+// ---------- My Booking -----------
+//get roomdata by ID
+router.get('/getRoomData', (req, res) => {
+    const roomId = req.query.roomId;
+
+    const sql = 'SELECT * FROM room WHERE room_id = ?;'
+
+    con.query(query, [roomId], (err, results) => {
+        if (err) {
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        // Check if there are results
+        if (results.length === 0) {
+            res.status(404).send('Room not found');
+        } else {
+            // Return the room data as JSON
+            res.json(results[0]);
+        }
+    });
+});
+
+//get แค่ request ของตัวเองสำหรับ user
+router.get("/roomuser_request", function (req, res) {
+    const sql = "SELECT * FROM booking WHERE user_id=?";
+    con.query(sql, [req.session.userID], function (err, result) {
+        if (err) {
+            res.status(500).send('DB error')
+        }
+        else {
+            res.json(result);
+        }
+    })
 });
 
 
@@ -86,7 +121,7 @@ app.get('/', function (req, res) {
 // Register service
 app.get('/register', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Sign_up.html'));
-}); 
+});
 
 const port = 3000;
 app.listen(port, function () {

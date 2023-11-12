@@ -73,7 +73,7 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody class="">
+                    <tbody id="booking">
                         <tr class="table-secondary ">
                             <td>7/12/2023</td>
                             <td>XL101</td>
@@ -125,36 +125,40 @@
     </div>
 
     <script>
-        //
-        const tblBooking = document.querySelector('#tblBooking');
-        //
-        getBooking();
+        const booking = document.querySelector('#booking');
+        getbooking();
 
         // GET BOOKING
-        async function getBooking() {
-
+        async function getbooking() {
             try {
-                const response = await fetch('/booking');
+                //get booking data form server
+            const response = await fetch('/mybooking', options);
                 if (response.ok) {
-                    const data = await response.json();
-                    let rows = '';
-                    data.forEach(function (booking) {
-                        rows += `<tr><td>${booking.date}</td>`
-                        rows += `<td>${booking.room}</td>`
-                        rows += `<td>${booking.time}</td>`
-                        rows += `<td>${booking.status === 0 ? 'Pending' : booking.status}</td></tr>`;
-                    });
-                    tblBooking.innerHTML = rows;
-                }
-                else if(response.status == 500) {
+                    const data = await response.text();
+                    alert('OK');
+                } else if (response.status == 401) {
                     const data = await response.text();
                     throw Error(data);
-                } 
+                } else {
+                    const data = await response.text();
+                    throw Error(data);
+                }
+                then(function (data) {
+                    let rows = '';
+                    data.forEach(function (room) {
+                        rows += `<tr>`;
+                        rows += `<td>${room.date}</td>`;
+                        rows += `<td>${room.room_id}</td>`;
+                        rows += `<td>${room.time}</td>`;
+                        rows += `<td>${room.status}</td>`;
+                    });
+                    booking.innerHTML = rows;
+                })
              } catch (err) {
-                    console.error(err.message);
+                    console.error(err);
                     alert(err);
                 }
-            };
+            }
     </script>
 
 </body>
