@@ -9,7 +9,9 @@
  app.use(express.json());
  app.use(express.urlencoded({ extended: true }));
 
-
+app.get('/home', function (req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
+});
 // ---------- login -----------
 app.post('/login', function (req, res) {
     const { username, password } = req.body;
@@ -29,13 +31,25 @@ app.post('/login', function (req, res) {
                 if (err) {
                     res.status(500).send('Password compare error');
                 }
-                else {
-                    if (same) {
-                        res.send('Login successfully');
-                    }
-                    else {
-                        res.status(401).send('wrong password');
-                    }
+
+                else{
+                    res.send('/home');
+                    // if(same){
+                    //     // res.send('Login successfully');
+                    //     req.session.username = username;
+                    //     req.session.userID = results[0].id;
+                    //     req.session.role = results[0].role;
+                    //     if(results[0].role == 1){
+                    //         res.send('/welcome');
+                    //     }
+                    //     else if (results[0].role == 2){
+                    //         res.send('/shop');
+                    //     }
+                    // }
+                    // else{
+                    //     res.status(401).send('wrong password');
+                    // }
+
                 }
             })
         }

@@ -59,7 +59,7 @@
                 if (response.ok) {
                     const data = await response.text();
                     // alert(data);
-                    Notiflix.Report.success('Success', data, 'OK');
+                    location.replace(data);
                 }
                 else if (response.status == 401) {
                     const data = await response.text();
