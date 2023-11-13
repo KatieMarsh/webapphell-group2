@@ -1,13 +1,13 @@
-const express = require('express');
-const path = require('path');
-const bcrypt = require("bcrypt");
-const con = require('./config/db');
+ const express = require('express');
+ const path = require('path');
+ const bcrypt = require("bcrypt");
+ const con = require('./config/db');
 
-const app = express();
-app.use("/public", express.static(path.join(__dirname, "public")));
-//for JS exchange
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+ const app = express();
+ app.use("/public", express.static(path.join(__dirname, "public")));
+ //for JS exchange
+ app.use(express.json());
+ app.use(express.urlencoded({ extended: true }));
 
 
 // ---------- login -----------
@@ -191,6 +191,40 @@ app.get('/room', (req, res) => {
   });
 
 
+
+
+// API endpoint สำหรับการดึงข้อมูลห้อง
+app.get('/room', (req, res) => {
+  // ดึงข้อมูลห้องจากฐานข้อมูล
+  con.query('SELECT * FROM room', (err, results) => {
+    if (err) {
+      console.error('เกิดข้อผิดพลาดในการดึงข้อมูลห้องจากฐานข้อมูล:',err);
+      res.status(500).json({ success: false, message: 'Internal Server Error' });
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+
+app.post('/update_room_status', function (req,res) {
+    const {room_id,status} = req.body;
+    // const  booking_id = req.params.id;
+    // const status = req.params.status;
+    // UPDATE `booking` SET `status` = 'approved' WHERE `booking`.`booking_id` = 1
+    const sql = `UPDATE booking SET status = ? WHERE room.room_id = ?`;
+    con.query(sql,[status,room_id] ,function (err,results) {
+        if(err) {
+            console.error(err);
+            res.status(500).send("Server error update data!");
+        }
+        else {
+            res.send("update success")
+        }
+    })
+});
+
+
 // Root service
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Login.html'));
@@ -200,7 +234,7 @@ app.get('/sign-up', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Sign_up.html'));
 });
 
-const port = 3000;
-app.listen(port, function () {
-    console.log('Server is ready at' + port);
+ const port = 3000;
+ app.listen(port, function () {
+     console.log('Server is ready at' + port);
 });
