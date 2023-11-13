@@ -73,7 +73,7 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody id="booking">
+                    <tbody id="table_booking">
                         <tr class="table-secondary ">
                             <td>7/12/2023</td>
                             <td>XL101</td>
@@ -82,30 +82,7 @@
                             <td></td>
                             <td></td>
                         </tr>
-                        <tr>
-                            <td>5/12/2023</td>
-                            <td>XL102</td>
-                            <td>09:00 - 12:00</td>
-                            <td>Approved</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr class="table-secondary">
-                            <td>3/12/2023</td>
-                            <td>L101</td>
-                            <td>18:00 - 22:00</td>
-                            <td>Approved</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2/12/2023</td>
-                            <td>XL102</td>
-                            <td>13:00 - 18:00</td>
-                            <td>Approved</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
@@ -125,40 +102,51 @@
     </div>
 
     <script>
-        const booking = document.querySelector('#booking');
-        getbooking();
-
-        // GET BOOKING
-        async function getbooking() {
-            try {
-                //get booking data form server
-            const response = await fetch('/mybooking', options);
+         getBooking();
+         const table_booking = document.querySelector('#table_booking');
+         function getBooking(){
+        fetch('/my-booking/getbooking')
+            .then(function(response){
                 if (response.ok) {
-                    const data = await response.text();
-                    alert('OK');
-                } else if (response.status == 401) {
-                    const data = await response.text();
-                    throw Error(data);
-                } else {
-                    const data = await response.text();
-                    throw Error(data);
+                    return response.json();
                 }
-                then(function (data) {
-                    let rows = '';
-                    data.forEach(function (room) {
-                        rows += `<tr>`;
-                        rows += `<td>${room.date}</td>`;
-                        rows += `<td>${room.room_id}</td>`;
-                        rows += `<td>${room.time}</td>`;
-                        rows += `<td>${room.status}</td>`;
-                    });
-                    booking.innerHTML = rows;
-                })
-             } catch (err) {
-                    console.error(err);
-                    alert(err);
-                }
-            }
+                throw Error('Bad response');
+            })
+            .then(function(data){
+                console.log(data);
+                let rows = '';
+                data.forEach(function (room){
+                    rows += '<tr>';
+                    rows += `<td>${room.formatted_date}</td>`;
+                    rows += `<td>${room.room_name}</td>`;
+                    if(room.time_slot_1 == "1"){
+                        rows += `<td>08:00 - 10:00</td>`;
+                    }
+                    else if (room.time_slot_2 == "1")
+                    {
+                        rows += `<td>10:00 - 12:00</td>`;
+                    }
+                    else if (room.time_slot_3 == "1")
+                    {
+                        rows += `<td>13:00 - 15:00</td>`;
+                    }
+                    else if (room.time_slot_4 == "1")
+                    {
+                        rows += `<td>15:00 - 17:00</td>`;
+                    }
+                    else{
+                        rows += `<td>Error</td>`;
+                    }
+                    rows += `<td>${room.status}</td>`;
+                    rows += '</tr>';
+                });    
+                table_booking.innerHTML = rows;
+            })
+            .catch(function(err){
+                console.error(err);
+                alert(err);
+            });
+        }
     </script>
 
 </body>

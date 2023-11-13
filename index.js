@@ -81,40 +81,22 @@ app.post('/register', function (req, res) {
 });
 
 // ---------- My Booking -----------
-//get roomdata by ID
-router.get('/getRoomData', (req, res) => {
-    const roomId = req.query.roomId;
-
-    const sql = 'SELECT * FROM room WHERE room_id = ?;'
-
-    con.query(query, [roomId], (err, results) => {
+app.get("/my-booking/getbooking", function(_req, res){
+    const sql = "SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = 'sss';";
+    con.query(sql, function (err, results){
         if (err) {
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-        // Check if there are results
-        if (results.length === 0) {
-            res.status(404).send('Room not found');
-        } else {
-            // Return the room data as JSON
-            res.json(results[0]);
-        }
-    });
-});
-
-//get แค่ request ของตัวเองสำหรับ user
-router.get("/roomuser_request", function (req, res) {
-    const sql = "SELECT * FROM booking WHERE user_id=?";
-    con.query(sql, [req.session.userID], function (err, result) {
-        if (err) {
-            res.status(500).send('DB error')
+            console.error(err);
+            res.status(500).send('DB error');
         }
         else {
-            res.json(result);
+            res.send(results);
         }
     })
 });
 
+app.get('/my-booking', function (req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/My_Booking.html'));
+});
 
 // ===== Dasboard =====
 // Dashboard service
