@@ -114,7 +114,7 @@ app.post("/rooms", function (req, res) {
   });
   
   
-  app.get('/addroom', function (req, res) {
+  app.get('/rooms', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/addroom.html'));
 });
 
