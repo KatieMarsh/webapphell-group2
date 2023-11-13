@@ -263,22 +263,73 @@
 
 
 
-        <script>
-            function redirectToBookDetail() {
-                // ทำการเปลี่ยนหน้าไปยัง "book_detail.html" หรือไฟล์ที่คุณต้องการ
-                window.location.href = 'Booking_details.html';
-            }
-            function redirectToBrowseroom() {
-            // ทำการเรียกใช้งาน PHP เพื่อดึงข้อมูล
-            fetch('backend.php') // ให้ชื่อไฟล์ PHP ตรงนี้
-                .then(response => response.json())
-                .then(data => {
-                    // ทำตามต้องการกับข้อมูลที่ได้รับ
-                    console.log(data);
-                })
-                .catch(error => console.error('Error:', error));
-        }
-        </script>
+<script>
+    function redirectToBookDetail() {
+        // Redirect to the booking details page
+        window.location.href = 'Booking_details';
+    }
+
+    function fetchRoomData() {
+        // Fetch room data from the backend
+        fetch('/home') // แก้เป็น /home ตามที่คุณกำหนดในเซิร์ฟเวอร์
+            .then(response => response.json())
+            .then(data => {
+                // Process the data and update the UI
+                console.log(data);
+                // For example, you can render the room data on the page
+                renderRoomData(data);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Function to render room data on the page
+    function renderRoomData(data) {
+        const container = document.querySelector('.row'); // Adjust the selector as needed
+
+        // Clear existing content
+        container.innerHTML = '';
+
+        // Loop through the room data and create card elements
+        data.forEach(room => {
+            const card = document.createElement('div');
+            card.className = 'col-4 mt-5';
+            card.innerHTML = `
+                <div class="card" style="width: 250px;">
+                    <img src="${room.image}" class="card-img-top" alt="${room.name}">
+                    <div class="card-body">
+                        <h4 class="card-title">${room.name}</h4>
+                        <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
+                        <hr>
+                        <h6 class="card-subtitle text-muted">Location: ${room.location}</h6>
+                        <h6 class="card-subtitle text-muted">Facilities:
+                            ${renderFacilities(room.facilities)}
+                        </h6>
+                        Timeslots:
+                        ${renderTimeslots(room.timeslots)}
+                    </div>
+                    <button class="btn btn-primary" onclick="redirectToBookDetail()">Book</button>
+                </div>
+            `;
+
+            container.appendChild(card);
+        });
+    }
+
+    // Helper function to render facilities
+    function renderFacilities(facilities) {
+        return facilities.map(facility => `<img class="avatar rounded-circle" src="${facility}" alt="user1">`).join('');
+    }
+
+    // Helper function to render timeslots
+    function renderTimeslots(timeslots) {
+        return timeslots.map(timeslot => `<span class="badge ${timeslot.available ? 'bg-success' : 'bg-danger'}">${timeslot.time}</span>`).join('');
+    }
+
+    // Call the function to fetch and render room data when the page loads
+    window.onload = fetchRoomData;
+</script>
+
+
 
     </body>
 

@@ -9,8 +9,22 @@
  app.use(express.json());
  app.use(express.urlencoded({ extended: true }));
 
-app.get('/home', function (req, res) {
-    res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
+ app.get('/home', (req, res) => {
+    // ดึงข้อมูลห้องจากฐานข้อมูล
+    con.query('SELECT * FROM room', (err, results) => {
+      if (err) {
+        console.error('เกิดข้อผิดพลาดในการดึงข้อมูลห้องจากฐานข้อมูล:', err);
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
+      } else {
+        // ส่งข้อมูลห้องและไฟล์ HTML กลับไป
+        res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
+      }
+    });
+  });
+  
+
+app.get('/Booking_details', function (req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
 });
 // ---------- login -----------
 app.post('/login', function (req, res) {
