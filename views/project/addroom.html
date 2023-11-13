@@ -166,7 +166,7 @@
           <script>
             function displayText() {
               var inputValue = document.getElementById("seat_input").value;
-              document.getElementById("displayArea").textContent = "ข้อความที่คุณพิมพ์: " + inputValue;
+              document.getElementById("displayArea").textContent = "ข้อความที่พิมพ์: " + inputValue;
             }
           </script>
         </div>
@@ -185,9 +185,9 @@
 
           var formData = new FormData();
           formData.append('room_name', name);
-          formData.append('room_Location', location);
-          formData.append('room_seatcapacity', seatCapacity);
-          formData.append('img', selectedFile);
+          formData.append('building', location);
+          formData.append('capacity', seatCapacity);
+          formData.append('image', selectedFile);
 
           fetch('/rooms', {
             method: 'POST',
