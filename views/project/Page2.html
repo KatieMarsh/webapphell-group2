@@ -42,8 +42,13 @@
         <div class="container ">
             <div class="row" id="room-container">
                 <!-- Rooms will be loaded here -->
+
             </div>
         </div>
+        
+        <button class="btn btn-success ms-auto position-absolute bottom-0 end-0 m-5" onclick="redirectToAddRoom()">Add Room</button>
+
+
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -212,6 +217,10 @@
                     console.error(err.message);
                     Notiflix.Report.failure('Error', err.message, 'Close');
                 }
+            }
+            
+            function redirectToAddRoom() {
+                window.location.href = '/addroom';
             }
         </script>
 
