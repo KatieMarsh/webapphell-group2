@@ -57,43 +57,96 @@
 
     <script>
         const submitButton = document.getElementById('submit');
+    
+        submitButton.onclick = async function () {
+            try {
+                const email = document.getElementById('mail').value;
+                const stuid = document.getElementById('stuid').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmpassword').value;
+                const firstname = document.getElementById('ftname').value;
+                const lastname = document.getElementById('ltname').value;
+                const phone = document.getElementById('phone').value;
+    
+                // Check if email is empty
+                if (!email.trim()) {
+                    alert('Please enter your Email.');
+                    return;
+                }
 
-submitButton.onclick = async function () {
-    try {
-        const email = document.getElementById('mail').value;
-        const stuid = document.getElementById('stuid').value;
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmpassword').value;
-        const firstname = document.getElementById('ftname').value;
-        const lastname = document.getElementById('ltname').value;
-        const phone = document.getElementById('phone').value;
+                if (!password.trim()) {
+                    alert('Please enter your Password.');
+                    return;
+                }
+                if (!confirmPassword.trim()) {
+                    alert('Please enter your Confirm password.');
+                    return;
+                }
 
-        const options = {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ "user_id": stuid, "email": email, "password": password, "conpassword":confirmPassword, "name": firstname +' ' + lastname  , "phone": phone,}),
+                
+                if (password !== confirmPassword) {
+                    alert('Password and Confirm Password do not match.');
+                    return;
+                }
+                
+                if (!stuid.trim()) {
+                    alert('Please enter your Student ID.');
+                    return;
+                }
+
+                if (!firstname.trim()) {
+                    alert('Please enter your First Name.');
+                    return;
+                }
+
+                if (!lastname.trim()) {
+                    alert('Please enter your Last Name.');
+                    return;
+                }
+
+                if (!phone.trim()) {
+                    alert('Please enter your Phone Number.');
+                    return;
+                }
+
+                
+    
+                const options = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        "user_id": stuid,
+                        "email": email,
+                        "password": password,
+                        "conpassword": confirmPassword,
+                        "name": firstname + ' ' + lastname,
+                        "phone": phone,
+                    }),
+                };
+    
+
+                const response = await fetch('/register', options);
+
+                if (response.ok) {
+                    const data = await response.text();
+                    // document.getElementById('/sign-up').reset();
+                    // uncomment this to make it go to the next page
+                    // window.location.replace(data);
+                    alert('OK');
+                } else if (response.status == 401) {
+                    const data = await response.text();
+                    throw Error(data);
+                } else {
+                    const data = await response.text();
+                    throw Error(data);
+                }
+            } catch (err) {
+                console.error(err);
+                alert(err);
+            }
         };
-
-        const response = await fetch('/sign-up', options);
-        if (response.ok) {
-            const data = await response.text();
-            // document.getElementById('/sign-up').reset();
-            // uncomment this to make it go to the next page
-            // window.location.replace(data); 
-            alert('OK');
-        } else if (response.status == 401) {
-            const data = await response.text();
-            throw Error(data);
-        } else {
-            const data = await response.text();
-            throw Error(data);
-        }
-    } catch (err) {
-        console.error(err);
-        alert(err);
-    }
-};
     </script>
+    
 
    
 
