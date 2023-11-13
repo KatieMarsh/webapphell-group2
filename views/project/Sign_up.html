@@ -124,7 +124,9 @@
                     }),
                 };
     
-                const response = await fetch('/sign-up/register', options);
+
+                const response = await fetch('/register', options);
+
                 if (response.ok) {
                     const data = await response.text();
                     // document.getElementById('/sign-up').reset();
