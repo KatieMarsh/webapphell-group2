@@ -10,8 +10,8 @@
   <link rel="stylesheet" type="text/css" href="/public/css/project/index.css">
   <link rel="stylesheet" type="text/css" href="/ll/">
 
-  
-  
+
+
 </head>
 
 <body>
@@ -32,7 +32,7 @@
             alert("คลิกยกเลิกปุ่มแล้ว!");
           }
         </script>
-        
+
         <div class="add-edit-meetingroomthq-exclude-location">
 
           <div class="add-edit-meetingroomthq-exclude-dropdown">
@@ -84,6 +84,7 @@
             </div>
           </div>
         </div>
+
         <button class="add-edit-meetingroomthq-exclude-inputchip" onclick="toggleOption(this)">Video</button>
         <button class="add-edit-meetingroomthq-exclude-inputchip1" onclick="toggleOption(this)">Audio</button>
         <button class="add-edit-meetingroomthq-exclude-inputchip2" onclick="toggleOption(this)">WhiteBoard</button>
@@ -92,9 +93,51 @@
         <button class="add-edit-meetingroomthq-exclude-inputchip5" onclick="toggleOption(this)">Speaker Phone</button>
 
 
+
         <div class="add-edit-meetingroomthq-exclude-location1"></div>
       </div>
-      <script src="scrip.js"></script>
+      <script> // ฟังก์ชันเลือกหรือยกเลิกเลือกตัวเลือก
+        function toggleOption(button) {
+          if (button.classList.contains("selected")) {
+            button.classList.remove("selected");
+            removeOption(button.textContent);
+          } else {
+            button.classList.add("selected");
+            addOption(button.textContent);
+          }
+        }
+
+        // ฟังก์ชันเพิ่มตัวเลือกในรายการ
+        function addOption(option) {
+          const selectedButtons = document.getElementById("selected-buttons");
+          const span = document.createElement("span");
+          span.textContent = option;
+          span.className = "selected-button";
+          span.addEventListener("click", () => {
+            removeOption(option);
+            const optionButtons = document.querySelectorAll(".option-button");
+            optionButtons.forEach((button) => {
+              if (button.textContent === option) {
+                button.classList.remove("selected");
+              }
+            });
+          });
+          selectedButtons.appendChild(span);
+        }
+
+        // ฟังก์ชันลบตัวเลือกจากรายการ
+        function removeOption(option) {
+          const selectedButtons = document.getElementById("selected-buttons");
+          const selectedButtonSpans = selectedButtons.getElementsByClassName("selected-button");
+          for (let i = 0; i < selectedButtonSpans.length; i++) {
+            if (selectedButtonSpans[i].textContent === option) {
+              selectedButtons.removeChild(selectedButtonSpans[i]);
+              break;
+            }
+          }
+        }
+
+      </script>
 
 
 
@@ -129,12 +172,51 @@
         </div>
 
       </div>
-      <button class="add-edit-meetingroomthq-exclude-buttonbutton1" onclick="AddFunction()">
+      <button class="add-edit-meetingroomthq-exclude-buttonbutton1" onclick="addRoom()">
         <span class="add-edit-meetingroomthq-exclude-text14">Add</span>
       </button>
       <script>
-        function AddFunction() {
-          alert("คุณคลิกปุ่มแล้ว!");
+        function addRoom() {
+          var name = document.getElementById("name_input").value;
+          var location = document.getElementById("location_input").value;
+          var seatCapacity = document.getElementById("seat_input").value;
+          var imageInput = document.getElementById("imageInput");
+          var selectedFile = imageInput.files[0];
+
+          var formData = new FormData();
+          formData.append('room_name', name);
+          formData.append('room_Location', location);
+          formData.append('room_seatcapacity', seatCapacity);
+          formData.append('img', selectedFile);
+
+          fetch('/rooms', {
+            method: 'POST',
+            body: formData,
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Success:', data);
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+        }
+
+        function uploadImage() {
+          var imageInput = document.getElementById("imageInput");
+          imageInput.click();
+        }
+
+        function displayImageName() {
+          var imageInput = document.getElementById("imageInput");
+          var imageName = document.getElementById("imageName");
+          var selectedImage = document.getElementById("selectedImage");
+          var selectedFile = imageInput.files[0];
+
+          if (selectedFile) {
+            imageName.textContent = selectedFile.name;
+            selectedImage.style.display = "block";
+          }
         }
       </script>
       <div class="add-edit-meetingroomthq-exclude-group2000">
@@ -218,22 +300,7 @@
             class="add-edit-meetingroomthq-exclude-line-copy4" />
           <img alt="LineCopy6I469" src="/public/external/linecopy6i469-vrkk.svg"
             class="add-edit-meetingroomthq-exclude-line-copy6" />
-          <div class="add-edit-meetingroomthq-exclude-headericonmenunormal">
-            <div class="add-edit-meetingroomthq-exclude-system-icons32pt-new-notifications">
-              <div class="add-edit-meetingroomthq-exclude-frame10">
-                <img alt="PathI469" src="/public/external/pathi469-5jr.svg"
-                  class="add-edit-meetingroomthq-exclude-path" />
-                <img alt="PathI469" src="/public/external/pathi469-5jr.svg"
-                  class="add-edit-meetingroomthq-exclude-path1" />
-                <img alt="OvalI469" src="/public/external/ovali469-4fz8.svg"
-                  class="add-edit-meetingroomthq-exclude-oval" />
-                <span class="add-edit-meetingroomthq-exclude-text29">
-                  99+
 
-                </span>
-              </div>
-            </div>
-          </div>
           <img alt="LineCopy2I469" src="/public/external/linecopy2i469-4kt8j.svg"
             class="add-edit-meetingroomthq-exclude-line-copy2" />
           <img alt="LineCopy3I469" src="/public/external/linecopy3i469-lhfb.svg"
@@ -241,16 +308,16 @@
           <div class="add-edit-meetingroomthq-exclude-headerusernamenormal">
             <div class="add-edit-meetingroomthq-exclude-system-icons32pt-profileicon">
               <img alt="Rectangle33I469" src="." class="add-edit-meetingroomthq-exclude-rectangle33" />
-              
-              <a href="./my_acc/accout.html"><img alt="ProfileiconI469" src="/public/external/profileiconi469-61e.svg"
-                class="add-edit-meetingroomthq-exclude-profileicon" /></a>
+
+              <a href="./my_acc/accout.html"><img alt="ProfileiconI469" src="/public/images/user_64px.png"
+                  class="add-edit-meetingroomthq-exclude-profileicon" /></a>
             </div>
             <span class="add-edit-meetingroomthq-exclude-text30">
               <span><a href="./my_acc/accout.html">John doe</span></a>
             </span>
           </div>
         </div>
-        
+
         <span class="add-edit-meetingroomthq-exclude-text32">
           <span>
             <p> <a href="./ii/index.html">Dashboard</a></p>
