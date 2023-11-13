@@ -100,7 +100,7 @@ app.post('/update_room_status', function (req,res) {
     // const  booking_id = req.params.id;
     // const status = req.params.status;
     // UPDATE `booking` SET `status` = 'approved' WHERE `booking`.`booking_id` = 1
-    const sql = `UPDATE booking SET status = ? WHERE room.room_id = ?`;
+    const sql = `UPDATE room SET status = ? WHERE room.room_id = ?`;
     con.query(sql,[status,room_id] ,function (err,results) {
         if(err) {
             console.error(err);
