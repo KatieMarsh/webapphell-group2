@@ -11,6 +11,7 @@
 
 app.get('/home', function (_req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
+
 });
 app.get('/staff/home', function (_req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Page2.html'));
