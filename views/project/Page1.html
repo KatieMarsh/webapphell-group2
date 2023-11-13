@@ -339,7 +339,7 @@
                     let timeSlotsHtml = createTimeSlotsHtml(room);
 
                     card.innerHTML = `
-                        <img src="${room.image}" class="card-img-top" alt="${room.room_name}">
+                        <img src="/public/images/${room.image}" class="card-img-top" alt="${room.room_name}">
                         <div class="card-body">
                             <h4 class="card-title">${room.room_name}</h4>
                             <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
@@ -358,9 +358,10 @@
                         card.appendChild(disabledText);
                     } else {
                         const bookButton = document.createElement('button');
-                            bookButton.className = 'btn btn-primary';
-                            bookButton.innerText = 'Book Now';
-                            card.appendChild(bookButton);
+                        bookButton.className = 'btn btn-primary';
+                        bookButton.innerText = 'Book Now';
+                        bookButton.onclick = () => bookRoom(room.room_id);
+                        card.appendChild(bookButton);
                     }
 
                     col.appendChild(card);
@@ -380,14 +381,32 @@
             "time_slot_4": "15:00 - 17:00"
         };
         let html = '';
-        
+        const isDisabled = room.status === 'disabled';
+
         for (const key in timeSlotLabels) {
             if (room.hasOwnProperty(key)) {
-                const color = room[key] === 1 ? 'bg-danger' : 'bg-success';
+                const color = isDisabled || room[key] === 1 ? 'bg-danger' : 'bg-success';
                 html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
             }
         }
         return html;
+    }
+
+    function bookRoom(room_id) {
+        const options = {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ "room_id": room_id })
+        };
+        fetch(`/booking/${room_id}`, options)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Booking successful:', data);
+                // You can add logic here to update the UI or notify the user
+            })
+            .catch(error => {
+                console.error('Error booking the room:', error);
+            });
     }
 </script>
 
