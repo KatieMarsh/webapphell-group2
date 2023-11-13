@@ -49,7 +49,7 @@
 
         <!-- 2-column details -->
 
-        <div class="container ">
+        <!-- <div class="container ">
             <div class="row">
                 <div class="col-4 mt-5">
                     <div class="card" style="width: 250px;">
@@ -77,12 +77,8 @@
                         </div>
                         <h6 class="text-center bg-danger" style="color: white;">Reserve</h6>
                     </div>
-
-
-
-
-
                 </div>
+
                 <div class="col-4 mt-5">
                     <div class="card" style="width: 250px;">
                         <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
@@ -150,10 +146,10 @@
 
             </div>
 
-        </div>
+        </div> -->
         <div class="container ">
-            <div class="row">
-                <div class="col-4 mt-5">
+            <div class="row" id="room-container">
+                <!-- <div class="col-4 mt-5">
                     <div class="card" style="width: 250px;">
                         <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
                         <div class="card-body">
@@ -243,12 +239,8 @@
                         </div>
                         <button class="btn btn-primary" onclick="redirectToBookDetail()">Book</button>
                     </div>
+                </div> -->
 
-
-
-
-
-                </div>
 
             </div>
 
@@ -264,7 +256,7 @@
 
 
 <!-- เพิ่มสคริปต์นี้ในไฟล์ HTML ของคุณ -->
-<script>
+<!-- <script>
     function redirectToBookDetail() {
         // ไปยังหน้ารายละเอียดการจอง
         window.location.href = 'Booking_details';
@@ -280,7 +272,7 @@
                 // ตัวอย่าง: คุณสามารถแสดงข้อมูลห้องบนหน้าเว็บได้
                 renderRoomData(data);
             })
-            .catch(error => console.error('ข้อผิดพลาด:', error));
+            .catch(error => console.error('something went wrong', error));
     }
 
     // ฟังก์ชันเพื่อแสดงข้อมูลห้องบนหน้าเว็บ
@@ -294,6 +286,7 @@
         data.forEach(room => {
             const card = document.createElement('div');
             card.className = 'col-4 mt-5';
+            
             card.innerHTML = `
                 <div class="card" style="width: 250px;">
                     <img src="${room.image}" class="card-img-top" alt="${room.name}">
@@ -301,10 +294,8 @@
                         <h4 class="card-title">${room.name}</h4>
                         <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
                         <hr>
-                        <h6 class="card-subtitle text-muted">Location: ${room.location}</h6>
-                        <h6 class="card-subtitle text-muted">Facilities:
-                            ${renderFacilities(room.facilities)}
-                        </h6>
+                        <h6 class="card-subtitle text-muted">Location: ${room.building}</h6>
+                        ${}
                         Timeslots:
                         ${renderTimeslots(room.timeslots)}
                     </div>
@@ -328,9 +319,77 @@
 
     // เรียกฟังก์ชันเพื่อดึงและแสดงข้อมูลห้องเมื่อหน้าเว็บโหลด
     window.onload = redirectToBrowseroom;
+</script> -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/room')
+            .then(response => response.json())
+            .then(data => {
+                const roomContainer = document.getElementById('room-container');
+                data.forEach(room => {
+                    const col = document.createElement('div');
+                    col.className = 'col-4 mt-5';
+
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.style.width = '250px';
+
+                    let facilitiesHtml = ''; // Add logic here to generate facilities HTML based on room data
+                    let timeSlotsHtml = createTimeSlotsHtml(room);
+
+                    card.innerHTML = `
+                        <img src="${room.image}" class="card-img-top" alt="${room.room_name}">
+                        <div class="card-body">
+                            <h4 class="card-title">${room.room_name}</h4>
+                            <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
+                            <hr>
+                            <h6 class="card-subtitle text-muted">Location: ${room.building}</h6>
+                            <h6 class="card-subtitle text-muted">Facilities: ${facilitiesHtml}</h6>
+                            Timeslots: ${timeSlotsHtml}
+                        </div>
+                    `;
+
+                    if (room.status === 'disabled') {
+                        const disabledText = document.createElement('h6');
+                        disabledText.className = 'text-center bg-danger';
+                        disabledText.style.color = 'white';
+                        disabledText.innerText = 'Disabled';
+                        card.appendChild(disabledText);
+                    } else {
+                        const bookButton = document.createElement('button');
+                            bookButton.className = 'btn btn-primary';
+                            bookButton.innerText = 'Book Now';
+                            card.appendChild(bookButton);
+                    }
+
+                    col.appendChild(card);
+                    roomContainer.appendChild(col);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+    function createTimeSlotsHtml(room) {
+        const timeSlotLabels = {
+            "time_slot_1": "08:00 - 10:00",
+            "time_slot_2": "10:00 - 12:00",
+            "time_slot_3": "13:00 - 15:00",
+            "time_slot_4": "15:00 - 17:00"
+        };
+        let html = '';
+        
+        for (const key in timeSlotLabels) {
+            if (room.hasOwnProperty(key)) {
+                const color = room[key] === 1 ? 'bg-danger' : 'bg-success';
+                html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
+            }
+        }
+        return html;
+    }
 </script>
-
-
 
 
     </body>
