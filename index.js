@@ -297,8 +297,13 @@ app.get('/accout', function (req, res) {
    res.sendFile(path.join(__dirname, 'views/project/accout.html'));
 });
  
+app.get('/booking_details', function (req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
+ });
 
-
+ app.get('/editroom', function (_req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/editroom.html'));
+});
 // Root service
 app.get('/', function (req, res) {
    res.sendFile(path.join(__dirname, 'views/project/Login.html'));

@@ -360,6 +360,8 @@
                         const bookButton = document.createElement('button');
                         bookButton.className = 'btn btn-primary';
                         bookButton.innerText = 'Book Now';
+
+                        // Set the onclick function to navigate to the booking_details page
                         bookButton.onclick = () => bookRoom(room.room_id);
                         card.appendChild(bookButton);
                     }
@@ -393,20 +395,8 @@
     }
 
     function bookRoom(room_id) {
-        const options = {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ "room_id": room_id })
-        };
-        fetch(`/booking/${room_id}`, options)
-            .then(response => response.json())
-            .then(data => {
-                console.log('Booking successful:', data);
-                // You can add logic here to update the UI or notify the user
-            })
-            .catch(error => {
-                console.error('Error booking the room:', error);
-            });
+        // Redirect to booking_details.html
+        window.location.href = `/Booking_details`;
     }
 </script>
 
