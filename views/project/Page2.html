@@ -252,6 +252,55 @@
                 window.location.href = 'editroom.html';
             }
             
+            async function disableroom(room_id){
+            try {
+                const options = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "room_id": room_id}),
+                };
+                const response = await fetch('/staff/home/disableroom', options);
+                if (response.ok) {
+                    const data = await response.text();
+                }
+                else if (response.status == 401) {
+                    const data = await response.text();
+                    throw Error(data);
+                }
+                else {
+                    throw Error('Connection error');
+                }
+            } catch (err) {
+                console.error(err.message);
+                // alert(err.message);
+                Notiflix.Report.failure('Error', err.message, 'Close');
+            }
+            }
+            async function enableroom(room_id){
+            try {
+                const options = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "room_id": room_id}),
+                };
+                const response = await fetch('/staff/home/enableroom', options);
+                if (response.ok) {
+                    const data = await response.text();
+                }
+                else if (response.status == 401) {
+                    const data = await response.text();
+                    throw Error(data);
+                }
+                else {
+                    throw Error('Connection error');
+                }
+            } catch (err) {
+                console.error(err.message);
+                // alert(err.message);
+                Notiflix.Report.failure('Error', err.message, 'Close');
+            }
+            }
+            
         </script>
 
 
