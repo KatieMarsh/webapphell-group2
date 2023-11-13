@@ -17,7 +17,7 @@
         res.status(500).json({ success: false, message: 'Internal Server Error' });
       } else {
         // ส่งข้อมูลห้องและไฟล์ HTML กลับไป
-        res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
+         res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
       }
     });
   });
@@ -207,7 +207,7 @@ app.post('/confirm/update_booking_status', function (req,res) {
     })
 });
 
-// API endpoint สำหรับการดึงข้อมูลห้อง
+
 app.get('/room', (req, res) => {
   // ดึงข้อมูลห้องจากฐานข้อมูล
   con.query('SELECT * FROM room', (err, results) => {
@@ -221,22 +221,25 @@ app.get('/room', (req, res) => {
 });
 
 
-app.post('/update_room_status', function (req,res) {
-    const {room_id,status} = req.body;
-    // const  booking_id = req.params.id;
-    // const status = req.params.status;
-    // UPDATE `booking` SET `status` = 'approved' WHERE `booking`.`booking_id` = 1
+app.use(express.json()); // เพิ่มบรรทัดนี้เพื่อแปลง JSON requests
+
+app.post('/update_room_status', function (req, res) {
+    const { room_id, status } = req.body;
     const sql = `UPDATE room SET status = ? WHERE room_id = ?`;
-    con.query(sql,[status,room_id] ,function (err,results) {
-        if(err) {
+
+    con.query(sql, [status, room_id], function (err, results) {
+        if (err) {
             console.error(err);
-            res.status(500).send("Server error update data!");
+            res.status(500).send("เกิดข้อผิดพลาดในการอัปเดตสถานะห้อง!");
+        } else {
+            // อัปเดตสถานะห้องเรียบร้อยแล้ว
+            res.send("อัปเดตสถานะห้องเรียบร้อยแล้ว");
         }
-        else {
-            res.send("update success")
-        }
-    })
+    });
 });
+
+
+
 
 // ------------- Add a new room --------------
 app.post("/rooms", function (req, res) {
@@ -280,6 +283,39 @@ app.post("/rooms", function (req, res) {
 
 app.get('/accout', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/accout.html'));
+});
+
+app.post('/staff/home/disableroom', function (req,res) {
+    const {room_id} = req.body;
+    const sql = `UPDATE room SET status = 'disabled' WHERE room_id = ?`;
+    con.query(sql,[room_id] ,function (err,results) {
+        if(err) {
+            console.error(err);
+            res.status(500).send("Server error disable room");
+        }
+        else {
+            res.send("Disable room success")
+        }
+    
+    })
+});
+app.post('/staff/home/enableroom', function (req,res) {
+    const {room_id} = req.body;
+    const sql = `UPDATE room SET status = 'enabled' WHERE room_id = ?`;
+    con.query(sql,[room_id] ,function (err,results) {
+        if(err) {
+            console.error(err);
+            res.status(500).send("Server error enable room");
+        }
+        else {
+            res.send("Enable room success")
+        }
+    
+    })
+});
+
+app.get('/Page2.html', function (req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/Page2.html'));
 });
   
 
