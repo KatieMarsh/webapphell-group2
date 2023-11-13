@@ -263,33 +263,34 @@
 
 
 
+<!-- เพิ่มสคริปต์นี้ในไฟล์ HTML ของคุณ -->
 <script>
     function redirectToBookDetail() {
-        // Redirect to the booking details page
+        // ไปยังหน้ารายละเอียดการจอง
         window.location.href = 'Booking_details';
     }
 
-    function fetchRoomData() {
-        // Fetch room data from the backend
-        fetch('/home') // แก้เป็น /home ตามที่คุณกำหนดในเซิร์ฟเวอร์
+    function redirectToBrowseroom() {
+        // เรียกข้อมูลห้องจาก Backend
+        fetch('/room')
             .then(response => response.json())
             .then(data => {
-                // Process the data and update the UI
+                // ประมวลผลข้อมูลและอัปเดต UI
                 console.log(data);
-                // For example, you can render the room data on the page
+                // ตัวอย่าง: คุณสามารถแสดงข้อมูลห้องบนหน้าเว็บได้
                 renderRoomData(data);
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => console.error('ข้อผิดพลาด:', error));
     }
 
-    // Function to render room data on the page
+    // ฟังก์ชันเพื่อแสดงข้อมูลห้องบนหน้าเว็บ
     function renderRoomData(data) {
-        const container = document.querySelector('.row'); // Adjust the selector as needed
+        const container = document.querySelector('.row'); // ปรับเป็นเลือกคลาสที่เหมาะสม
 
-        // Clear existing content
+        // ลบเนื้อหาที่มีอยู่
         container.innerHTML = '';
 
-        // Loop through the room data and create card elements
+        // วนลูปผ่านข้อมูลห้องและสร้างองค์ประกอบการ์ด
         data.forEach(room => {
             const card = document.createElement('div');
             card.className = 'col-4 mt-5';
@@ -307,7 +308,7 @@
                         Timeslots:
                         ${renderTimeslots(room.timeslots)}
                     </div>
-                    <button class="btn btn-primary" onclick="redirectToBookDetail()">Book</button>
+                    <button class="btn btn-primary" onclick="redirectToBookDetail()">จอง</button>
                 </div>
             `;
 
@@ -315,19 +316,20 @@
         });
     }
 
-    // Helper function to render facilities
+    // ฟังก์ชันช่วยเพื่อแสดงสิ่งอำนวยความสะดวก
     function renderFacilities(facilities) {
         return facilities.map(facility => `<img class="avatar rounded-circle" src="${facility}" alt="user1">`).join('');
     }
 
-    // Helper function to render timeslots
+    // ฟังก์ชันช่วยเพื่อแสดงช่วงเวลา
     function renderTimeslots(timeslots) {
         return timeslots.map(timeslot => `<span class="badge ${timeslot.available ? 'bg-success' : 'bg-danger'}">${timeslot.time}</span>`).join('');
     }
 
-    // Call the function to fetch and render room data when the page loads
-    window.onload = fetchRoomData;
+    // เรียกฟังก์ชันเพื่อดึงและแสดงข้อมูลห้องเมื่อหน้าเว็บโหลด
+    window.onload = redirectToBrowseroom;
 </script>
+
 
 
 
