@@ -12,14 +12,11 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // ---------- for session -----------
-app.use(session ({
-    cookie : {maxAge : 24*60*60*1000},
-    secret : 'mysecretcode',
-    resave : false,
-    saveUninitialized : true,
-    store : new MemoryStore({
-        checkPeriod : 24*60*60*100
-    })
+app.use(session({
+    cookie: { maxAge: 24 * 60 * 60 * 100 },
+    secret: 'mysecretcode',
+    resave: false,
+    saveUninitialized: true
 }));
 
 
