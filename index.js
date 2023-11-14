@@ -3,6 +3,7 @@ const path = require('path');
 const bcrypt = require("bcrypt");
 const con = require('./config/db');
 const session = require('express-session');
+const { ok } = require('assert');
 
 const app = express();
 app.use("/public", express.static(path.join(__dirname, "public")));
@@ -71,7 +72,7 @@ app.get('/my-booking', function (req,res) {
         res.redirect('/');
     }
     else {
-        res.sendFile(path.join(__dirname, 'views/My_Booking.html'));
+        res.sendFile(path.join(__dirname, 'views/project/My_Booking.html'));
     }
 });
 
@@ -80,7 +81,7 @@ app.get('/dashboard', function (req,res) {
         res.redirect('/');
     }
     else {
-        res.sendFile(path.join(__dirname, 'views/dashboard.html'));
+        res.sendFile(path.join(__dirname, 'views/project/dashboard.html'));
     }
 });
 
@@ -93,7 +94,7 @@ app.get('/',function (req,res) {
         res.redirect('/dashboard');
     }
     else {
-        res.sendFile(path.join(__dirname, 'views/Loging.html'));
+        res.sendFile(path.join(__dirname, 'views/project/Login.html'));
     }
 });
 
