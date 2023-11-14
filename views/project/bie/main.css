@@ -1,0 +1,67 @@
+/* main.css */
+
+/* Custom style for the navigation bar */
+.custom-navbar {
+    background-color: #9A1212; /* Set your desired color here */
+    height: 65px; /* Set the desired height here */
+}
+
+/* Custom style for the text color */
+.navbar-light .navbar-nav .nav-link {
+    color: white;
+    margin-right: 40px; /* Set the desired margin (spacing) here */
+    font-family: 'Lato', sans-serif;
+}
+.profile-icon {
+    width: 35px;
+    height: auto;
+    margin-right: 10px; /* Set the desired margin (spacing) here */
+}
+
+.nav{
+    background-color: #ffffff; /* Set your desired color here */
+    height: 65px; /* Set the desired height here */
+    font-family: 'Lato', sans-serif;
+
+}
+
+.nav-link {
+        color: gray; /* Set the default color for nav-link items */
+ }
+.addmeetingtoom {
+     /* Set the top margin to 63px */
+    width: 8px;
+    margin-left: 60px;
+    white-space: nowrap; /* Prevent line break */
+    
+}
+.custom-container {
+    background-color: #e8d0d0; /* Set the background color to red (#ff0000) */
+    padding: 20px; /* Optional: Add padding for better visual appearance */
+    margin-left: 60px;
+    margin-right: 60px; 
+    border-radius: 5px;
+}
+.title{
+    color: rgb(100, 95, 95);
+    font-family: 'Lato', sans-serif;
+}
+.cl{
+    max-width: 300px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.form-control input {
+    flex-grow: 1;
+    margin-right: 5px; /* ปรับตามความต้องการ */
+    border: none;
+}
+
+.form-control button {
+    margin-left: 5px; /* ปรับตามความต้องการ */
+}
+.selected {
+    background-color: #007bff; /* Change the background color to indicate selection */
+    color: #fff;
+}
+
