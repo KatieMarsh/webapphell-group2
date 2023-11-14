@@ -183,15 +183,17 @@
           var imageInput = document.getElementById("imageInput");
           var selectedFile = imageInput.files[0];
 
-          var formData = new FormData();
-          formData.append('room_name', name);
-          formData.append('room_Location', location);
-          formData.append('room_seatcapacity', seatCapacity);
-          formData.append('img', selectedFile);
+          // var formData = new FormData();
+          // formData.append('room_name', name);
+          // formData.append('room_Location', location);
+          // formData.append('room_seatcapacity', seatCapacity);
+          // formData.append('image', selectedFile);
+          // console.log(formData);
+          
 
           fetch('/rooms', {
             method: 'POST',
-            body: formData,
+            body: JSON.stringify({ "room_name": name, "building": location, "capacity":seatCapacity, "image":selectedFile}),
           })
             .then(response => response.json())
             .then(data => {

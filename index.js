@@ -256,7 +256,7 @@ app.post('/update_room_status', function (req,res) {
 // ------------- Add a new room --------------
 app.post("/rooms", function (req, res) {
     const newRoom = req.body;
-    const sql = "INSERT INTO room SET ?";
+    const sql = "INSERT INTO room SET room_name=?, building=?, capacity=?, image=?";
     con.query(sql, newRoom, function (err, results) {
       if (err) {
         console.error(err);
@@ -291,6 +291,9 @@ app.put("/rooms/:id", function (req, res) {
   
 app.get('/addroom', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/addroom.html'));
+});
+app.get('/addroom_new', function (req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/addroom_new.html'));
 });
 
 app.get('/accout', function (req, res) {
