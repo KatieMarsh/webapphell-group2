@@ -19,18 +19,12 @@
         <nav class="navbar navbar-expand navbar-dark bg-danger ">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav ms-auto"> <!-- Added ms-auto class here -->
-                        <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link active" href="#">My Booking</a>
-                        </li>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="#">My Booking</a></li>
                         <img class="avatar rounded-circle" src="/public/images/fc2900d41b78b817.jpg">
-                        <li class="nav-item"><a class="nav-link active" href="#"> John Doe
-
-                            </a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link active" href="#"> John Doe </a></li>
                     </ul>
-
                 </div>
             </div>
         </nav>
@@ -48,19 +42,27 @@
         <div class="container ">
             <div class="row" id="room-container">
                 <!-- Rooms will be loaded here -->
+
+
             </div>
         </div>
+        
+        <button class="btn btn-success ms-auto position-absolute bottom-0 end-0 m-5" onclick="redirectToAddRoom()">Add Room</button>
+
 
 
         <script>
+
             // call functions
             // Event listener for DOMContentLoaded
+
             document.addEventListener('DOMContentLoaded', function () {
                 loadRooms();
             });
 
+
             // define functions
-            
+
             function loadRooms() {
                 fetch('/room')
                     .then(response => response.json())
@@ -76,33 +78,46 @@
                             card.className = 'card';
                             card.style.width = '250px';
 
-                            let facilitiesHtml = ''; // Add logic here to generate facilities HTML based on room data
+
+                            let facilitiesHtml = '';
                             let timeSlotsHtml = createTimeSlotsHtml(room);
 
                             card.innerHTML = `
-                        <img src="/public/images/${room.image}" class="card-img-top" alt="${room.room_name}">
-                        <div class="card-body">
-                            <h4 class="card-title">${room.room_name}</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: ${room.building}</h6>
-                            <h6 class="card-subtitle text-muted">Facilities: ${facilitiesHtml}</h6>
-                            Timeslots: ${timeSlotsHtml}
-                        </div>
-                    `;
+                                <img src="/public/images/${room.image}" class="card-img-top" alt="${room.room_name}">
+                                <div class="card-body">
+                                    <h4 class="card-title">${room.room_name}</h4>
+                                    <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
+                                    <hr>
+                                    <h6 class="card-subtitle text-muted">Location: ${room.building}</h6>
+                                    Facilities: ${facilitiesHtml}
+                                    Timeslots: ${timeSlotsHtml}
+                                </div>
+                            `;
 
                             if (room.status === 'disabled') {
-                                const bookButton = document.createElement('button');
-                                bookButton.className = 'btn btn-primary';
-                                bookButton.innerText = 'Enable';
-                                bookButton.onclick = () => enableroom(room.room_id);
-                                card.appendChild(bookButton);
+                                const enableButton = document.createElement('button');
+                                enableButton.className = 'btn btn-primary';
+                                enableButton.innerText = 'Enable';
+                                enableButton.onclick = () => enableroom(room.room_id);
+                                card.appendChild(enableButton);
+                                const editButton = document.createElement('button');
+                                editButton.className = 'btn btn-warning';
+                                editButton.innerText = 'Edit';
+                                editButton.onclick = () => redirectToEditroom();
+                                card.appendChild(editButton);
                             } else {
-                                const bookButton = document.createElement('button');
-                                bookButton.className = 'btn btn-danger';
-                                bookButton.innerText = 'Disable';
-                                bookButton.onclick = () => disableroom(room.room_id);
-                                card.appendChild(bookButton);
+                                const disableButton = document.createElement('button');
+                                disableButton.className = 'btn btn-danger';
+                                disableButton.innerText = 'Disable';
+                                disableButton.onclick = () => disableroom(room.room_id);
+                                card.appendChild(disableButton);
+                                const editButton = document.createElement('button');
+                                editButton.className = 'btn btn-warning';
+                                editButton.innerText = 'Edit';
+                                editButton.onclick = () => redirectToEditroom();
+                                card.appendChild(editButton);
+                                
+
                             }
 
                             col.appendChild(card);
@@ -113,7 +128,31 @@
                         console.error('Error:', error);
                     });
             }
-            
+
+            function createfacilitiesHtml(room) {
+                const audioLabels = {
+                    "audio": "/public/images/microphone.png",
+                    "video": "/public/images/microphone.png",
+                    "plug": "/public/images/microphone.png",
+                    "speakerphone": "/public/images/microphone.png",
+                    "TV": "/public/images/microphone.png",
+                    "webcam": "/public/images/microphone.png"
+                };
+                let html = '';
+                
+
+                for (const key in audioLabels) {
+                    if (room.hasOwnProperty(key)) {
+                        room[key] === 1 ;
+                        // const audioImageSrc = `/public/images/microphone.png`;
+                        // const videoImageSrc = `/public/images/microphone.png`; 
+                        // const sprakerphoneImageSrc = `/public/images/microphone.png`;
+                        // const webcam = `/public/images/microphone.png`;
+                        html += `<span class="badge ${color}">${audioLabels[key]}</span>`;
+                    }
+                }
+                return html;
+            }
 
             function createTimeSlotsHtml(room) {
                 const timeSlotLabels = {
@@ -133,13 +172,9 @@
                 }
                 return html;
             }
-            function redirectToAddroom() {
-                // ทำการเปลี่ยนหน้าไปยัง "book_detail.html" หรือไฟล์ที่คุณต้องการ
-                window.location.href = 'addroom.html';
-            }
+
             function redirectToEditroom() {
-                // ทำการเปลี่ยนหน้าไปยัง "book_detail.html" หรือไฟล์ที่คุณต้องการ
-                window.location.href = 'editroom.html';
+                window.location.href = '/editroom';
             }
 
             async function disableroom(room_id) {
@@ -163,10 +198,10 @@
                     }
                 } catch (err) {
                     console.error(err.message);
-                    // alert(err.message);
                     Notiflix.Report.failure('Error', err.message, 'Close');
                 }
             }
+
             async function enableroom(room_id) {
                 try {
                     const options = {
@@ -188,16 +223,18 @@
                     }
                 } catch (err) {
                     console.error(err.message);
-                    // alert(err.message);
                     Notiflix.Report.failure('Error', err.message, 'Close');
                 }
+            }
+            
+            function redirectToAddRoom() {
+                window.location.href = '/addroom';
             }
 
         </script>
 
-
-
-
     </body>
 
 </html>
+
+
