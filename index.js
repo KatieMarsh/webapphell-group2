@@ -50,13 +50,31 @@ app.post('/staff/home/enableroom', function (req,res) {
 });
 
 // ---------- for session -----------
+// set up
 app.use(session({
     cookie: { maxAge: 24 * 60 * 60 * 100 },
     secret: 'mysecretcode',
     resave: false,
     saveUninitialized: true
 }));
+// Get user info
+app.get('/user', function (req, res)  {
+    res.json({'userID' : req.session.userID, 'username' : req.session.username, 'role': req.session.role});
+});
+// ------------- Logout --------------
+app.get("/logout", function (req, res) {
+    // clear session
+    req.session.destroy(function(err) {
+        if(err) {
+            console.error(err.message);
+            res.status(500).send('Cannot logout');
+        }
+        else {
+            res.redirect('/');
+        }
+    });
 
+});
 
 // ---------- login -----------
 app.post('/login', function (req, res) {
@@ -80,13 +98,18 @@ app.post('/login', function (req, res) {
 
                 else {
                     if (same) {
-                        req.session.user_ID = results[0].id;
+                        req.session.user_ID = results[0].user_id;
                         req.session.username = username;
                         req.session.role = results[0].role;
+
+                        // If you want to foward the user to the next page put it here
                         if (results[0].role == 1) {
                             res.send('/my-booking');
                         }
                         else if (results[0].role == 2) {
+                            res.send('/dashboard');
+                        }
+                        else if (results[0].role == 3) {
                             res.send('/dashboard');
                         }
                     }
@@ -100,10 +123,7 @@ app.post('/login', function (req, res) {
     })
 });
 
-// ---------- get user -----------
-app.get('/user', function (req, res)  {
-    res.json({'userID' : req.session.userID, 'username' : req.session.username, 'role': req.session.role});
-});
+
 
 // ---------- Page routes -----------
 app.get('/my-booking', function (req,res) {
@@ -116,7 +136,8 @@ app.get('/my-booking', function (req,res) {
 });
 
 app.get('/dashboard', function (req,res) {
-    if(req.session.role !=1) {
+    // There was an error here I changed != to ==
+    if(req.session.role ==1) {
         res.redirect('/');
     }
     else {
