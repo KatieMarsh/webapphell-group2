@@ -16,6 +16,7 @@
   <title>Document</title>
 </head>
 
+
 <body>
   <!--------------------------------------------------------- navbar ---------------------------------------------------------------------------------------------------------------------->
   <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
@@ -31,7 +32,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <img src="./bie/Profile icon.svg" alt="Profile Icon" class="profile-icon">
+              <img src="/public/external/Profile icon.svg" alt="Profile Icon" class="profile-icon">
               John Doe
             </a>
           </li>
@@ -61,7 +62,7 @@
   <h4 class="addmeetingtoom">Add Meeting Rooms</h4>
   <br>
   <!--------------------------------------------------------------container--------------------------------------------------------------------------------------------------------------->
-  <div class="custom-container">
+  <div class="custom-container" >
 
     <form id="dataForm">
       <div class="row">
@@ -88,7 +89,7 @@
           <p class="title">Upload File</p>
           <div class="form-control d-flex">
             <input type="file" id="fileInput" class="form-control" style="display: none;">
-            <input type="text" id="uploadedFile" placeholder="No file chosen" aria-label="No file chosen"
+            <input type="text" id="uploadedFile" placeholder="No file chosen..." aria-label="No file chosen"
               class="flex-grow-1 border-0">
             <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-primary">Choose
               File</button>
@@ -104,16 +105,20 @@
         <button class="btn btn-primary btn-sm toggle-btn" data-type="Webcam">Webcam</button>
       </div>
 
+
     </form>
     <br><br>
-    <button type="button" class="btn btn-secondary btn-lg">Cancel</button>
-    <button type="button" class="btn btn-primary btn-lg">Add</button>
+    <button type="button" id="cancelButton" class="btn btn-secondary btn-lg">Cancel</button>
+    <button type="button" onclick="addRoom()" class="btn btn-primary btn-lg">Add</button>
+
     <br>
     <script src="/public/js/submit.js"></script>
-  
+
+
 
 
   </div>
+  
   <!--------------------------------------------------------------container--------------------------------------------------------------------------------------------------------------->
   
 
