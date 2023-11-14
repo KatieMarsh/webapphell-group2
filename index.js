@@ -2,12 +2,25 @@ const express = require('express');
 const path = require('path');
 const bcrypt = require("bcrypt");
 const con = require('./config/db');
+const session = require('express-session');
 
 const app = express();
 app.use("/public", express.static(path.join(__dirname, "public")));
 //for JS exchange
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
+// ---------- for session -----------
+app.use(session ({
+    cookie : {maxAge : 24*60*60*1000},
+    secret : 'mysecretcode',
+    resave : false,
+    saveUninitialized : true,
+    store : new MemoryStore({
+        checkPeriod : 24*60*60*100
+    })
+}));
 
 
 // ---------- login -----------
