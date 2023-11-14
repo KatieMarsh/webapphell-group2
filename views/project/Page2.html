@@ -80,7 +80,7 @@
                                     <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
                                     <hr>
                                     <h6 class="card-subtitle text-muted">Location: ${room.building}</h6>
-                                    <h6 class="card-subtitle text-muted">Facilities: ${facilitiesHtml}</h6>
+                                    Facilities: ${facilitiesHtml}
                                     Timeslots: ${timeSlotsHtml}
                                 </div>
                             `;
@@ -119,28 +119,26 @@
                     });
             }
 
-            function createFacilities(room) {
+            function createfacilitiesHtml(room) {
                 const audioLabels = {
-                    "audio": "Audio 1",
-                    "video": "Audio 2",
-                    "plug": "Audio 3",
-                    "speakerphone": "Audio 4",
-                    "TV": "Audio 4",
-                    "webcam": "Audio 4"
+                    "audio": "/public/images/microphone.png",
+                    "video": "/public/images/microphone.png",
+                    "plug": "/public/images/microphone.png",
+                    "speakerphone": "/public/images/microphone.png",
+                    "TV": "/public/images/microphone.png",
+                    "webcam": "/public/images/microphone.png"
                 };
                 let html = '';
                 
 
                 for (const key in audioLabels) {
                     if (room.hasOwnProperty(key)) {
-                        const color = isDisabled || room[key] === 1 ? 'bg-danger' : 'bg-success';
-                        const audioImageSrc = `/public/images/`;
-                        html += `
-                            <span class="badge ${color}">
-                                <img class="audio-image" src="${audioImageSrc}" alt="${audioLabels[key]}">
-                                ${audioLabels[key]}
-                            </span>
-                        `;
+                        room[key] === 1 ;
+                        // const audioImageSrc = `/public/images/microphone.png`;
+                        // const videoImageSrc = `/public/images/microphone.png`; 
+                        // const sprakerphoneImageSrc = `/public/images/microphone.png`;
+                        // const webcam = `/public/images/microphone.png`;
+                        html += `<span class="badge ${color}">${audioLabels[key]}</span>`;
                     }
                 }
                 return html;
@@ -227,3 +225,5 @@
     </body>
 
 </html>
+
+
