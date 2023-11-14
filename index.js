@@ -44,6 +44,7 @@ app.post('/login', function (req, res) {
 
 
 // ---------- Register -----------
+
 app.post('/register', function (req, res) {
     const { user_id, email, password, conpassword, name, phone } = req.body;
     bcrypt.hash(password, 10, function (err, hash) {
@@ -56,6 +57,7 @@ app.post('/register', function (req, res) {
             if (err) {
                 console.error(err);
                 res.status(500).send("Server error!");
+
             }
             else if (results.length > 0) {
                 res.status(401).send("Email has already used!");
@@ -78,6 +80,10 @@ app.post('/register', function (req, res) {
             }
         })
     })
+});
+// ===== adroom =====
+app.get('/addroom', function (req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/addroom.html'));
 });
 
 // ---------- My Booking -----------
@@ -172,6 +178,17 @@ app.post('/confirm/update_booking_status', function (req,res) {
     
     })
 });
+app.get('/room', (req, res) => {
+    // ดึงข้อมูลห้องจากฐานข้อมูล
+    con.query('SELECT * FROM room', (err, results) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
+      } else {
+        res.json(results);
+      }
+    });
+  });
 
 
 // Root service
