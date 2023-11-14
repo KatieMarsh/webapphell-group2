@@ -242,22 +242,22 @@ app.post("/rooms", function (req, res) {
   });
   
   // ------------- Update a room --------------
-  app.put("/rooms/:id", function (req, res) {
-    const id = req.params.id;
-    const updateRoom = req.body;
-    const sql = "UPDATE room SET ? WHERE room_id = ?";
-    con.query(sql, [updateRoom, id], function (err, results) {
-      if (err) {
-        console.error(err);
-        return res.status(500).send("Database server error");
-      }
-      if (results.affectedRows !== 1) {
-        console.error('Row updated is not 1');
-        return res.status(500).send("Update failed");
-      }
-      res.status(200).send("Update successfully");
+  app.post("/rooms", function (req, res) {
+    const newRoom = req.body;
+    const sql = "INSERT INTO room SET ?";
+    con.query(sql, newRoom, function (err, results) {
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Database server error");
+        }
+        if (results.affectedRows !== 1) {
+            console.error('Row added is not 1');
+            return res.status(500).send("Add failed");
+        }
+        res.status(200).send("Add successfully");
     });
-  });
+});
+
   
   
   app.get('/rooms', function (req, res) {
