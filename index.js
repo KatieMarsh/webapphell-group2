@@ -41,7 +41,15 @@ app.post('/login', function (req, res) {
                 }
                 else {
                     if (same) {
-                        res.send('Login successfully');
+                        req.session.user_ID = results[0].id;
+                        req.session.username = username;
+                        req.session.role = results[0].role;
+                        if (results[0].role == 1) {
+                            res.send('/my-booking');
+                        }
+                        else if (results[0].role == 2) {
+                            res.send('/dashboard');
+                        }
                     }
                     else {
                         res.status(401).send('wrong password');
@@ -52,6 +60,42 @@ app.post('/login', function (req, res) {
     })
 });
 
+// ---------- get user -----------
+app.get('/user', function (req, res)  {
+    res.json({'userID' : req.session.userID, 'username' : req.session.username, 'role': req.session.role});
+});
+
+// ---------- Page routes -----------
+app.get('/my-booking', function (req,res) {
+    if(req.session.role !=1) {
+        res.redirect('/');
+    }
+    else {
+        res.sendFile(path.join(__dirname, 'views/My_Booking.html'));
+    }
+});
+
+app.get('/dashboard', function (req,res) {
+    if(req.session.role !=1) {
+        res.redirect('/');
+    }
+    else {
+        res.sendFile(path.join(__dirname, 'views/dashboard.html'));
+    }
+});
+
+// root service
+app.get('/',function (req,res) {
+    if(req.session.role == 1) {
+        res.redirect('/my-booking');
+    }
+    else if (req.session.role == 2) {
+        res.redirect('/dashboard');
+    }
+    else {
+        res.sendFile(path.join(__dirname, 'views/Loging.html'));
+    }
+});
 
 // ---------- Register -----------
 
@@ -91,6 +135,11 @@ app.post('/register', function (req, res) {
         })
     })
 });
+
+
+
+
+
 // ===== adroom =====
 app.get('/addroom', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/addroom.html'));
@@ -209,6 +258,7 @@ app.get('/', function (req, res) {
 app.get('/sign-up', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Sign_up.html'));
 });
+
 
 const port = 3000;
 app.listen(port, function () {
