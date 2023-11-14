@@ -320,7 +320,6 @@
     // เรียกฟังก์ชันเพื่อดึงและแสดงข้อมูลห้องเมื่อหน้าเว็บโหลด
     window.onload = redirectToBrowseroom;
 </script> -->
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         fetch('/room')
@@ -330,6 +329,7 @@
                 data.forEach(room => {
                     const col = document.createElement('div');
                     col.className = 'col-4 mt-5';
+
 
                     const card = document.createElement('div');
                     card.className = 'card';
@@ -395,6 +395,7 @@
     }
 
     function bookRoom(room_id) {
+
         // Redirect to booking_details.html
         window.location.href = `/Booking_details`;
     }
