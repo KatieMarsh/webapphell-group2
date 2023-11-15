@@ -15,340 +15,84 @@
 
 
     <body>
-        
-
-        <!-- navbar -->
-        <nav class="navbar navbar-expand navbar-dark bg-danger ">
+        <nav class="navbar navbar-expand navbar-dark bg-danger">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav ms-auto"> <!-- Added ms-auto class here -->
-                        <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link active" href="#">My Booking</a>
-                        </li>
-                        <img class="avatar rounded-circle" src="/public/images/fc2900d41b78b817.jpg">
-                        <li class="nav-item"><a class="nav-link active" href="#">John Doe
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/staff/home">Rooms</a></li>
+
+                        <!-- Dropdown for User -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px"
+                                    width="40px"> John Doe
                             </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                            </ul>
                         </li>
                     </ul>
-
                 </div>
             </div>
         </nav>
         <a href="Link">Dashboard</a> /
         <a href="Link">Bookroom</a><br>
         <div class="container text-center mt-5">
-            <h4>Rooms Availibility</h4>
-            <div class="input-group mb-3 mt-3">
-                <input type="text" class="form-control" placeholder="Search for rooms" aria-label="Search for rooms"
-                    aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+            <div class="container text-center mt-5">
+                <h4>Rooms Availibility</h4>
+                <div class="input-group mb-3 mt-3">
+                    <input type="text" class="form-control" id="search" placeholder="Search for rooms">
+                    <button class="btn btn-outline-secondary" onclick="searchClicked()">Search</button>
+                </div>
+            </div>
+
+            <div class="container ">
+                <div class="row" id="room-container">
+                </div>
             </div>
         </div>
 
-
-        <!-- 2-column details -->
-
-        <!-- <div class="container ">
-            <div class="row">
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                    src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                    alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                    alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                            Timeslots:
-                            <span class="badge bg-secondary">08:00 - 10:00</span>
-                            <span class="badge bg-secondary">10:00 - 12:00</span>
-                            <span class="badge bg-secondary">13:00 - 15:00</span>
-                            <span class="badge bg-secondary">15:00 - 17:00</span>
-                        </div>
-                        <h6 class="text-center bg-danger" style="color: white;">Reserve</h6>
-                    </div>
-                </div>
-
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                    src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                    alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                    alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                            Timeslots:
-                            <span class="badge bg-secondary">08:00 - 10:00</span>
-                            <span class="badge bg-secondary">10:00 - 12:00</span>
-                            <span class="badge bg-secondary">13:00 - 15:00</span>
-                            <span class="badge bg-secondary">15:00 - 17:00</span>
-                        </div>
-                        <h6 class="text-center bg-danger" style="color: white;">Reserve</h6>
-                    </div>
+        <script>
+            // Load the rooms for the first time
+            loadRooms();
 
 
+            // define functions
+            function searchClicked() {
+                const room_name = document.querySelector('#search').value;
+                searchRooms(room_name);
+            }
 
-
-
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                    src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                    alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                    alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                            Timeslots:
-                            <span class="badge bg-danger">08:00 - 10:00</span>
-                            <span class="badge bg-danger">10:00 - 12:00</span>
-                            <span class="badge bg-success">13:00 - 15:00</span>
-                            <span class="badge bg-danger">15:00 - 17:00</span>
-                        </div>
-                        <button class="btn btn-primary" onclick="redirectToBookDetail()">Book</button>
-                    </div>
-
-
-
-
-
-                </div>
-
-            </div>
-
-        </div> -->
-        <div class="container ">
-            <div class="row" id="room-container">
-                <!-- <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                    src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                    alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                    alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                            Timeslots:
-                            <span class="badge bg-danger">08:00 - 10:00</span>
-                            <span class="badge bg-success">10:00 - 12:00</span>
-                            <span class="badge bg-success">13:00 - 15:00</span>
-                            <span class="badge bg-success">15:00 - 17:00</span>
-                        </div>
-                        <button class="btn btn-primary" onclick="redirectToBookDetail()">Book</button>
-                    </div>
-
-
-
-
-
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                    src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                    alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                    alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                            Timeslots:
-                            <span class="badge bg-danger">08:00 - 10:00</span>
-                            <span class="badge bg-success">10:00 - 12:00</span>
-                            <span class="badge bg-success">13:00 - 15:00</span>
-                            <span class="badge bg-danger">15:00 - 17:00</span>
-                        </div>
-                        <button class="btn btn-primary" onclick="redirectToBookDetail()">Book</button>
-                    </div>
-
-
-
-
-
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                    src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                    alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                    alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                                <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                            Timeslots:
-                            <span class="badge bg-success">08:00 - 10:00</span>
-                            <span class="badge bg-success">10:00 - 12:00</span>
-                            <span class="badge bg-success">13:00 - 15:00</span>
-                            <span class="badge bg-danger">15:00 - 17:00</span>
-                        </div>
-                        <button class="btn btn-primary" onclick="redirectToBookDetail()">Book</button>
-                    </div>
-                </div> -->
-
-
-            </div>
-
-        </div>
-
-
-
-
-
-        </div>
-
-
-
-
-<!-- เพิ่มสคริปต์นี้ในไฟล์ HTML ของคุณ -->
-<!-- <script>
-    function redirectToBookDetail() {
-        // ไปยังหน้ารายละเอียดการจอง
-        window.location.href = 'Booking_details';
-    }
-
-    function redirectToBrowseroom() {
-        // เรียกข้อมูลห้องจาก Backend
-        fetch('/room')
-            .then(response => response.json())
-            .then(data => {
-                // ประมวลผลข้อมูลและอัปเดต UI
-                console.log(data);
-                // ตัวอย่าง: คุณสามารถแสดงข้อมูลห้องบนหน้าเว็บได้
-                renderRoomData(data);
-            })
-            .catch(error => console.error('something went wrong', error));
-    }
-
-    // ฟังก์ชันเพื่อแสดงข้อมูลห้องบนหน้าเว็บ
-    function renderRoomData(data) {
-        const container = document.querySelector('.row'); // ปรับเป็นเลือกคลาสที่เหมาะสม
-
-        // ลบเนื้อหาที่มีอยู่
-        container.innerHTML = '';
-
-        // วนลูปผ่านข้อมูลห้องและสร้างองค์ประกอบการ์ด
-        data.forEach(room => {
-            const card = document.createElement('div');
-            card.className = 'col-4 mt-5';
-            
-            card.innerHTML = `
-                <div class="card" style="width: 250px;">
-                    <img src="${room.image}" class="card-img-top" alt="${room.name}">
-                    <div class="card-body">
-                        <h4 class="card-title">${room.name}</h4>
-                        <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
-                        <hr>
-                        <h6 class="card-subtitle text-muted">Location: ${room.building}</h6>
-                        ${}
-                        Timeslots:
-                        ${renderTimeslots(room.timeslots)}
-                    </div>
-                    <button class="btn btn-primary" onclick="redirectToBookDetail()">จอง</button>
-                </div>
-            `;
-
-            container.appendChild(card);
-        });
-    }
-
-    // ฟังก์ชันช่วยเพื่อแสดงสิ่งอำนวยความสะดวก
-    function renderFacilities(facilities) {
-        return facilities.map(facility => `<img class="avatar rounded-circle" src="${facility}" alt="user1">`).join('');
-    }
-
-    // ฟังก์ชันช่วยเพื่อแสดงช่วงเวลา
-    function renderTimeslots(timeslots) {
-        return timeslots.map(timeslot => `<span class="badge ${timeslot.available ? 'bg-success' : 'bg-danger'}">${timeslot.time}</span>`).join('');
-    }
-
-    // เรียกฟังก์ชันเพื่อดึงและแสดงข้อมูลห้องเมื่อหน้าเว็บโหลด
-    window.onload = redirectToBrowseroom;
-</script> -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch('/room')
-            .then(response => response.json())
-            .then(data => {
+            // This function will display the rooms from JSON data received from back-end
+            function displayRooms(data) {
                 const roomContainer = document.getElementById('room-container');
+                roomContainer.innerHTML = '';
+                console.log(data)
                 data.forEach(room => {
                     const col = document.createElement('div');
                     col.className = 'col-4 mt-5';
-
 
                     const card = document.createElement('div');
                     card.className = 'card';
                     card.style.width = '250px';
 
-                    let facilitiesHtml = ''; // Add logic here to generate facilities HTML based on room data
+
+                    let facilitiesHtml = createfacilitiesHtml(room);
                     let timeSlotsHtml = createTimeSlotsHtml(room);
 
                     card.innerHTML = `
-                        <img src="/public/images/${room.image}" class="card-img-top" alt="${room.room_name}">
-                        <div class="card-body">
-                            <h4 class="card-title">${room.room_name}</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: ${room.building}</h6>
-                            <h6 class="card-subtitle text-muted">Facilities: ${facilitiesHtml}</h6>
-                            Timeslots: ${timeSlotsHtml}
-                        </div>
-                    `;
+                            <img src="/public/images/${room.image}" class="card-img-top" alt="${room.room_name}">
+                            <div class="card-body">
+                                <h4 class="card-title">${room.room_name}</h4>
+                                <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
+                                <hr>
+                                <h6 class="card-subtitle text-muted">Location: ${room.building}</h6>
+                                <h6>Facilities:</h6> ${facilitiesHtml}
+                                <h6>Timeslots:</h6> ${timeSlotsHtml}
+                            </div>
+                        `;
 
                     if (room.status === 'disabled') {
                         const disabledText = document.createElement('h6');
@@ -356,6 +100,7 @@
                         disabledText.style.color = 'white';
                         disabledText.innerText = 'Disabled';
                         card.appendChild(disabledText);
+
                     } else {
                         const bookButton = document.createElement('button');
                         bookButton.className = 'btn btn-primary';
@@ -369,37 +114,90 @@
                     col.appendChild(card);
                     roomContainer.appendChild(col);
                 });
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    });
-
-    function createTimeSlotsHtml(room) {
-        const timeSlotLabels = {
-            "time_slot_1": "08:00 - 10:00",
-            "time_slot_2": "10:00 - 12:00",
-            "time_slot_3": "13:00 - 15:00",
-            "time_slot_4": "15:00 - 17:00"
-        };
-        let html = '';
-        const isDisabled = room.status === 'disabled';
-
-        for (const key in timeSlotLabels) {
-            if (room.hasOwnProperty(key)) {
-                const color = isDisabled || room[key] === 1 ? 'bg-danger' : 'bg-success';
-                html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
             }
-        }
-        return html;
-    }
 
-    function bookRoom(room_id) {
+            // Send room_name to the back-end to query the DB with
+            function searchRooms(room_name) {
+                const options = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        "room_name": room_name
+                    }),
+                };
+                fetch('/room', options)
+                    .then(response => response.json())
+                    .then(data => {
+                        displayRooms(data);
 
-        // Redirect to booking_details.html
-        window.location.href = `/Booking_details`;
-    }
-</script>
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+
+            // Get all rooms data from DB
+            function loadRooms() {
+                fetch('/room')
+                    .then(response => response.json())
+                    .then(data => {
+                        displayRooms(data);
+
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+
+            // show facilities
+            function createfacilitiesHtml(room) {
+                const timeSlotLabels = {
+                    "audio": "audio",
+                    "video": "video",
+                    "plug": "plug",
+                    "speakerphone": "speakerphone",
+                    "TV": "TV",
+                    "webcam": "webcam"
+                };
+                let html = '';
+                const isDisabled = room.status === 'disabled';
+
+                for (const key in timeSlotLabels) {
+                    if (room.hasOwnProperty(key)) {
+                        const color = isDisabled || room[key] === 1 ? 'bg-danger' : 'bg-success';
+                        html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
+                    }
+                }
+                return html;
+            }
+            
+            // show time slots
+            function createTimeSlotsHtml(room) {
+                const timeSlotLabels = {
+                    "time_slot_1": "08:00 - 10:00",
+                    "time_slot_2": "10:00 - 12:00",
+                    "time_slot_3": "13:00 - 15:00",
+                    "time_slot_4": "15:00 - 17:00"
+                };
+                let html = '';
+                const isDisabled = room.status === 'disabled';
+
+                for (const key in timeSlotLabels) {
+                    if (room.hasOwnProperty(key)) {
+                        const color = isDisabled || room[key] === 1 ? 'bg-danger' : 'bg-success';
+                        html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
+                    }
+                }
+                return html;
+            }
+
+            function bookRoom(room_id) {
+
+                // Redirect to booking_details.html
+                window.location.href = `/Booking_details`;
+            }
+
+        </script>
 
 
     </body>

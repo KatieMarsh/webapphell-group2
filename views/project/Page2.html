@@ -11,230 +11,261 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand navbar-dark bg-danger">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Rooms</a></li>
 
-    <body>
-        <!-- header -->
-
-        <!-- navbar -->
-        <nav class="navbar navbar-expand navbar-dark bg-danger ">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="#">My Booking</a></li>
-                        <img class="avatar rounded-circle" src="/public/images/fc2900d41b78b817.jpg">
-                        <li class="nav-item"><a class="nav-link active" href="#"> John Doe </a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <a href="Link">Dashboard</a> /
-        <a href="Link">Bookroom</a><br>
-        <div class="container text-center mt-5">
-            <h4>Rooms Availibility</h4>
-            <div class="input-group mb-3 mt-3">
-                <input type="text" class="form-control" placeholder="Search for rooms" aria-label="Search for rooms"
-                    aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+                    <!-- Dropdown for User -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px"
+                                width="40px"> John Doe
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
-
-        <div class="container ">
-            <div class="row" id="room-container">
-                <!-- Rooms will be loaded here -->
-
-
-            </div>
+    </nav>
+    <a href="/dashboard">Dashboard</a> /
+    <a href="Link">Bookroom</a><br>
+    <div class="container text-center mt-5">
+        <h4>Rooms Availibility</h4>
+        <div class="input-group mb-3 mt-3">
+            <input type="text" class="form-control" id="search" placeholder="Search for rooms"
+                >
+            <button class="btn btn-outline-secondary" onclick="searchClicked()">Search</button>
         </div>
-        
-        <button class="btn btn-success ms-auto position-absolute bottom-0 end-0 m-5" onclick="redirectToAddRoom()">Add Room</button>
+    </div>
+
+    <div class="container ">
+        <div class="row" id="room-container">
+            <!-- Rooms will be loaded here -->
+
+
+        </div>
+    </div>
+
+    <button class="btn btn-success ms-auto position-absolute bottom-0 end-0 m-5" onclick="redirectToAddRoom()">Add
+        Room</button>
 
 
 
-        <script>
+    <script>
 
-            // call functions
-            // Event listener for DOMContentLoaded
+        // call functions
+        // Event listener for DOMContentLoaded
 
-            document.addEventListener('DOMContentLoaded', function () {
-                loadRooms();
-            });
+        // document.addEventListener('DOMContentLoaded', function () {
+            loadRooms();
+        // });
 
-
-            // define functions
-
-            function loadRooms() {
-                fetch('/room')
-                    .then(response => response.json())
-                    .then(data => {
-                        const roomContainer = document.getElementById('room-container');
-                        roomContainer.innerHTML = '';
-
-                        data.forEach(room => {
-                            const col = document.createElement('div');
-                            col.className = 'col-4 mt-5';
-
-                            const card = document.createElement('div');
-                            card.className = 'card';
-                            card.style.width = '250px';
+        function searchClicked(){
+            // alert('hello');
+            const room_name = document.querySelector('#search').value;
+            // console.log(room_name);
+            searchRooms(room_name);
+        }
 
 
-                            let facilitiesHtml = '';
-                            let timeSlotsHtml = createTimeSlotsHtml(room);
+        // define functions
+        function displayRooms(data) {
+            const roomContainer = document.getElementById('room-container');
+            roomContainer.innerHTML = '';
+            console.log(data)
+            data.forEach(room => {
+                const col = document.createElement('div');
+                col.className = 'col-4 mt-5';
 
-                            card.innerHTML = `
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.width = '250px';
+
+
+                let facilitiesHtml = createfacilitiesHtml(room);
+                let timeSlotsHtml = createTimeSlotsHtml(room);
+
+                card.innerHTML = `
                                 <img src="/public/images/${room.image}" class="card-img-top" alt="${room.room_name}">
                                 <div class="card-body">
                                     <h4 class="card-title">${room.room_name}</h4>
                                     <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
                                     <hr>
                                     <h6 class="card-subtitle text-muted">Location: ${room.building}</h6>
-                                    Facilities: ${facilitiesHtml}
-                                    Timeslots: ${timeSlotsHtml}
+                                    <h6>Facilities:</h6> ${facilitiesHtml}
+                                    <h6>Timeslots:</h6> ${timeSlotsHtml}
                                 </div>
                             `;
 
-                            if (room.status === 'disabled') {
-                                const enableButton = document.createElement('button');
-                                enableButton.className = 'btn btn-primary';
-                                enableButton.innerText = 'Enable';
-                                enableButton.onclick = () => enableroom(room.room_id);
-                                card.appendChild(enableButton);
-                                const editButton = document.createElement('button');
-                                editButton.className = 'btn btn-warning';
-                                editButton.innerText = 'Edit';
-                                editButton.onclick = () => redirectToEditroom();
-                                card.appendChild(editButton);
-                            } else {
-                                const disableButton = document.createElement('button');
-                                disableButton.className = 'btn btn-danger';
-                                disableButton.innerText = 'Disable';
-                                disableButton.onclick = () => disableroom(room.room_id);
-                                card.appendChild(disableButton);
-                                const editButton = document.createElement('button');
-                                editButton.className = 'btn btn-warning';
-                                editButton.innerText = 'Edit';
-                                editButton.onclick = () => redirectToEditroom();
-                                card.appendChild(editButton);
-                                
+                if (room.status === 'disabled') {
+                    const enableButton = document.createElement('button');
+                    enableButton.className = 'btn btn-primary';
+                    enableButton.innerText = 'Enable';
+                    enableButton.onclick = () => enableroom(room.room_id);
+                    card.appendChild(enableButton);
+                    const editButton = document.createElement('button');
+                    editButton.className = 'btn btn-warning text-white mt-1';
+                    editButton.innerText = 'Edit';
+                    editButton.onclick = () => redirectToEditroom();
+                    card.appendChild(editButton);
+                } else {
+                    const disableButton = document.createElement('button');
+                    disableButton.className = 'btn btn-danger';
+                    disableButton.innerText = 'Disable';
+                    disableButton.onclick = () => disableroom(room.room_id);
+                    card.appendChild(disableButton);
+                    const editButton = document.createElement('button');
+                    editButton.className = 'btn btn-warning text-white mt-1';
+                    editButton.innerText = 'Edit';
+                    editButton.onclick = () => redirectToEditroom();
+                    card.appendChild(editButton);
 
-                            }
 
-                            col.appendChild(card);
-                            roomContainer.appendChild(col);
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            }
+                }
 
-            function createfacilitiesHtml(room) {
-                const audioLabels = {
-                    "audio": "/public/images/microphone.png",
-                    "video": "/public/images/microphone.png",
-                    "plug": "/public/images/microphone.png",
-                    "speakerphone": "/public/images/microphone.png",
-                    "TV": "/public/images/microphone.png",
-                    "webcam": "/public/images/microphone.png"
+                col.appendChild(card);
+                roomContainer.appendChild(col);
+            });
+        }
+
+        function searchRooms(room_name) {
+            const options = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        "room_name": room_name
+                    }),
                 };
-                let html = '';
-                
+            fetch('/room',options)
+                .then(response => response.json())
+                .then(data => {
+                    displayRooms(data);
 
-                for (const key in audioLabels) {
-                    if (room.hasOwnProperty(key)) {
-                        room[key] === 1 ;
-                        // const audioImageSrc = `/public/images/microphone.png`;
-                        // const videoImageSrc = `/public/images/microphone.png`; 
-                        // const sprakerphoneImageSrc = `/public/images/microphone.png`;
-                        // const webcam = `/public/images/microphone.png`;
-                        html += `<span class="badge ${color}">${audioLabels[key]}</span>`;
-                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function loadRooms() {
+            fetch('/room')
+                .then(response => response.json())
+                .then(data => {
+                    displayRooms(data);
+
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // show facilities
+        function createfacilitiesHtml(room) {
+            const timeSlotLabels = {
+                "audio": "audio",
+                "video": "video",
+                "plug": "plug",
+                "speakerphone": "speakerphone",
+                "TV": "TV",
+                "webcam": "webcam"
+            };
+            let html = '';
+            const isDisabled = room.status === 'disabled';
+
+            for (const key in timeSlotLabels) {
+                if (room.hasOwnProperty(key)) {
+                    const color = isDisabled || room[key] === 1 ? 'bg-danger' : 'bg-success';
+                    html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
                 }
-                return html;
             }
+            return html;
+        }
+        // show time slots
+        function createTimeSlotsHtml(room) {
+            const timeSlotLabels = {
+                "time_slot_1": "08:00 - 10:00",
+                "time_slot_2": "10:00 - 12:00",
+                "time_slot_3": "13:00 - 15:00",
+                "time_slot_4": "15:00 - 17:00"
+            };
+            let html = '';
+            const isDisabled = room.status === 'disabled';
 
-            function createTimeSlotsHtml(room) {
-                const timeSlotLabels = {
-                    "time_slot_1": "08:00 - 10:00",
-                    "time_slot_2": "10:00 - 12:00",
-                    "time_slot_3": "13:00 - 15:00",
-                    "time_slot_4": "15:00 - 17:00"
+            for (const key in timeSlotLabels) {
+                if (room.hasOwnProperty(key)) {
+                    const color = isDisabled || room[key] === 1 ? 'bg-danger' : 'bg-success';
+                    html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
+                }
+            }
+            return html;
+        }
+
+        function redirectToEditroom() {
+            window.location.href = '/editroom';
+        }
+
+        async function disableroom(room_id) {
+            try {
+                const options = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "room_id": room_id }),
                 };
-                let html = '';
-                const isDisabled = room.status === 'disabled';
-
-                for (const key in timeSlotLabels) {
-                    if (room.hasOwnProperty(key)) {
-                        const color = isDisabled || room[key] === 1 ? 'bg-danger' : 'bg-success';
-                        html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
-                    }
+                const response = await fetch('/staff/home/disableroom', options);
+                if (response.ok) {
+                    const data = await response.text();
+                    loadRooms();
                 }
-                return html;
-            }
-
-            function redirectToEditroom() {
-                window.location.href = '/editroom';
-            }
-
-            async function disableroom(room_id) {
-                try {
-                    const options = {
-                        method: 'POST',
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ "room_id": room_id }),
-                    };
-                    const response = await fetch('/staff/home/disableroom', options);
-                    if (response.ok) {
-                        const data = await response.text();
-                        loadRooms();
-                    }
-                    else if (response.status == 401) {
-                        const data = await response.text();
-                        throw Error(data);
-                    }
-                    else {
-                        throw Error('Connection error');
-                    }
-                } catch (err) {
-                    console.error(err.message);
-                    Notiflix.Report.failure('Error', err.message, 'Close');
+                else if (response.status == 401) {
+                    const data = await response.text();
+                    throw Error(data);
                 }
-            }
-
-            async function enableroom(room_id) {
-                try {
-                    const options = {
-                        method: 'POST',
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ "room_id": room_id }),
-                    };
-                    const response = await fetch('/staff/home/enableroom', options);
-                    if (response.ok) {
-                        const data = await response.text();
-                        loadRooms();
-                    }
-                    else if (response.status == 401) {
-                        const data = await response.text();
-                        throw Error(data);
-                    }
-                    else {
-                        throw Error('Connection error');
-                    }
-                } catch (err) {
-                    console.error(err.message);
-                    Notiflix.Report.failure('Error', err.message, 'Close');
+                else {
+                    throw Error('Connection error');
                 }
+            } catch (err) {
+                console.error(err.message);
+                Notiflix.Report.failure('Error', err.message, 'Close');
             }
-            
-            function redirectToAddRoom() {
-                window.location.href = '/addroom';
+        }
+
+        async function enableroom(room_id) {
+            try {
+                const options = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "room_id": room_id }),
+                };
+                const response = await fetch('/staff/home/enableroom', options);
+                if (response.ok) {
+                    const data = await response.text();
+                    loadRooms();
+                }
+                else if (response.status == 401) {
+                    const data = await response.text();
+                    throw Error(data);
+                }
+                else {
+                    throw Error('Connection error');
+                }
+            } catch (err) {
+                console.error(err.message);
+                Notiflix.Report.failure('Error', err.message, 'Close');
             }
+        }
 
-        </script>
+        function redirectToAddRoom() {
+            window.location.href = '/addroom';
+        }
 
-    </body>
+    </script>
+
+</body>
 
 </html>
-
-
