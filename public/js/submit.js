@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', function () {
     const toggleButtons = document.querySelectorAll('.toggle-btn');
     const amenitiesInput = document.getElementById('amenities');
