@@ -363,6 +363,28 @@ app.post("/rooms", function (req, res) {
   });
   
   // ------------- Update a room --------------
+  app.post("/rooms", function (req, res) {
+    const newRoom = req.body;
+    const sql = "INSERT INTO room SET ?";
+    con.query(sql, newRoom, function (err, results) {
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Database server error");
+        }
+        if (results.affectedRows !== 1) {
+            console.error('Row added is not 1');
+            return res.status(500).send("Add failed");
+        }
+        res.status(200).send("Add successfully");
+    });
+});
+
+  
+  
+  app.get('/rooms', function (req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/addroom.html'));
+  });
+
 app.put("/rooms/:id", function (req, res) {
    const id = req.params.id;
    const updateRoom = req.body;
