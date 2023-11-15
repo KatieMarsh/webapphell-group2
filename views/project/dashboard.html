@@ -13,20 +13,23 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand navbar-dark bg-danger ">
+    <nav class="navbar navbar-expand navbar-dark bg-danger">
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto"> <!-- Added ms-auto class here -->
-                    <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link active" href="#">My Booking</a>
-                    </li>
-                    <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px">
-                    <li class="nav-item"><a class="nav-link active" href="#">| John Doe
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">My Booking</a></li>
+                    
+                    <!-- Dropdown for User -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px"> John Doe
                         </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
                     </li>
                 </ul>
-
             </div>
         </div>
     </nav>
@@ -72,12 +75,18 @@
         const table_history = document.querySelector('#table_history');
         const datetime = document.querySelector('#datetime');
 
-        // mock-up data
-        // const json_data = '[{"time":"08:00-10:00","free_rooms_time_slot_1":"10","reserved_rooms_time_slot_1":"10","disabled_rooms_time_slot_1":"2"},]';
-        
-        // Parse JSON to JS objects
-        // const data = JSON.parse(json_data);
-        // const history = JSON.parse(json_history);
+        // document.getElementById('logoutButton').addEventListener('click', function() {
+        // fetch('/logout').then(function(response) {
+        //     if (response.ok) {
+        //         return response.text().then(function(text) {
+        //             alert("Logged out successfully"); // Or redirect to login page
+        //         });
+        //     }
+        //     throw Error('Logout Error');
+        // }).catch(function(error) {
+        //     alert(error.message);
+        // });
+        //  });
 
         // Date Time
         function getTime(){

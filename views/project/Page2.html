@@ -19,18 +19,12 @@
         <nav class="navbar navbar-expand navbar-dark bg-danger ">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav ms-auto"> <!-- Added ms-auto class here -->
-                        <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link active" href="#">My Booking</a>
-                        </li>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="#">My Booking</a></li>
                         <img class="avatar rounded-circle" src="/public/images/fc2900d41b78b817.jpg">
-                        <li class="nav-item"><a class="nav-link active" href="#"> John Doe
-
-                            </a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link active" href="#"> John Doe </a></li>
                     </ul>
-
                 </div>
             </div>
         </nav>
@@ -45,218 +39,202 @@
             </div>
         </div>
 
-
-        <!-- 2-column details -->
-
         <div class="container ">
-            <div class="row">
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                        </div>
-                        <button class="btn btn-success" onclick="redirectToEditroom()">Edit</button>
-                        <button class="btn btn-danger">Disable</button>
-                        
-                    </div>
+            <div class="row" id="room-container">
+                <!-- Rooms will be loaded here -->
 
-
-
-
-
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                        </div>
-                        <button class="btn btn-success" onclick="redirectToEditroom()">Edit</button>
-                        <button class="btn btn-danger">Disable</button>
-                    </div>
-
-
-
-
-
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                        </div>
-                        <button class="btn btn-success" onclick="redirectToEditroom()">Edit</button>
-                        <button class="btn btn-primary">Enable</button>
-                        
-                    </div>
-
-
-
-
-
-                </div>
 
             </div>
-
         </div>
-        <div class="container ">
-            <div class="row">
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                        </div>
-                        <button class="btn btn-success" onclick="redirectToEditroom()">Edit</button>
-                        <button class="btn btn-primary">Enable</button>
-                        
-                    </div>
+        
+        <button class="btn btn-success ms-auto position-absolute bottom-0 end-0 m-5" onclick="redirectToAddRoom()">Add Room</button>
 
-
-
-
-
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                        </div>
-                        <button class="btn btn-success" onclick="redirectToEditroom()">Edit</button>
-                        <button class="btn btn-primary">Enable</button>
-                        
-                    </div>
-
-
-
-
-
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                        </div>
-                        <button class="btn btn-success" onclick="redirectToEditroom()">Edit</button>
-                        <button class="btn btn-primary">Enable</button>
-                        
-                    </div>
-                    
-
-
-
-
-
-                </div>
-
-            </div>
-
-        </div>
-        <button class="btn btn-primary my-4 mx-4" style="float: right;" onclick="redirectToAddroom()">Addroom </button>
-
-
-
-
-        </div>
 
 
         <script>
-            function redirectToAddroom() {
-                // ทำการเปลี่ยนหน้าไปยัง "book_detail.html" หรือไฟล์ที่คุณต้องการ
-                window.location.href = 'addroom.html';
+
+            // call functions
+            // Event listener for DOMContentLoaded
+
+            document.addEventListener('DOMContentLoaded', function () {
+                loadRooms();
+            });
+
+
+            // define functions
+
+            function loadRooms() {
+                fetch('/room')
+                    .then(response => response.json())
+                    .then(data => {
+                        const roomContainer = document.getElementById('room-container');
+                        roomContainer.innerHTML = '';
+
+                        data.forEach(room => {
+                            const col = document.createElement('div');
+                            col.className = 'col-4 mt-5';
+
+                            const card = document.createElement('div');
+                            card.className = 'card';
+                            card.style.width = '250px';
+
+
+                            let facilitiesHtml = '';
+                            let timeSlotsHtml = createTimeSlotsHtml(room);
+
+                            card.innerHTML = `
+                                <img src="/public/images/${room.image}" class="card-img-top" alt="${room.room_name}">
+                                <div class="card-body">
+                                    <h4 class="card-title">${room.room_name}</h4>
+                                    <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
+                                    <hr>
+                                    <h6 class="card-subtitle text-muted">Location: ${room.building}</h6>
+                                    Facilities: ${facilitiesHtml}
+                                    Timeslots: ${timeSlotsHtml}
+                                </div>
+                            `;
+
+                            if (room.status === 'disabled') {
+                                const enableButton = document.createElement('button');
+                                enableButton.className = 'btn btn-primary';
+                                enableButton.innerText = 'Enable';
+                                enableButton.onclick = () => enableroom(room.room_id);
+                                card.appendChild(enableButton);
+                                const editButton = document.createElement('button');
+                                editButton.className = 'btn btn-warning';
+                                editButton.innerText = 'Edit';
+                                editButton.onclick = () => redirectToEditroom();
+                                card.appendChild(editButton);
+                            } else {
+                                const disableButton = document.createElement('button');
+                                disableButton.className = 'btn btn-danger';
+                                disableButton.innerText = 'Disable';
+                                disableButton.onclick = () => disableroom(room.room_id);
+                                card.appendChild(disableButton);
+                                const editButton = document.createElement('button');
+                                editButton.className = 'btn btn-warning';
+                                editButton.innerText = 'Edit';
+                                editButton.onclick = () => redirectToEditroom();
+                                card.appendChild(editButton);
+                                
+
+                            }
+
+                            col.appendChild(card);
+                            roomContainer.appendChild(col);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
             }
+
+            function createfacilitiesHtml(room) {
+                const audioLabels = {
+                    "audio": "/public/images/microphone.png",
+                    "video": "/public/images/microphone.png",
+                    "plug": "/public/images/microphone.png",
+                    "speakerphone": "/public/images/microphone.png",
+                    "TV": "/public/images/microphone.png",
+                    "webcam": "/public/images/microphone.png"
+                };
+                let html = '';
+                
+
+                for (const key in audioLabels) {
+                    if (room.hasOwnProperty(key)) {
+                        room[key] === 1 ;
+                        // const audioImageSrc = `/public/images/microphone.png`;
+                        // const videoImageSrc = `/public/images/microphone.png`; 
+                        // const sprakerphoneImageSrc = `/public/images/microphone.png`;
+                        // const webcam = `/public/images/microphone.png`;
+                        html += `<span class="badge ${color}">${audioLabels[key]}</span>`;
+                    }
+                }
+                return html;
+            }
+
+            function createTimeSlotsHtml(room) {
+                const timeSlotLabels = {
+                    "time_slot_1": "08:00 - 10:00",
+                    "time_slot_2": "10:00 - 12:00",
+                    "time_slot_3": "13:00 - 15:00",
+                    "time_slot_4": "15:00 - 17:00"
+                };
+                let html = '';
+                const isDisabled = room.status === 'disabled';
+
+                for (const key in timeSlotLabels) {
+                    if (room.hasOwnProperty(key)) {
+                        const color = isDisabled || room[key] === 1 ? 'bg-danger' : 'bg-success';
+                        html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
+                    }
+                }
+                return html;
+            }
+
             function redirectToEditroom() {
-                // ทำการเปลี่ยนหน้าไปยัง "book_detail.html" หรือไฟล์ที่คุณต้องการ
-                window.location.href = 'editroom.html';
+                window.location.href = '/editroom';
+            }
+
+            async function disableroom(room_id) {
+                try {
+                    const options = {
+                        method: 'POST',
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ "room_id": room_id }),
+                    };
+                    const response = await fetch('/staff/home/disableroom', options);
+                    if (response.ok) {
+                        const data = await response.text();
+                        loadRooms();
+                    }
+                    else if (response.status == 401) {
+                        const data = await response.text();
+                        throw Error(data);
+                    }
+                    else {
+                        throw Error('Connection error');
+                    }
+                } catch (err) {
+                    console.error(err.message);
+                    Notiflix.Report.failure('Error', err.message, 'Close');
+                }
+            }
+
+            async function enableroom(room_id) {
+                try {
+                    const options = {
+                        method: 'POST',
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ "room_id": room_id }),
+                    };
+                    const response = await fetch('/staff/home/enableroom', options);
+                    if (response.ok) {
+                        const data = await response.text();
+                        loadRooms();
+                    }
+                    else if (response.status == 401) {
+                        const data = await response.text();
+                        throw Error(data);
+                    }
+                    else {
+                        throw Error('Connection error');
+                    }
+                } catch (err) {
+                    console.error(err.message);
+                    Notiflix.Report.failure('Error', err.message, 'Close');
+                }
             }
             
+            function redirectToAddRoom() {
+                window.location.href = '/addroom';
+            }
+
         </script>
-
-
-
 
     </body>
 
 </html>
+
+
