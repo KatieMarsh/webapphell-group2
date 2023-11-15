@@ -133,6 +133,31 @@ app.get('/my-booking', function (req, res) {
     }
 });
 
+
+
+app.post('/my-booking/getbooking', function (req, res) {
+    if (req.session.role !== 1) {
+      res.status(403).json({ error: 'Unauthorized' });
+    } else {
+      const userId = req.session.userId;
+      const query = `
+        SELECT date, room_id, time_slot_1, time_slot_2, time_slot_3, time_slot_4, status
+        FROM booking
+        WHERE user_id = ?`;
+  
+      db.query(query, [userId], (err, results) => {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+          res.json({ bookings: results });
+        }
+      });
+    }
+  });
+  
+
+
 app.get('/dashboard', function (req, res) {
     // There was an error here I changed != to ==
     if (req.session.role == 1) {
@@ -414,6 +439,11 @@ app.get('/', function (req, res) {
 app.get('/sign-up', function (req, res) {
 
     res.sendFile(path.join(__dirname, 'views/project/Sign_up.html'));
+});
+
+app.get('/my-booking', function (req, res) {
+
+    res.sendFile(path.join(__dirname, 'views/project/My_Booking.html)'));
 });
 
 

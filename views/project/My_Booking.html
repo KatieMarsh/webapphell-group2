@@ -102,9 +102,9 @@
     </div>
 
     <script>
-         getBooking();
+         postBooking();
          const table_booking = document.querySelector('#table_booking');
-         function getBooking(){
+         function postBooking(){
         fetch('/my-booking/getbooking')
             .then(function(response){
                 if (response.ok) {
