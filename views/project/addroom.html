@@ -67,17 +67,18 @@
     <form id="dataForm">
       <div class="row">
         <div class="col">
-          <p class="title">Name</p>
-          <input type="text" name="name" class="form-control" placeholder="First name" aria-label="First name">
+          <p class="title">Room Name</p>
+          <input type="text" name="room_name" class="form-control" placeholder="Room name" aria-label="Room name">
         </div>
+        <!-- Building -->
         <div class="col">
           <p class="title">Building</p>
-          <input type="text" name="building" class="form-control" placeholder="Location Room"
-            aria-label="Location Room">
+          <input type="text" name="building" class="form-control" placeholder="Building" aria-label="Building">
         </div>
+        <!-- Capacity -->
         <div class="col">
-          <p class="title">Seat Capacity</p>
-          <input type="text" name="seatcapacity" class="form-control" placeholder="Seat" aria-label="Seat">
+          <p class="title">Capacity</p>
+          <input type="number" name="capacity" class="form-control" placeholder="Capacity" aria-label="Capacity">
         </div>
       </div>
       <br>
@@ -89,7 +90,7 @@
         <div class="col">
           <p class="title">Upload File</p>
           <div class="form-control d-flex">
-            <input type="file" id="fileInput" class="form-control" style="display: none;">
+            <input type="file" id="fileInput" name="image" class="form-control" style="display: none;">
             <input type="text" id="uploadedFile" placeholder="No file chosen..." aria-label="No file chosen"
               class="flex-grow-1 border-0">
             <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn-primary">Choose
@@ -98,59 +99,77 @@
         </div>
 
       </div>
-  
+
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+        <input class="form-check-input" type="checkbox" name="audio" id="flexCheckDefault1">
         <label class="form-check-label" for="flexCheckDefault1">
           Audio
         </label>
-      </div>
-      
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
-        <label class="form-check-label" for="flexCheckDefault2">
-          Video
-        </label>
-      </div>
-      
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
-        <label class="form-check-label" for="flexCheckDefault3">
-          Plug
-        </label>
-      </div>
-      
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault4">
-        <label class="form-check-label" for="flexCheckDefault4">
-          Speakerphone
-        </label>
-      </div>
-      
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault5">
-        <label class="form-check-label" for="flexCheckDefault5">
-          TV
-        </label>
-      </div>
-      
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault6">
-        <label class="form-check-label" for="flexCheckDefault6">
-          Webcam
-        </label>
-      </div>
-      
-      
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="video" id="flexCheckDefault2">
+          <label class="form-check-label" for="flexCheckDefault2">
+            Video
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="plug" id="flexCheckDefault3">
+          <label class="form-check-label" for="flexCheckDefault3">
+            Plug
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="Speakerphone" id="flexCheckDefault4">
+          <label class="form-check-label" for="flexCheckDefault4">
+            Speaker phone
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="TV" id="flexCheckDefault5">
+          <label class="form-check-label" for="flexCheckDefault5">
+            TV
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault6">
+          <label class="form-check-label" for="flexCheckDefault6">
+            Webcam
+          </label>
+        </div>
+
+
 
 
     </form>
     <br><br>
     <button type="button" id="cancelButton" class="btn btn-secondary btn-lg">Cancel</button>
-    <button type="button" onclick="addRoom()" class="btn btn-primary btn-lg">Add</button>
+    <button type="submit" id="addRoomButton" class="btn btn-primary btn-lg">Add Room</button>
 
 
     <br>
+    <script>
+      
+      document.getElementById('addRoomForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // รวบรวมข้อมูลจากฟอร์ม
+        var formData = new FormData(this);
+
+        // ส่งข้อมูลไปยัง server
+        fetch('/rooms', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error('Error:', error));
+      });
+
+    </script>
     <script src="/public/js/submit.js"></script>
 
 
