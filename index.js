@@ -103,7 +103,7 @@ app.post('/login', function (req, res) {
                         // If you want to foward the user to the next page put it here
                         // Student
                         if (results[0].role == 1) {
-                            res.send('/my-booking');
+                            res.send('/home');
                         }
                         // Staff
                         else if (results[0].role == 2) {
