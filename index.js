@@ -410,8 +410,8 @@ app.get('/addroom_new', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/addroom_new.html'));
 });
 
-app.get('/accout', function (req, res) {
-   res.sendFile(path.join(__dirname, 'views/project/accout.html'));
+app.get('/account', function (req, res) {
+   res.sendFile(path.join(__dirname, 'views/project/account.html'));
 });
  
 app.get('/booking_details', function (req, res) {
