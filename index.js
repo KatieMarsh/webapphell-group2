@@ -370,9 +370,9 @@ app.put("/rooms/:id", function (req, res) {
 app.get('/addroom', function (req, res) {
    res.sendFile(path.join(__dirname, 'views/project/addroom.html'));
 });
-app.get('/addroom_new', function (req, res) {
-    res.sendFile(path.join(__dirname, 'views/project/addroom_new.html'));
-});
+// app.get('/addroom_new', function (req, res) {
+//     res.sendFile(path.join(__dirname, 'views/project/addroom_new.html'));
+// });
 
 app.get('/accout', function (req, res) {
    res.sendFile(path.join(__dirname, 'views/project/accout.html'));
