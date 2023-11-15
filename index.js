@@ -101,12 +101,15 @@ app.post('/login', function (req, res) {
                         req.session.role = results[0].role;
 
                         // If you want to foward the user to the next page put it here
+                        // Student
                         if (results[0].role == 1) {
-                            res.send('/my-booking');
+                            res.send('/home');
                         }
+                        // Staff
                         else if (results[0].role == 2) {
-                            res.send('/dashboard');
+                            res.send('/staff/home');
                         }
+                        // Lecturer
                         else if (results[0].role == 3) {
                             res.send('/dashboard');
                         }
@@ -299,11 +302,26 @@ app.post('/confirm/update_booking_status', function (req, res) {
 });
 
 // API endpoint สำหรับการดึงข้อมูลห้อง
-app.get('/room', (req, res) => {
-    // ดึงข้อมูลห้องจากฐานข้อมูล
-    con.query('SELECT * FROM room', (err, results) => {
+
+app.get('/room', (_req, res) => {
+ // ดึงข้อมูลห้องจากฐานข้อมูล
+ con.query('SELECT * FROM room', (err, results) => {
+   if (err) {
+     console.error('QUERY error',err);
+     res.status(500).json({ success: false, message: 'Internal Server Error' });
+   } else {
+     res.json(results);
+   }
+ });
+
+});
+// for searching room
+app.post('/room', (req, res) => {
+    const room_name = req.body.room_name; // Assuming room_name is in the request body
+    const sql = "SELECT * FROM room WHERE TRIM(room_name) LIKE ?;";
+    con.query(sql, [`%${room_name}%`], (err, results) => {
         if (err) {
-            console.error('เกิดข้อผิดพลาดในการดึงข้อมูลห้องจากฐานข้อมูล:', err);
+            console.error('QUERY error', err);
             res.status(500).json({ success: false, message: 'Internal Server Error' });
         } else {
             res.json(results);
@@ -312,21 +330,20 @@ app.get('/room', (req, res) => {
 });
 
 
-app.post('/update_room_status', function (req, res) {
-    const { room_id, status } = req.body;
-    // const  booking_id = req.params.id;
-    // const status = req.params.status;
-    // UPDATE `booking` SET `status` = 'approved' WHERE `booking`.`booking_id` = 1
-    const sql = `UPDATE room SET status = ? WHERE room_id = ?`;
-    con.query(sql, [status, room_id], function (err, results) {
-        if (err) {
-            console.error(err);
-            res.status(500).send("Server error update data!");
-        }
-        else {
-            res.send("update success")
-        }
-    })
+
+
+app.post('/update_room_status', function (req,res) {
+   const {room_id,status} = req.body;
+   const sql = `UPDATE room SET status = ? WHERE room_id = ?`;
+   con.query(sql,[status,room_id] ,function (err,results) {
+       if(err) {
+           console.error(err);
+           res.status(500).send("Server error update data!");
+       }
+       else {
+           res.send("update success")
+       }
+   })
 });
 
 // ------------- Add a new room --------------
@@ -349,6 +366,7 @@ app.post("/rooms", function (req, res) {
   
   // ------------- Update a room --------------
 
+
 // Update Room
 app.put("/rooms/:id", function (req, res) {
   const id = req.params.id;
@@ -368,7 +386,9 @@ app.put("/rooms/:id", function (req, res) {
 });
 
 
+
 app.get('/addroom', function (req, res) {
+
     res.sendFile(path.join(__dirname, 'views/project/addroom.html'));
 
     app.put("/rooms/:id", function (req, res) {
@@ -387,6 +407,7 @@ app.get('/addroom', function (req, res) {
             res.status(200).send("Update successfully");
         });
     });
+
 });
 
 
@@ -404,6 +425,21 @@ app.get('/booking_details', function (req, res) {
 
 
 app.get('/editroom', function (_req, res) {
+    res.sendFile(path.join(__dirname, 'views/project/editroom.html'));
+});
+
+ app.get('/editroom/:room_id', function (req, res) {
+    const {room_id} = req.params.room_id;
+    const sql = `GET * from room WHERE room_id = ?`;
+    con.query(sql,[room_id] ,function (err,results) {
+        if(err) {
+            console.error(err);
+            res.status(500).send("Server error update data!");
+        }
+        else {
+            res.render('project/editroom', { room: roomData });
+        }
+    })
     res.sendFile(path.join(__dirname, 'views/project/editroom.html'));
 });
 // Root service

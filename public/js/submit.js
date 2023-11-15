@@ -1,3 +1,4 @@
+
 // Get the input field
 var amenitiesInput = document.getElementById("amenities");
 
@@ -15,6 +16,7 @@ checkboxes.forEach(function (checkbox) {
       if (cb.checked) {
         amenitiesInput.value += cb.labels[0].innerText + ", ";
       }
+
     });
 
     // Remove trailing comma and space
