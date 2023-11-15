@@ -119,31 +119,32 @@
                     });
             }
 
-            function createfacilitiesHtml(room) {
-                const audioLabels = {
-                    "audio": "/public/images/microphone.png",
-                    "video": "/public/images/microphone.png",
-                    "plug": "/public/images/microphone.png",
-                    "speakerphone": "/public/images/microphone.png",
-                    "TV": "/public/images/microphone.png",
-                    "webcam": "/public/images/microphone.png"
-                };
-                let html = '';
+            
+            // function createfacilitiesHtml(room) {
+            //     const audioLabels = {
+            //         "audio": "audio",
+            //         "video": "/public/images/microphone.png",
+            //         "plug": "/public/images/microphone.png",
+            //         "speakerphone": "/public/images/microphone.png",
+            //         "TV": "/public/images/microphone.png",
+            //         "webcam": "/public/images/microphone.png"
+            //     };
+            //     let html = '';
                 
 
-                for (const key in audioLabels) {
-                    if (room.hasOwnProperty(key)) {
-                        room[key] === 1 ;
-                        // const audioImageSrc = `/public/images/microphone.png`;
-                        // const videoImageSrc = `/public/images/microphone.png`; 
-                        // const sprakerphoneImageSrc = `/public/images/microphone.png`;
-                        // const webcam = `/public/images/microphone.png`;
-                        html += `<span class="badge ${color}">${audioLabels[key]}</span>`;
-                    }
-                }
-                return html;
-            }
-
+            //     for (const key in audioLabels) {
+            //         if (room.hasOwnProperty(key)) {
+            //             room[key] === 1 
+            //             // const audioImageSrc = `/public/images/microphone.png`;
+            //             // const videoImageSrc = `/public/images/microphone.png`; 
+            //             // const sprakerphoneImageSrc = `/public/images/microphone.png`;
+            //             // const webcam = `/public/images/microphone.png`;
+            //             html += `<span class="badge ${color}">${audioLabels[key]}</span>`;
+            //         }
+            //     }
+            //     return html;
+            // }
+          
             function createTimeSlotsHtml(room) {
                 const timeSlotLabels = {
                     "time_slot_1": "08:00 - 10:00",
