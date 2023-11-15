@@ -1,39 +1,26 @@
+ // Get the input field
+ var amenitiesInput = document.getElementById("amenities");
 
+ // Get all checkboxes
+ var checkboxes = document.querySelectorAll(".form-check-input");
 
-document.addEventListener('DOMContentLoaded', function () {
-    const toggleButtons = document.querySelectorAll('.toggle-btn');
-    const amenitiesInput = document.getElementById('amenities');
+ // Add event listener to each checkbox
+ checkboxes.forEach(function (checkbox) {
+   checkbox.addEventListener("change", function () {
+     // Clear the input field
+     amenitiesInput.value = "";
 
-    toggleButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            this.classList.toggle('selected');
+     // Loop through checkboxes to find checked ones and update the input field
+     checkboxes.forEach(function (cb) {
+       if (cb.checked) {
+         amenitiesInput.value += cb.labels[0].innerText + ", ";
+       }
+     });
 
-            // Get all selected buttons and update the Amenities input
-            const selectedButtons = Array.from(toggleButtons).filter(btn => btn.classList.contains('selected'));
-            const amenitiesText = selectedButtons.map(btn => btn.textContent).join(', ');
-
-            amenitiesInput.value = amenitiesText;
-
-            // Apply styling to selected buttons
-            selectedButtons.forEach(selectedBtn => {
-                selectedBtn.style.backgroundColor = '#d4edda'; // Light green background color
-                selectedBtn.style.border = '1px solid #c3e6cb'; // Green border
-            });
-
-            // Reset styling for non-selected buttons
-            toggleButtons.forEach(btn => {
-                if (!btn.classList.contains('selected')) {
-                    btn.style.backgroundColor = ''; // Reset background color
-                    btn.style.border = ''; // Reset border
-                }
-            });
-
-            // Log values to console for debugging
-            console.log('Selected Buttons:', selectedButtons);
-            console.log('Amenities Text:', amenitiesText);
-        });
-    });
-});
+     // Remove trailing comma and space
+     amenitiesInput.value = amenitiesInput.value.replace(/,\s*$/, "");
+   });
+ });
 
 document.addEventListener('DOMContentLoaded', function () {
     const fileInput = document.getElementById('fileInput');
