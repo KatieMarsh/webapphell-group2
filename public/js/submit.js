@@ -81,40 +81,57 @@ function clearForm() {
         input.value = ''; // ลบค่าใน input
     });
 }
+
+
+//up data
+// Include this JavaScript code in your existing script or in a separate script file
 function addRoom() {
-    // Gather data from the form
-    const name = document.getElementById('name').value;
-    const building = document.getElementById('building').value;
-    const seatcapacity = document.getElementById('seatcapacity').value;
-    const uploadedFile = document.getElementById('uploadedFile').value;
-
-    // Create a JavaScript object with the data
-    const newRoom = {
-        name: name,
-        building: building,
-        seatcapacity: seatcapacity,
-        uploadedFile: uploadedFile
-    };
-
-    // Make an AJAX request to send the data to the server
-    const xhr = new XMLHttpRequest();
+    // Get values from the form fields
+    var roomName = document.getElementsByName('name')[0].value;
+    var building = document.getElementsByName('building')[0].value;
+    var seatCapacity = document.getElementsByName('seatcapacity')[0].value;
+    var amenities = document.getElementById('amenities').value;
+  
+    // File input handling (similar to your existing file upload code)
+    var fileInput = document.getElementById('fileInput');
+    var file = fileInput.files[0];
+  
+    // Create a FormData object to send data including files
+    var formData = new FormData();
+  
+    // Append form data
+    formData.append('roomName', roomName);
+    formData.append('building', building);
+    formData.append('seatCapacity', seatCapacity);
+    formData.append('amenities', amenities);
+    formData.append('file', file);
+  
+    // Make an AJAX request to send data to the server
+    var xhr = new XMLHttpRequest();
     xhr.open('POST', '/rooms', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                // Request was successful, handle the response if needed
-                console.log(xhr.responseText);
-            } else {
-                // Request failed, handle the error if needed
-                console.error(xhr.statusText);
-            }
-        }
+  
+    // Set up the onload function to handle the response from the server
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        // Successful response, do something if needed
+        console.log('Room added successfully!');
+      } else {
+        // Handle errors
+        console.error('Error adding room:', xhr.statusText);
+      }
     };
+  
+    // Send the FormData object to the server
+    xhr.send(formData);
+  }
+  
+//---------------ADD NEW PRODUCT-----------------
+var action = 'add';
 
-    // Convert the JavaScript object to a JSON string and send it in the request body
-    xhr.send(JSON.stringify(newRoom));
+const formdata = document.querySelector('#dataForm');
+function addProduct() {
+    action = 'add';
+    formdata.reset();
 }
 
 
