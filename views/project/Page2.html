@@ -128,6 +128,7 @@
                     card.appendChild(editButton);
 
 
+
                 }
 
                 col.appendChild(card);
@@ -142,6 +143,7 @@
                     body: JSON.stringify({
                         "room_name": room_name
                     }),
+
                 };
             fetch('/room',options)
                 .then(response => response.json())

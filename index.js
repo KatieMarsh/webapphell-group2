@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+
 app.get('/home', function (_req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
 
@@ -444,6 +445,7 @@ app.put("/editroom/update/:id", function (req, res) {
         res.send("Update successfully");
     });
 });
+
 // Root service
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Login.html'));
