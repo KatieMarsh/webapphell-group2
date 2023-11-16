@@ -1,339 +1,193 @@
 <!DOCTYPE html>
-<html lang="english">
+<html lang="en">
 
 <head>
-  <title>Add meeting room</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta charset="utf-8" />
-  <meta property="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" type="text/css" href="/public/css/project/style.css">
-  <link rel="stylesheet" type="text/css" href="/public/css/project/index.css">
-  <link rel="stylesheet" type="text/css" href="/ll/">
-
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add room</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <script src="/public/js/bootstrap.bundle.min.js"></script>
+    <script src="/public/js/notiflix-aio-3.2.6.min.js"></script>
 </head>
 
+
 <body>
-  <link rel="stylesheet" href="/public/css/project/addroom.css" />
-  <div>
-    <link href="./index.css" rel="stylesheet" />
+    <!--------------------------------------------------------- navbar ---------------------------------------------------------------------------------------------------------------------->
+    <nav class="navbar navbar-expand navbar-dark bg-danger">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Rooms</a></li>
 
-    <div class="add-edit-meetingroomthq-exclude-container">
-      <div class="add-edit-meetingroomthq-exclude-add-edit-meetingroomthq-exclude">
-        <button class="add-edit-meetingroomthq-exclude-buttonbutton" onclick="cancelFunction()">
-          <span class="add-edit-meetingroomthq-exclude-text RegularL1">
-            Cancel
-          </span>
-        </button>
-
-        <script>
-          function cancelFunction() {
-            alert("คลิกยกเลิกปุ่มแล้ว!");
-          }
-        </script>
-
-        <div class="add-edit-meetingroomthq-exclude-location">
-
-          <div class="add-edit-meetingroomthq-exclude-dropdown">
-            <span class="add-edit-meetingroomthq-exclude-text01 RegularP2">
-
-              <span>Name</span>
-            </span>
-
-
-            <div class="add-edit-meetingroomthq-exclude-frame6">
-              <input class="add-edit-meetingroomthq-exclude-fieldinput" type="text" placeholder="Select"
-                id="name_input">
-              <script>
-                function displayText() {
-                  var inputValue = document.getElementById("name_input").value;
-                  document.getElementById("displayArea").textContent = "ข้อความที่คุณพิมพ์: " + inputValue;
-                }
-              </script>
+                    <!-- Dropdown for User -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px"
+                                width="40px"> John Doe
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
-            <div class="add-edit-meetingroomthq-exclude-fa"></div>
-          </div>
         </div>
-      </div>
-      <span class="add-edit-meetingroomthq-exclude-text04 RegularH2">
-        <span>Meeting Room</span>
-      </span>
+    </nav>
 
-      <div class="add-edit-meetingroomthq-exclude-group1981">
-        <div class="add-edit-meetingroomthq-exclude-group1950">
-          <div class="add-edit-meetingroomthq-exclude-group1949">
-            <div class="add-edit-meetingroomthq-exclude-amenities">
-              <div class="add-edit-meetingroomthq-exclude-date-picker">
-                <div class="add-edit-meetingroomthq-exclude-title">
-                  <span class="add-edit-meetingroomthq-exclude-text06 RegularP2">
-                    <span>Amenities</span>
-                  </span>
+
+    <h4 class="m-3">Add Meeting Rooms</h4>
+    <br>
+    <div class="container-fluid">
+        <form id="dataForm">
+            <div class="row m-3">
+                <div class="col">
+                    <label for="txt_room_name">Room Name</label>
+                    <input type="text" id="txt_room_name" name="room_name" class="form-control" placeholder="Room name"
+                        aria-label="Room name" required>
+                </div>
+                <!-- Building -->
+                <div class="col">
+                    <label for="txt_building">Building</label>
+                    <input type="text" id="txt_building" name="building" class="form-control" placeholder="Building"
+                        aria-label="Building" required>
+                </div>
+                <!-- Capacity -->
+                <div class="col">
+                    <label for="txt_capacity">Capacity</label>
+                    <input type="number" id="txt_capacity" name="capacity" class="form-control" placeholder="Capacity"
+                        aria-label="Capacity" required>
                 </div>
 
-                <div class="add-edit-meetingroomthq-exclude-field">
-                  <div class="add-edit-meetingroomthq-exclude-frame61">
-                    <div id="result-box">
-                      <ul id="selected-buttons">
-                      </ul>
+            </div>
+            <br>
+            <div class="row m-3">
+                <div class="col-auto">
+                    <!-- facilities -->
+                    <p class="title">Facilities</p>
+
+                    <div class="form-check form-check-inline">
+                        <input name="audio" class="form-check-input" type="checkbox" value="audio" id="audio">
+                        <label class="form-check-label" for="audio">Audio</label>
                     </div>
-                  </div>
-                  <div class="add-edit-meetingroomthq-exclude-fa1"></div>
+
+                    <div class="form-check form-check-inline">
+                        <input name="video" class="form-check-input" type="checkbox" value="video" id="video">
+                        <label class="form-check-label" for="video">Video</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input name="plug" class="form-check-input" type="checkbox" value="plug" id="plug">
+                        <label class="form-check-label" for="plug">Plug</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input name="speakerphone" class="form-check-input" type="checkbox" value="speakerphone"
+                            id="speakerphone">
+                        <label class="form-check-label" for="speakerphone">Speaker phone</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input name="TV" class="form-check-input" type="checkbox" value="TV" id="tv">
+                        <label class="form-check-label" for="tv">TV</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input name="webcam" class="form-check-input" type="checkbox" value="webcam" id="webcam">
+                        <label class="form-check-label" for="webcam">Webcam</label>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
+                <!-- image upload -->
+                <!-- <div class="col-xl">
+                    <p class="title">Upload File</p>
+                    <div class="form-control">
+                        <input type="file" class="form-control my-2" name="filetoupload" required>
+                    </div>
+                </div> -->
+
+        
+        <!-- outside of form -->
+        <div class="row mt-3">
+            <div class="col-auto"><button type="button" id="cancelButton"
+                    class="btn btn-secondary btn-lg">Cancel</button></div>
+            <div class="col-auto"><button type="button" id="addRoomButton" class="btn btn-primary btn-lg">Add
+                    Room</button></div>
         </div>
-
-        <button class="add-edit-meetingroomthq-exclude-inputchip" onclick="toggleOption(this)" value="video">Video</button>
-        <button class="add-edit-meetingroomthq-exclude-inputchip1" onclick="toggleOption(this)" value="audio">Audio</button>
-        <button class="add-edit-meetingroomthq-exclude-inputchip2" onclick="toggleOption(this)" value="wb">WhiteBoard</button>
-        <button class="add-edit-meetingroomthq-exclude-inputchip3" onclick="toggleOption(this)" value="html">HDMI</button>
-        <button class="add-edit-meetingroomthq-exclude-inputchip4" onclick="toggleOption(this)" value="projector">Projector</button>
-        <button class="add-edit-meetingroomthq-exclude-inputchip5" onclick="toggleOption(this)" value="sp">Speaker Phone</button>
-
-
-
-        <div class="add-edit-meetingroomthq-exclude-location1"></div>
-      </div>
-      <script> // ฟังก์ชันเลือกหรือยกเลิกเลือกตัวเลือก
-        function toggleOption(button) {
-          if (button.classList.contains("selected")) {
-            button.classList.remove("selected");
-            removeOption(button.textContent);
-          } else {
-            button.classList.add("selected");
-            addOption(button.textContent);
-          }
-        }
-
-        // ฟังก์ชันเพิ่มตัวเลือกในรายการ
-        function addOption(option) {
-          const selectedButtons = document.getElementById("selected-buttons");
-          const span = document.createElement("span");
-          span.textContent = option;
-          span.className = "selected-button";
-          span.addEventListener("click", () => {
-            removeOption(option);
-            const optionButtons = document.querySelectorAll(".option-button");
-            optionButtons.forEach((button) => {
-              if (button.textContent === option) {
-                button.classList.remove("selected");
-              }
-            });
-          });
-          selectedButtons.appendChild(span);
-        }
-
-        // ฟังก์ชันลบตัวเลือกจากรายการ
-        function removeOption(option) {
-          const selectedButtons = document.getElementById("selected-buttons");
-          const selectedButtonSpans = selectedButtons.getElementsByClassName("selected-button");
-          for (let i = 0; i < selectedButtonSpans.length; i++) {
-            if (selectedButtonSpans[i].textContent === option) {
-              selectedButtons.removeChild(selectedButtonSpans[i]);
-              break;
-            }
-          }
-        }
-
-      </script>
-
-
-
-      <div class="add-edit-meetingroomthq-exclude-dropdown1">
-        <span class="add-edit-meetingroomthq-exclude-text08 RegularP2">
-          <span>Location</span>
-        </span>
-        <input class="add-edit-meetingroomthq-exclude-fieldinputname" type="text" placeholder="Select"
-          id="location_input" />
-        <script>
-          function displayText() {
-            var inputValue = document.getElementById("name_input").value;
-            document.getElementById("displayArea").textContent = "ข้อความที่คุณพิมพ์: " + inputValue;
-          }
-        </script>
-
-      </div>
-      <div class="add-edit-meetingroomthq-exclude-dropdown2">
-        <span class="add-edit-meetingroomthq-exclude-text10 RegularP2">
-          <span>Seat Capacity</span>
-        </span>
-
-        <div class="add-edit-meetingroomthq-exclude-frame62">
-          <input class="add-edit-meetingroomthq-exclude-fieldinputname" type="text" placeholder="Select"
-            id="seat_input" />
-          <script>
-            function displayText() {
-              var inputValue = document.getElementById("seat_input").value;
-              document.getElementById("displayArea").textContent = "ข้อความที่คุณพิมพ์: " + inputValue;
-            }
-          </script>
-        </div>
-
-      </div>
-      <button class="add-edit-meetingroomthq-exclude-buttonbutton1" onclick="addRoom()">
-        <span class="add-edit-meetingroomthq-exclude-text14">Add</span>
-      </button>
-      <script>
-        function addRoom() {
-          var name = document.getElementById("name_input").value;
-          var location = document.getElementById("location_input").value;
-          var seatCapacity = document.getElementById("seat_input").value;
-          var imageInput = document.getElementById("imageInput");
-          var selectedFile = imageInput.files[0];
-
-          // var formData = new FormData();
-          // formData.append('room_name', name);
-          // formData.append('room_Location', location);
-          // formData.append('room_seatcapacity', seatCapacity);
-          // formData.append('image', selectedFile);
-          // console.log(formData);
-          
-
-          fetch('/rooms', {
-            method: 'POST',
-            body: JSON.stringify({ "room_name": name, "building": location, "capacity":seatCapacity, "image":selectedFile}),
-          })
-            .then(response => response.json())
-            .then(data => {
-              console.log('Success:', data);
-            })
-            .catch(error => {
-              console.error('Error:', error);
-            });
-        }
-
-        function uploadImage() {
-          var imageInput = document.getElementById("imageInput");
-          imageInput.click();
-        }
-
-        function displayImageName() {
-          var imageInput = document.getElementById("imageInput");
-          var imageName = document.getElementById("imageName");
-          var selectedImage = document.getElementById("selectedImage");
-          var selectedFile = imageInput.files[0];
-
-          if (selectedFile) {
-            imageName.textContent = selectedFile.name;
-            selectedImage.style.display = "block";
-          }
-        }
-      </script>
-      <div class="add-edit-meetingroomthq-exclude-group2000">
-        <div class="add-edit-meetingroomthq-exclude-component1">
-          <div class="add-edit-meetingroomthq-exclude-field2">
-            <span class="add-edit-meetingroomthq-exclude-text15 RegularP2">
-              รูปภาพที่เลือก: <span id="imageName"></span>
-            </span>
-          </div>
-          <button class="add-edit-meetingroomthq-exclude-buttonbutton2" onclick="uploadImage()">
-            <span class="add-edit-meetingroomthq-exclude-text17 RegularL1">
-
-              <span>Choose File</span>
-            </span>
-          </button>
-          <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="displayImageName()">
-          <script>
-            function uploadImage() {
-              var imageInput = document.getElementById("imageInput");
-              imageInput.click();
-            }
-
-            function displayImageName() {
-              var imageInput = document.getElementById("imageInput");
-              var imageName = document.getElementById("imageName");
-              var selectedImage = document.getElementById("selectedImage");
-              var selectedFile = imageInput.files[0];
-
-              if (selectedFile) {
-                imageName.textContent = selectedFile.name;
-                selectedImage.style.display = "block";
-              }
-            }
-          </script>
-
-        </div>
-        <span class="add-edit-meetingroomthq-exclude-text19 RegularP2">
-          <span>Upload Image</span>
-        </span>
-      </div>
-      <div class="add-edit-meetingroomthq-exclude-breadcrum">
-        <button class="add-edit-meetingroomthq-exclude-buttonbutton3">
-          <span class="add-edit-meetingroomthq-exclude-text21 RegularL1">
-            <span>
-              <p> <a href="หน้าที่คุณต้องการลิงก์ไป">Dashboard</a></p>
-            </span>
-
-          </span>
-        </button>
-        <button class="add-edit-meetingroomthq-exclude-button">
-          <span class="add-edit-meetingroomthq-exclude-text23 RegularL1">
-            /
-          </span>
-        </button>
-        <button class="add-edit-meetingroomthq-exclude-buttonbutton4">
-          <span class="add-edit-meetingroomthq-exclude-text24 RegularL1">
-
-            <span>
-              <p> <a href="หน้าที่คุณต้องการลิงก์ไป">Meeting Room</a></p>
-            </span>
-          </span>
-        </button>
-        <button class="add-edit-meetingroomthq-exclude-button1">
-          <span class="add-edit-meetingroomthq-exclude-text26 RegularL1">
-            /
-          </span>
-        </button>
-        <button class="add-edit-meetingroomthq-exclude-button2">
-          <span class="add-edit-meetingroomthq-exclude-text27 RegularL1">
-            <span>
-              <p> <a href="หน้าที่คุณต้องการลิงก์ไป">Add Meeting Room</a></p>
-            </span>
-          </span>
-        </button>
-      </div>
-      <div class="add-edit-meetingroomthq-exclude-header">
-        <div class="add-edit-meetingroomthq-exclude-frame22">
-          <img alt="LineCopy5I469" src="/public/external/linecopy5i469-sfsi.svg"
-            class="add-edit-meetingroomthq-exclude-line-copy5" />
-          <img alt="LineCopy4I469" src="/public/external/linecopy4i469-lxlt.svg"
-            class="add-edit-meetingroomthq-exclude-line-copy4" />
-          <img alt="LineCopy6I469" src="/public/external/linecopy6i469-vrkk.svg"
-            class="add-edit-meetingroomthq-exclude-line-copy6" />
-
-          <img alt="LineCopy2I469" src="/public/external/linecopy2i469-4kt8j.svg"
-            class="add-edit-meetingroomthq-exclude-line-copy2" />
-          <img alt="LineCopy3I469" src="/public/external/linecopy3i469-lhfb.svg"
-            class="add-edit-meetingroomthq-exclude-line-copy3" />
-          <div class="add-edit-meetingroomthq-exclude-headerusernamenormal">
-            <div class="add-edit-meetingroomthq-exclude-system-icons32pt-profileicon">
-              <img alt="Rectangle33I469" src="." class="add-edit-meetingroomthq-exclude-rectangle33" />
-
-              <a href="./my_acc/accout.html"><img alt="ProfileiconI469" src="/public/images/user_64px.png"
-                  class="add-edit-meetingroomthq-exclude-profileicon" /></a>
-            </div>
-            <span class="add-edit-meetingroomthq-exclude-text30">
-              <span><a href="./my_acc/accout.html">John doe</span></a>
-            </span>
-          </div>
-        </div>
-
-        <span class="add-edit-meetingroomthq-exclude-text32">
-          <span>
-            <p> <a href="./ii/index.html">Dashboard</a></p>
-          </span>
-        </span>
-      </div>
-      <span class="add-edit-meetingroomthq-exclude-text34">
-        <span>
-          <p> <a href="หน้าที่คุณต้องการลิงก์ไป">Meeting Room</a></p>
-        </span>
-      </span>
+    </form>
     </div>
-  </div>
-  </div>
+
+
+
+    <script>
+        // cancel button takes you back to the home page
+        document.querySelector('#cancelButton').addEventListener('click', function () {
+            window.location.href = '/staff/home';
+        });
+        // submit form
+        // const form = document.querySelector('#dataForm');
+        // form.onsubmit = async function (e) {
+        document.querySelector('#addRoomButton').addEventListener('click', function () {
+                // text inputs
+                const room_name = document.querySelector('#txt_room_name').value;
+                const building = document.querySelector('#txt_building').value;
+                const capacity = document.querySelector('#txt_capacity').value;
+                console.log(room_name);
+                console.log(building);
+                console.log(capacity);
+
+                // checkbox inputs
+                const facilities = document.querySelectorAll('input[type="checkbox"]');
+                let room_data = {};
+                room_data["room_name"] = room_name;
+                room_data["building"] = building;
+                room_data["capacity"] = capacity;
+                facilities.forEach(function (facility) {
+                if (facility.checked) {
+                    room_data[facility.value] = 1;
+                } else {
+                    room_data[facility.value] = 0;
+                }
+                
+            });
+            console.log(room_data);
+                // room_data
+            upload(room_data);
+
+            // Log the current state of selected facilities
+            // console.log(room_data);
+
+            // console.log(room_data);
+
+            // e.preventDefault();
+            // const formData = new FormData(this);
+            // upload(formData);
+        });
+
+        // sending data to the back-end
+        // async function upload(formData) {
+            async function upload(r) {
+        try {
+            const options = {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(r), // Send the entire object as is
+            };
+            const response = await fetch('/addroom/insert_room', options);
+            if (response.ok) {
+                const data = await response.text();
+                Notiflix.Report.success('Success', data, 'OK');
+            }
+            else {
+                throw Error('Insert error');
+            }
+        } catch (err) {
+            console.error(err.message);
+            Notiflix.Report.failure('Error', err.message, 'Close');
+        }
+    }
+
+    </script>
 </body>
 
 </html>
