@@ -64,4 +64,7 @@
     background-color: #007bff; /* Change the background color to indicate selection */
     color: #fff;
 }
-
+.form-check {
+    display: inline-block;
+    margin-right: 10px; /* Adjust the margin as needed */
+  }
