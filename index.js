@@ -4,13 +4,16 @@ const bcrypt = require("bcrypt");
 const con = require('./config/db');
 const session = require('express-session');
 const { ok } = require('assert');
-
+const upload = require('./config/upload');
+const { stringify } = require('querystring');
 
 const app = express();
 app.use("/public", express.static(path.join(__dirname, "public")));
 //for JS exchange
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.get('/home', function (_req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
@@ -162,7 +165,7 @@ app.get('/', function (req, res) {
 // ---------- Register -----------
 
 app.post('/register', function (req, res) {
-    const { user_id, email, password, conpassword, name, phone } = req.body;
+    const { user_id, email, password, name, phone } = req.body;
     bcrypt.hash(password, 10, function (err, hash) {
         console.log(hash);
         if (err) {
@@ -179,9 +182,6 @@ app.post('/register', function (req, res) {
                 res.status(401).send("Email has already used!");
             }
             else {
-                if (password !== conpassword) {
-                    return res.status(401).send('Password miss match!')
-                }
                 const sql = `INSERT INTO user (user_id, email, password, name, phone, role) VALUES(?,?,?,?,?,1)`;
                 con.query(sql, [user_id, email, hash, name, phone,], function (err, results) {
                     if (err) {
@@ -199,24 +199,64 @@ app.post('/register', function (req, res) {
 });
 
 
-
-
-
-
-// ===== adroom =====
-app.get('/addroom', function (req, res) {
+// ===== get addroom =====
+app.get('/addroom', function (_req, res) {
     res.sendFile(path.join(__dirname, 'views/project/addroom.html'));
 });
 
+// ------------- Insert new room into database --------------
+app.post("/addroom/insert_room", function (req, res) {
+    // console.log('Pass check point 0!');
+    // // insert image into server
+    // upload(req, res, function(err){
+    //     if(err){
+    //         console.error(err);
+    //         return res.status(500).send('upload error');
+    //     }
+    // });
+    console.log('Pass check point 1!');
+    // insert data into database
+    const {room_name, building, capacity, audio, video, plug, speakerphone, TV, webcam} = req.body;
+    // const image = req.body.room_name;
+    const sql = "INSERT INTO room (room_name, status, time_slot_1, time_slot_2, time_slot_3, time_slot_4, audio, video, plug, speakerphone, TV, webcam, image, building, capacity) VALUES(?,'available',0,0,0,0,?,?,?,?,?,?,'OIP.jpg',?,?)";
+    con.query(sql, [room_name, audio, video, plug, speakerphone, TV, webcam, building, capacity], async function (err) {
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Database server error");
+        }                    
+        else {
+            console.log('Pass check point 2!');
+            res.status(200).send("Add successfully");
+            }
+        
+    });
+});
+// ---------- Upload image to the server ---------------
+// upload
+// app.post('/addroom/insert_room/uploading', function(req,res){
+//     upload(req, res, function(err){
+//         if(err){
+//             console.error(err);
+//             return res.status(500).send('upload error');
+//         }
+//         // do anything after the upload
+
+        
+//         res.send('Upload done');
+//     })
+
+// });
 
 // ---------- My Booking -----------
-app.get("/my-booking/getbooking", function (_req, res) {
-    const sql = "SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = 'sss';";
-    con.query(sql, function (err, results) {
+app.get("/my-booking/getbooking", function (req, res) {
+    const {user_id} = req.body;
+    const sql = "SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = ?;";
+    con.query(sql, [user_id],function (err, results) {
         if (err) {
             console.error(err);
             res.status(500).send('DB error');
-        } else {
+        }
+        else {
             res.send(results);
         }
     })
@@ -315,7 +355,7 @@ app.get('/room', (_req, res) => {
     });
 
 });
-// for searching room
+// for searching room by name
 app.post('/room', (req, res) => {
     const room_name = req.body.room_name; // Assuming room_name is in the request body
     const sql = "SELECT * FROM room WHERE TRIM(room_name) LIKE ?;";
@@ -328,8 +368,19 @@ app.post('/room', (req, res) => {
         }
     });
 });
-
-
+// for searching room by ID
+app.post('/get_room_by_id', (req, res) => {
+    const room_id = req.body.room_id; // Assuming room_name is in the request body
+    const sql = "SELECT * FROM room WHERE room_id = ?;";
+    con.query(sql, [room_id], (err, results) => {
+        if (err) {
+            console.error('QUERY error', err);
+            res.status(500).json({ success: false, message: 'Internal Server Error' });
+        } else {
+            res.json(results);
+        }
+    });
+});
 
 
 app.post('/update_room_status', function (req, res) {
@@ -346,27 +397,9 @@ app.post('/update_room_status', function (req, res) {
     })
 });
 
-// ------------- Add a new room --------------
-app.post("/rooms", function (req, res) {
 
-    const newRoom = req.body;
-    const sql = "INSERT INTO room SET ?";
-    con.query(sql, newRoom, function (err, results) {
-        if (err) {
-            console.error(err);
-            return res.status(500).send("Database server error");
-        }
-        if (results.affectedRows !== 1) {
-            console.error('Row added is not 1');
-            return res.status(500).send("Add failed");
-        }
-        res.status(200).send("Add successfully");
-    });
-});
 
 // ------------- Update a room --------------
-
-
 // Update Room
 app.put("/rooms/:id", function (req, res) {
     const id = req.params.id;
@@ -385,17 +418,10 @@ app.put("/rooms/:id", function (req, res) {
     });
 });
 
-
 app.get('/account', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/account.html'));
 });
 
-
-
-app.get('/addroom', function (req, res) {
-
-    res.sendFile(path.join(__dirname, 'views/project/addroom.html'));
-});
 
 app.put("/rooms/:id", function (req, res) {
     const id = req.params.id;
@@ -416,11 +442,6 @@ app.put("/rooms/:id", function (req, res) {
 
 
 
-
-
-app.get('/addroom', function (req, res) {
-    res.sendFile(path.join(__dirname, 'views/project/addroom.html'));
-});
 app.get('/account', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/account.html'));
 });
@@ -429,24 +450,21 @@ app.get('/booking_details', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
 });
 
-
-app.get('/editroom', function (_req, res) {
+app.get('/editroom', async function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/editroom.html'));
 });
 
-app.get('/editroom/:room_id', function (req, res) {
-    const { room_id } = req.params.room_id;
-    const sql = `GET * from room WHERE room_id = ?`;
-    con.query(sql, [room_id], function (err, results) {
+app.post('/editroom/get/', function (req, res) {
+    const room_id = req.body.room_id; // Assuming room_name is in the request body
+    const sql = "SELECT * FROM room WHERE room_id = ?;";
+    con.query(sql, [`%${room_id}%`], (err, results) => {
         if (err) {
-            console.error(err);
-            res.status(500).send("Server error update data!");
+            console.error('QUERY error', err);
+            res.status(500).json({ success: false, message: 'Internal Server Error' });
+        } else {
+            res.json(results);
         }
-        else {
-            res.render('project/editroom', { room: roomData });
-        }
-    })
-    res.sendFile(path.join(__dirname, 'views/project/editroom.html'));
+    });
 });
 // Root service
 app.get('/', function (req, res) {
