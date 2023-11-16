@@ -30,6 +30,7 @@
                                     width="40px"> John Doe
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/account">Account</a></li>
                                 <li><a class="dropdown-item" href="/logout">Logout</a></li>
                             </ul>
                         </li>
@@ -61,9 +62,20 @@
         <script>
             // Load the rooms for the first time
             loadRooms();
-
+            getUser();
 
             // define functions
+            async function getUser() {
+            try {
+                const response = await fetch('/user');
+                if (response.ok) {
+                }
+            } catch (err) {
+                console.error(err.message);
+                Notiflix.Report.failure('Error', err.message, 'Close');
+            }
+            }
+
             function searchClicked() {
                 const room_name = document.querySelector('#search').value;
                 searchRooms(room_name);
