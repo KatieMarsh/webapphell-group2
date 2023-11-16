@@ -129,7 +129,6 @@
                     .then(response => response.json())
                     .then(data => {
                         displayRooms(data);
-
                     })
                     .catch(error => {
                         console.error('Error:', error);
@@ -192,7 +191,8 @@
             }
 
             function bookRoom(room_id) {
-
+                sessionStorage.clear();
+                sessionStorage.room_id = room_id;
                 // Redirect to booking_details.html
                 window.location.href = `/Booking_details`;
             }

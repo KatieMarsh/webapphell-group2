@@ -61,7 +61,7 @@ app.use(session({
 }));
 // Get user info
 app.get('/user', function (req, res) {
-    res.json({ 'userID': req.session.userID, 'username': req.session.username, 'role': req.session.role });
+    res.json({ 'user_id': req.session.user_id, 'username': req.session.username, 'role': req.session.role, 'name':req.session.name});
 });
 // ------------- Logout --------------
 app.get("/logout", function (req, res) {
@@ -81,7 +81,7 @@ app.get("/logout", function (req, res) {
 // ---------- login -----------
 app.post('/login', function (req, res) {
     const { username, password } = req.body;
-    const sql = 'SELECT user_id, email, password, role FROM user WHERE email=?';
+    const sql = 'SELECT user_id, email, password, name, role FROM user WHERE email=?';
     con.query(sql, [username], function (err, results) {
         if (err) {
             console.error(err);
@@ -99,9 +99,10 @@ app.post('/login', function (req, res) {
                 }
                 else {
                     if (same) {
-                        req.session.user_ID = results[0].user_id;
+                        req.session.user_id = results[0].user_id;
                         req.session.username = username;
                         req.session.role = results[0].role;
+                        req.session.name = results[0].name;
 
                         // If you want to foward the user to the next page put it here
                         // Student
@@ -139,6 +140,7 @@ app.get('/my-booking', function (req, res) {
     }
 });
 
+
 app.get('/dashboard', function (req, res) {
     // There was an error here I changed != to ==
     if (req.session.role == 1) {
@@ -152,10 +154,13 @@ app.get('/dashboard', function (req, res) {
 // root service
 app.get('/', function (req, res) {
     if (req.session.role == 1) {
-        res.redirect('/my-booking');
+        res.redirect('/home');
     }
     else if (req.session.role == 2) {
-        res.redirect('/dashboard');
+        res.redirect('/staff/home');
+    }
+    else if (req.session.role == 3){
+        res.redirect('/confirm');
     }
     else {
         res.sendFile(path.join(__dirname, 'views/project/Login.html'));
@@ -214,7 +219,7 @@ app.post("/addroom/insert_room", function (req, res) {
     //         return res.status(500).send('upload error');
     //     }
     // });
-    console.log('Pass check point 1!');
+    // console.log('Pass check point 1!');
     // insert data into database
     const {room_name, building, capacity, audio, video, plug, speakerphone, TV, webcam} = req.body;
     // const image = req.body.room_name;
@@ -307,7 +312,18 @@ app.get("/dashboard/gethistory", function (_req, res) {
 // ===== confirm =====
 // Confirm service
 app.get('/confirm', function (req, res) {
-    res.sendFile(path.join(__dirname, 'views/project/confirm.html'));
+    if (req.session.role == 1) {
+        res.redirect('/home');
+    }
+    else if (req.session.role == 2) {
+        res.redirect('/staff/home');
+    }
+    else if (req.session.role == 3){
+        res.redirect('/confirm');
+    }
+    else {
+        res.sendFile(path.join(__dirname, 'views/project/Login.html'));
+    }
 });
 // GET confirm info
 app.get("/confirm/getconfirm", function (_req, res) {
@@ -335,7 +351,7 @@ app.post('/confirm/update_booking_status', function (req, res) {
             res.status(500).send("Server error update data!");
         }
         else {
-            res.send("update success")
+            res.send(results)
         }
 
     })
@@ -399,16 +415,70 @@ app.post('/update_room_status', function (req, res) {
 
 
 
-
-
 app.get('/account', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/account.html'));
 });
 
 
 app.get('/booking_details', function (req, res) {
-    res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
+    if (req.session.role == 1) {
+        res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
+    }
+    else if (req.session.role == 2) {
+        res.redirect('/staff/home');
+    }
+    else if (req.session.role == 3){
+        res.redirect('/confirm');
+    }
+    else {
+        res.sendFile(path.join(__dirname, 'views/project/Login.html'));
+    }
+    // res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
 });
+
+// Array to store booked times
+app.post('/booking_details/add_booking', function (req, res) {
+    const {room_id,selectedTime,agenda} = req.body;
+    let time_slot_1=0, time_slot_2=0, time_slot_3=0, time_slot_4=0;
+    if(selectedTime == 'time_slot_1'){time_slot_1 = 1;}
+    else if(selectedTime == 'time_slot_2'){time_slot_2 = 1;}
+    else if(selectedTime == 'time_slot_3'){time_slot_3 = 1;}
+    else if(selectedTime == 'time_slot_4'){time_slot_3 = 1;}
+    else{}
+    
+    // const image = req.body.room_name;
+    const sql = "INSERT INTO booking (user_id, room_id, date, time_slot_1, time_slot_2, time_slot_3, time_slot_4, status, agenda, whoApprove, whoBook) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+    con.query(sql, [req.session.user_id,room_id,'2023-11-17',time_slot_1,time_slot_2,time_slot_3,time_slot_4,'pending',agenda,'',req.session.name], async function (err) {
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Database server error");
+        }                    
+        else {
+            // console.log('Pass check point 2!');
+            res.status(200).send("Add successfully");
+            }
+        
+    });
+});
+app.post('/booking_details/update_time_slot', function(req, res){
+    const {room_id, selectedTime} = req.body;
+    // update the room according to the booking
+    const sql = `UPDATE room SET ${selectedTime} = 1 WHERE room_id = ?`;
+    con.query(sql, [room_id], function (err, results) {
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Database server error");
+        }
+        if (results.affectedRows !== 1) {
+            console.error('Row updated is not 1');
+            return res.status(500).send("Update failed");
+        }
+        res.send("Update successfully");
+    });
+});
+
+
+
 // EDIT ROOM
 app.get('/editroom', async function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/editroom.html'));
