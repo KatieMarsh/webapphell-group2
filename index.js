@@ -234,19 +234,21 @@ app.get('/addroom', function (req, res) {
 });
 
 
-// ---------- My Booking -----------
-app.get("/my-booking/getbooking", function (_req, res) {
-    const sql = "SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = 'sss';";
-    con.query(sql, function (err, results) {
+// ---------- My Booking --------------------------------------------
+app.get("/my-booking/getbooking", function (req, res) {
+    const {user_id} = req.body;
+    const sql = "SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = ?;";
+    con.query(sql, [user_id],function (err, results) {
         if (err) {
             console.error(err);
             res.status(500).send('DB error');
-        } else {
+        }
+        else {
             res.send(results);
         }
     })
 });
-
+//---------------------------------------------------------------------
 app.get('/my-booking', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/My_Booking.html'));
 });
