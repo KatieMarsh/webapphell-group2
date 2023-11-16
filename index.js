@@ -399,57 +399,17 @@ app.post('/update_room_status', function (req, res) {
 
 
 
-// ------------- Update a room --------------
-// Update Room
-app.put("/rooms/:id", function (req, res) {
-    const id = req.params.id;
-    const updateRoom = req.body;
-    const sql = "UPDATE room SET ? WHERE room_id = ?";
-    con.query(sql, [updateRoom, id], function (err, results) {
-        if (err) {
-            console.error(err);
-            return res.status(500).send("Database server error");
-        }
-        if (results.affectedRows !== 1) {
-            console.error('Row updated is not 1');
-            return res.status(500).send("Update failed");
-        }
-        res.send("Update successfully");
-    });
-});
-
-app.get('/account', function (req, res) {
-    res.sendFile(path.join(__dirname, 'views/project/account.html'));
-});
-
-
-app.put("/rooms/:id", function (req, res) {
-    const id = req.params.id;
-    const updateRoom = req.body;
-    const sql = "UPDATE room SET ? WHERE room_id = ?";
-    con.query(sql, [updateRoom, id], function (err, results) {
-        if (err) {
-            console.error(err);
-            return res.status(500).send("Database server error");
-        }
-        if (results.affectedRows !== 1) {
-            console.error('Row updated is not 1');
-            return res.status(500).send("Update failed");
-        }
-        res.status(200).send("Update successfully");
-    });
-});
-
 
 
 app.get('/account', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/account.html'));
 });
+
 
 app.get('/booking_details', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
 });
-
+// EDIT ROOM
 app.get('/editroom', async function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/editroom.html'));
 });
@@ -464,6 +424,24 @@ app.post('/editroom/get/', function (req, res) {
         } else {
             res.json(results);
         }
+    });
+});
+// Update Room
+app.put("/editroom/update/:id", function (req, res) {
+    const id = req.params.id;
+    const updateRoom = req.body;
+    const sql = "UPDATE room SET ? WHERE room_id = ?";
+
+    con.query(sql, [updateRoom, id], function (err, results) {
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Database server error");
+        }
+        if (results.affectedRows !== 1) {
+            console.error('Row updated is not 1');
+            return res.status(500).send("Update failed");
+        }
+        res.send("Update successfully");
     });
 });
 // Root service
