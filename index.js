@@ -201,6 +201,29 @@ app.get('/my-booking', function (req, res) {
 });
 
 
+
+
+app.post('/my-booking/getbooking', function (req, res) {
+    if (req.session.role !== 1) {
+      res.status(403).json({ error: 'Unauthorized' });
+    } else {
+      const userId = req.session.userId;
+      const query = `
+        SELECT date, room_id, time_slot_1, time_slot_2, time_slot_3, time_slot_4, status
+        FROM booking
+        WHERE user_id = ?`;
+  
+      db.query(query, [userId], (err, results) => {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+          res.json({ bookings: results });
+        }
+      });
+    }
+  });
+
 app.get('/dashboard', function (req, res) {
     // There was an error here I changed != to ==
     if (req.session.role == 1) {
@@ -313,6 +336,7 @@ app.post("/addroom/insert_room", function (req, res) {
 // });
 
 // ---------- My Booking -----------
+
 app.get("/my-booking/getbooking", function (req, res) {
     const {user_id} = req.body;
     const sql = "SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = ?;";
@@ -326,7 +350,7 @@ app.get("/my-booking/getbooking", function (req, res) {
         }
     })
 });
-
+//---------------------------------------------------------------------
 app.get('/my-booking', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/My_Booking.html'));
 });
@@ -578,6 +602,11 @@ app.get('/', function (req, res) {
 app.get('/sign-up', function (req, res) {
 
     res.sendFile(path.join(__dirname, 'views/project/Sign_up.html'));
+});
+
+app.get('/my-booking', function (req, res) {
+
+    res.sendFile(path.join(__dirname, 'views/project/My_Booking.html)'));
 });
 
 
