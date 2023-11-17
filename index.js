@@ -29,6 +29,17 @@ app.use(session({
 app.get('/user', function (req, res) {
     res.json({ 'user_id': req.session.user_id, 'username': req.session.username, 'role': req.session.role, 'name':req.session.name});
 });
+
+// Get user account info
+app.get('/get_user',function(req,res) {
+    if(req.session.user) {
+        res.json({'user_id' : req.session.user_id, 'email': req.session.email, 'name': req.session.name, 'phone':req.session.phone});
+    }
+    else {
+        res.status(401).send("No user info");
+    }
+})
+
 // ------------- Logout --------------
 app.get("/logout", function (req, res) {
     // clear session

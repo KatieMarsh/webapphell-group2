@@ -43,12 +43,11 @@
               <a class="mb-0 ml-2 ms-3 nav-item nav-link active" href="/">Logout</a>
           </div>
       </div>
-      <div class="col-sm-5 pt-5 ">
-        <p >student ID: 6431501200</p>
-        <p>Email: john.d@lamduan.mfu.ac.th</p>
-        <p class="name">Name: John </p>
-        <p class="lastname">Lasname: Doe</p>
-        <p>Phone: 0933333333</p>
+      <div class="col-sm-5 pt-5" id="formaccount">
+        <p id="stid"></p>
+        <p id="email"></p>
+        <p id="flname" class="name"></p>
+        <p id="phon"></p>
           
       </div>
   </div>
@@ -70,5 +69,28 @@
     <!--======================================================middle===========================================--->
   </div>
 </body>
+
+  <script>
+      const formaccount = document.querySelector('#formaccount');
+      async function getUser() {
+        try {
+          const response = await fetch('/get_user')
+          if(response.ok) {
+            const data = await response.json();
+            data.forEach(function (user) {
+              document.getElementById('stid').innerText = "Student ID :" + user.user_id;
+              document.getElementById('email').innerText = "Email :" + user.email;
+              document.getElementById('flname').innerText = "Name :" + user.name;
+              document.getElementById('phon').innerText = "Phone :" + user.phone;
+            })
+          }
+        } catch (err) {
+          console.error(err);
+          alert(err);
+        }
+      }
+
+  </script>
+
 
 </html>
