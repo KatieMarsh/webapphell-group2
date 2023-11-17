@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <script src="/public/js/bootstrap.bundle.min.js"></script>
     <title>Sign Up</title>
@@ -24,7 +25,7 @@
 <body>
     <div class="container-fluid">
         <nav class="navbar navbar-expand-sm navbar d-flex justify-content-center shadow color">
-            <a href="#" class="ms-auto pe-3 nav-link text-white">    </a>
+            <a href="#" class="ms-auto pe-3 nav-link text-white"> </a>
         </nav>
     </div>
 
@@ -57,7 +58,12 @@
 
     <script>
         const submitButton = document.getElementById('submit');
-    
+        const cancelButton = document.getElementById('cancel');
+        cancelButton.onclick = function () {
+            // เปลี่ยนเส้นทางไปที่หน้าเข้าสู่ระบบ
+            window.location.replace('/login');
+        };
+
         submitButton.onclick = async function () {
             try {
                 const email = document.getElementById('mail').value;
@@ -67,7 +73,7 @@
                 const firstname = document.getElementById('ftname').value;
                 const lastname = document.getElementById('ltname').value;
                 const phone = document.getElementById('phone').value;
-    
+
                 // Check if email is empty
                 if (!email.trim()) {
                     alert('Please enter your Email.');
@@ -88,7 +94,7 @@
                     alert('Password and Confirm Password do not match.');
                     return;
                 }
-                
+
                 if (!stuid.trim()) {
                     alert('Please enter your Student ID.');
                     return;
@@ -109,8 +115,7 @@
                     return;
                 }
 
-                
-    
+
                 const options = {
                     method: 'POST',
                     headers: { "Content-Type": "application/json" },
@@ -122,7 +127,8 @@
                         "phone": phone,
                     }),
                 };
-    
+
+
 
                 const response = await fetch('/register', options);
 
@@ -139,15 +145,21 @@
                     const data = await response.text();
                     throw Error(data);
                 }
+                if (response.ok) {
+                    const data = await response.text();
+                    // ยกเลิก comment บรรทัดนี้เพื่อเปลี่ยนทางไปที่หน้าเข้าสู่ระบบ
+                    window.location.replace('/login');
+                    // alert('OK');
+                }
             } catch (err) {
                 console.error(err);
                 alert(err);
             }
         };
     </script>
-    
 
-   
+
+
 
 
 
