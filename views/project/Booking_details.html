@@ -38,7 +38,8 @@
                 <div class="form-group">
 
                     <p class="fw-bold">Booking name: John Doe</p>
-                    <div class="inputwrapper my-4">Time <input value=" " type="time" id="time" class="form-control form-control-inline" required /></div>
+                    
+                    <p class="fw-bold">Room</p>
                     
                     <label for="time">Choose your time :</label>
 
@@ -65,6 +66,70 @@
     </div>
 
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const timeSelect = document.getElementById("time");
+
+        // Function to fetch available times from the API
+        function fetchAvailableTimes() {
+            fetch('/api/available-times')
+                .then(response => response.json())
+                .then(data => {
+                    const availableTimes = data.availableTimes;
+                    updateDropdown(availableTimes);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Function to update the dropdown with available times
+        function updateDropdown(times) {
+            timeSelect.innerHTML = "<option value=''>Select a time</option>";
+            times.forEach(time => {
+                const option = document.createElement("option");
+                option.value = time;
+                option.text = time;
+                timeSelect.appendChild(option);
+            });
+        }
+
+        // Event listener for the form submission
+        document.getElementById("register-form").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Get the selected time
+            const selectedTime = timeSelect.value;
+
+            // Check if the selected time is not booked
+            if (selectedTime) {
+                // Perform the booking or other actions here
+                fetch('/api/book-time', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ selectedTime }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Booking successful, update UI and fetch available times
+                            alert("Booking successful!");
+                            fetchAvailableTimes();
+                        } else {
+                            // Booking failed, show error message
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            } else {
+                alert("Please select a time.");
+            }
+        });
+
+        // Fetch available times when the page loads
+        fetchAvailableTimes();
+    });
+    </script>
 </body>
 
 </html>
