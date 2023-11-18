@@ -151,18 +151,16 @@
             const username = txt_userName.value;
             event.preventDefault(); // Prevent the form from submitting
             // Get the selected time
-            const selectedTime = timeSelect.value;
+            const selectedTime = document.getElementById("time").value;
             // console.log(selectedTime);
             // Check if the selected time is not booked
             if (selectedTime) {
-                // Perform the booking or other actions here
-                
-                // Insert booking into DB
+                console.log(selectedTime);
                 try {
                     const options = {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json',},
-                    body: JSON.stringify({"room_id":room_id,"selected_time":selectedTime,"agenda":txt_agenda, "username":username})
+                    body: JSON.stringify({"room_id":room_id,"selectedTime":selectedTime,"agenda":txt_agenda, "username":username})
                     };
                     const response = await fetch('/booking_details/add_booking', options);
                     if (response.ok) {
