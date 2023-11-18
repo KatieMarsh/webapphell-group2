@@ -401,13 +401,13 @@ app.get('/my-booking/getbooking', function (_req, res) {
 //     })
 // });
 //---------------------------------------------------------------------
-app.get('/my-booking', function (req, res) {
+app.get('/account/my-booking', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/My_Booking.html'));
 });
 
 // ===== Dasboard =====
 // Dashboard service
-app.get('/dashboard', function (req, res) {
+app.get('/staff/home/dashboard', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/dashboard.html'));
 });
 // Datetime service
