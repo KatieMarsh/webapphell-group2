@@ -109,10 +109,8 @@
         
         <!-- outside of form -->
         <div class="row mt-3">
-            <div class="col-auto"><button type="button" id="cancelButton"
-                    class="btn btn-secondary btn-lg">Cancel</button></div>
-            <div class="col-auto"><button type="button" id="addRoomButton" class="btn btn-primary btn-lg">Add
-                    Room</button></div>
+            <div class="col-auto"><button type="button" id="cancelButton" class="btn btn-secondary btn-lg">Cancel</button></div>
+            <div class="col-auto"><button type="button" id="editRoomButton" class="btn btn-primary btn-lg">Edit room</button></div>
         </div>
     </form>
     </div>
@@ -121,8 +119,8 @@
 
     <script>
         // get room_id from sessionStorage
-        let room_id = sessionStorage.room_id;
-        alert(room_id);
+        const room_id = sessionStorage.room_id;
+        // alert(room_id);
         loadRooms(room_id);
         // Load room data
         async function loadRooms(room_id) {
@@ -137,7 +135,7 @@
                     .then(response => response.json())
                     .then(data => {
                         displayRooms(data);
-                        console.log(data);
+                        // console.log(data);
                     })
                     .catch(error => {
                         console.error('Error:', error);
@@ -145,26 +143,30 @@
         }
         // Display room data
         function displayRooms(data){
-            document.querySelector('#txt_room_name').value = data.room_name;
-            document.querySelector('#txt_building').value = data.building;
-            document.querySelector('#txt_capacity').value = data.capacity;
-            document.querySelector('#audio').value = data.audio;
-            document.querySelector('#video').value = data.video;
-            document.querySelector('#plug').value = data.plug;
-            document.querySelector('#speakerphone').value = data.speakerphone;
-            document.querySelector('#tv').value = data.TV;
-            document.querySelector('#webcam').value = data.webcam;
+            console.log(data);
+            console.log(data[0].room_name);
+            console.log(data[0].building);
+            console.log(data[0].building);
+            document.querySelector('input[name="room_name"]').value = data[0].room_name;
+            document.querySelector('input[name="building"]').value = data[0].building;
+            document.querySelector('input[name="capacity"]').value = data[0].capacity;
+            if(data[0].audio) document.querySelector('#audio').checked = true;
+            if(data[0].video) document.querySelector('#video').checked = true;
+            if(data[0].plug) document.querySelector('#plug').checked = true;
+            if(data[0].speakerphone) document.querySelector('#speakerphone').checked = true;
+            if(data[0].TV) document.querySelector('#tv').checked = true;
+            if(data[0].webcam) document.querySelector('#webcam').checked = true;
         }
 
         // cancel button takes you back to the home page
         document.querySelector('#cancelButton').addEventListener('click', function () {
-            fetch('/staff/home')
+            window.location.href = '/staff/home';
         });
 
         // submit form
         // const form = document.querySelector('#dataForm');
         // form.onsubmit = async function (e) {
-        document.querySelector('#addRoomButton').addEventListener('click', function () {
+        document.querySelector('#editRoomButton').addEventListener('click', function () {
                 // text inputs
                 const room_name = document.querySelector('#txt_room_name').value;
                 const building = document.querySelector('#txt_building').value;
@@ -176,6 +178,7 @@
                 // checkbox inputs
                 const facilities = document.querySelectorAll('input[type="checkbox"]');
                 let room_data = {};
+                room_data["room_id"] = room_id;
                 room_data["room_name"] = room_name;
                 room_data["building"] = building;
                 room_data["capacity"] = capacity;
@@ -187,30 +190,19 @@
                 }
                 
             });
-            console.log(room_data);
-                // room_data
-            upload(room_data);
-
-            // Log the current state of selected facilities
-            // console.log(room_data);
-
-            // console.log(room_data);
-
-            // e.preventDefault();
-            // const formData = new FormData(this);
-            // upload(formData);
+            edit(room_data);
         });
 
         // sending data to the back-end
         // async function upload(formData) {
-            async function upload(r) {
+            async function edit(r) {
         try {
             const options = {
-                method: 'POST',
+                method: 'PUT',
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(r), // Send the entire object as is
             };
-            const response = await fetch('/addroom/insert_room', options);
+            const response = await fetch(`/editroom/update/${r.room_id}`, options);
             if (response.ok) {
                 const data = await response.text();
                 Notiflix.Report.success('Success', data, 'OK');

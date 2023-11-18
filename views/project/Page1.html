@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/public/js/bootstrap.min.css">
     <link rel="stylesheet" href="/public/css/project/layout.css">
     <script src="/public/js/bootstrap.bundle.min.js"></script>
-    <title>PAGE 1</title>
+    <title>Home</title>
 </head>
 
 <body>
@@ -19,8 +19,8 @@
             <div class="container-fluid">
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="/staff/home">Rooms</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/staff/home/dashboard">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/home">Rooms</a></li>
 
                         <!-- Dropdown for User -->
                         <li class="nav-item dropdown">
@@ -30,6 +30,7 @@
                                     width="40px"> John Doe
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/account">Account</a></li>
                                 <li><a class="dropdown-item" href="/logout">Logout</a></li>
                             </ul>
                         </li>
@@ -37,29 +38,44 @@
                 </div>
             </div>
         </nav>
-        <a href="Link">Dashboard</a> /
-        <a href="Link">Bookroom</a><br>
+        <a href="/staff/home/dashboard">Dashboard</a> /
+        <a href="/home">Bookroom</a><br>
         <div class="container text-center mt-5">
+
             <div class="container text-center mt-5">
                 <h4>Rooms Availibility</h4>
                 <div class="input-group mb-3 mt-3">
                     <input type="text" class="form-control" id="search" placeholder="Search for rooms">
                     <button class="btn btn-outline-secondary" onclick="searchClicked()">Search</button>
+
                 </div>
             </div>
+
 
             <div class="container ">
                 <div class="row" id="room-container">
                 </div>
+
             </div>
         </div>
 
         <script>
             // Load the rooms for the first time
             loadRooms();
-
+            getUser();
 
             // define functions
+            async function getUser() {
+            try {
+                const response = await fetch('/user');
+                if (response.ok) {
+                }
+            } catch (err) {
+                console.error(err.message);
+                Notiflix.Report.failure('Error', err.message, 'Close');
+            }
+            }
+
             function searchClicked() {
                 const room_name = document.querySelector('#search').value;
                 searchRooms(room_name);
@@ -129,7 +145,6 @@
                     .then(response => response.json())
                     .then(data => {
                         displayRooms(data);
-
                     })
                     .catch(error => {
                         console.error('Error:', error);
@@ -192,13 +207,13 @@
             }
 
             function bookRoom(room_id) {
-
+                sessionStorage.clear();
+                sessionStorage.room_id = room_id;
                 // Redirect to booking_details.html
                 window.location.href = `/Booking_details`;
             }
 
         </script>
-
 
     </body>
 

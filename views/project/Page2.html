@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/public/js/bootstrap.min.css">
     <link rel="stylesheet" href="/public/css/project/layout.css">
     <script src="/public/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/public/js/notiflix-aio-3.2.6.min.js"></script>
 
     <title>PAGE 2</title>
 </head>
@@ -59,7 +59,6 @@
 
 
     <script>
-        let temp_data = [];
         // call functions
         // Event listener for DOMContentLoaded
 
@@ -128,6 +127,7 @@
                     card.appendChild(editButton);
 
 
+
                 }
 
                 col.appendChild(card);
@@ -142,6 +142,7 @@
                     body: JSON.stringify({
                         "room_name": room_name
                     }),
+
                 };
             fetch('/room',options)
                 .then(response => response.json())
@@ -159,8 +160,6 @@
                 .then(response => response.json())
                 .then(data => {
                     displayRooms(data);
-                    temp_data = [];
-                    temp_data = data;
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -178,11 +177,11 @@
                 "webcam": "webcam"
             };
             let html = '';
-            const isDisabled = room.status === 'disabled';
+
 
             for (const key in timeSlotLabels) {
                 if (room.hasOwnProperty(key)) {
-                    const color = isDisabled || room[key] === 1 ? 'bg-danger' : 'bg-success';
+                    const color = room[key] === 0 ? 'bg-danger' : 'bg-success';
                     html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
                 }
             }
@@ -209,6 +208,7 @@
         }
 
         function redirectToEditroom(room_id) {
+            sessionStorage.clear();
             sessionStorage.room_id = room_id;
             window.location.href = `/editroom`;
         }
