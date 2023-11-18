@@ -177,11 +177,11 @@
                 "webcam": "webcam"
             };
             let html = '';
-            const isDisabled = room.status === 'disabled';
+
 
             for (const key in timeSlotLabels) {
                 if (room.hasOwnProperty(key)) {
-                    const color = isDisabled || room[key] === 1 ? 'bg-danger' : 'bg-success';
+                    const color = room[key] === 0 ? 'bg-danger' : 'bg-success';
                     html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
                 }
             }
