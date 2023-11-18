@@ -24,32 +24,31 @@
     <!--===================================================menubar===========================================--->
     <div class="row">
       <div class="col-sm-4 mt-3 ms-5">
-        <div class="pt-5 pb-4 px-5 d-flex align-items-center mb-0">
-          <img src="/public/external/Group.svg" alt="">
-          <a class="mb-0 ml-2 ms-2 nav-item nav-link active" href="#" style="color: #9A1212;">My account</a>
-        </div>
 
-        <div class="ps-5 pb-4 d-flex align-items-center">
-          <img src="/public/external/🦆 icon _lock key_.svg" alt="">
-          <a class="mb-0 ml-2 ms-2 nav-item nav-link active" href="/account/change_password">Change password</a>
-        </div>
-        <div class="ps-5 pb-4 d-flex align-items-center">
-          <img src="/public/external/🦆 icon _paste clipboard_.svg" alt="">
-          <a class="mb-0 ml-2 ms-3 nav-item nav-link active" href="/account/my-booking">My booking</a>
-
-        </div>
-        <div class="ps-5 pb-4 d-flex align-items-center">
-          <img src="/public/external/🦆 icon _log out_.svg" alt="">
-          <a class="mb-0 ml-2 ms-3 nav-item nav-link active" href="/logout">Logout</a>
-        </div>
-          
+          <div class="pt-5 pb-4 px-5 d-flex align-items-center mb-0">
+              <img src="/public/external/Group.svg" alt="" >
+              <a  class="mb-0 ml-2 ms-2 nav-item nav-link active" href="/account">My account</a>
+          </div>
+          <div class="ps-5 pb-4 d-flex align-items-center">
+              <img src="/public/external/🦆 icon _lock key_.svg" alt="">
+              <a class="mb-0 ml-2 ms-2 nav-item nav-link active" href="/account/change_password">Change password</a>
+          </div>
+          <div class="ps-5 pb-4 d-flex align-items-center">
+              <img src="/public/external/🦆 icon _paste clipboard_.svg" alt="">
+              <a class="mb-0 ml-2 ms-3 nav-item nav-link active" href="/my-booking">My booking</a>
+              
+          </div>
+          <div class="ps-5 pb-4 d-flex align-items-center">
+              <img  src="/public/external/🦆 icon _log out_.svg" alt="">
+              <a class="mb-0 ml-2 ms-3 nav-item nav-link active" href="/">Logout</a>
+          </div>
       </div>
-      <div class="col-sm-5 pt-5 ">
-        <p>student ID: 6431501200</p>
-        <p>Email: john.d@lamduan.mfu.ac.th</p>
-        <p class="name">Name: John </p>
-        <p class="lastname">Lasname: Doe</p>
-        <p>Phone: 0933333333</p>
+      <div class="col-sm-5 pt-5" id="formaccount">
+        <p id="stid"></p>
+        <p id="email"></p>
+        <p id="flname" class="name"></p>
+        <p id="phon"></p>
+          
 
       </div>
     </div>
@@ -71,5 +70,28 @@
     <!--======================================================middle===========================================--->
   </div>
 </body>
+
+  <script>
+      const formaccount = document.querySelector('#formaccount');
+      async function getUser() {
+        try {
+          const response = await fetch('/get_user')
+          if(response.ok) {
+            const data = await response.json();
+            data.forEach(function (user) {
+              document.getElementById('stid').innerText = "Student ID :" + user.user_id;
+              document.getElementById('email').innerText = "Email :" + user.email;
+              document.getElementById('flname').innerText = "Name :" + user.name;
+              document.getElementById('phon').innerText = "Phone :" + user.phone;
+            })
+          }
+        } catch (err) {
+          console.error(err);
+          alert(err);
+        }
+      }
+
+  </script>
+
 
 </html>
