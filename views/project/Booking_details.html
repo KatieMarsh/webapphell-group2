@@ -22,7 +22,7 @@
                     <!-- Dropdown for User -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px" width="28px" id="nav_username"> John Doe
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px" width="28px"> <p class="d-inline" id="nav_username">Arjarn Surapong</p> 
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="/account">Account</a></li>
@@ -33,7 +33,7 @@
             </div>
         </div>
     </nav>
-    <div class="container-fluid p-3">
+    <div class="container-fluid p-3" id="info">
 
         <h1>Booking details</h1>
 
@@ -79,6 +79,7 @@
         const txt_roomName = document.getElementById("txt_room_name");
         const txt_userName = document.getElementById("txt_user_name");
         const agenda = document.querySelector('#txt_agenda');
+        const info = document.querySelector('#info');
         // Load the data
         getUser();
         loadRooms(room_id);
@@ -107,6 +108,9 @@
                 if (response.ok) {
                     const data = await response.json();
                     txt_userName.innerText = `Booking name: ${data.name}`;
+                    if(data.role!=1){
+                        info.innerHTML = `<h1>You are not a student this page is not available for you</h1>`;
+                    }
                 }
             } catch (err) {
                 console.error(err.message);

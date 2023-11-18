@@ -197,8 +197,20 @@ app.post('/account/change_password/reset', function (req, res) {
 
     })
 });
-app.get('/home', function (_req, res) {
+app.get('/home', function (req, res) {
+    if (req.session.role == 1) {
     res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
+    }
+    else if (req.session.role == 2){
+        res.redirect('/staff/home');
+    }
+    else if (req.session.role == 3){
+        res.redirect('/home');
+    }
+    else{
+        res.redirect('/');
+    }
+
 });
 app.get('/staff/home', function (req, res) {
     if (req.session.role == 2) {
@@ -246,7 +258,7 @@ app.post('/staff/home/enableroom', function (req, res) {
 // ---------- Page routes -----------
 app.get('/account/my-booking', function (req, res) {
     if (req.session.role != 1) {
-        res.redirect('/account');
+        res.sendFile(path.join(__dirname, 'views/project/My_Booking_not_student.html'));
     }
     else {
         res.sendFile(path.join(__dirname, 'views/project/My_Booking.html'));
@@ -570,10 +582,12 @@ app.get('/booking_details', function (req, res) {
         res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
     }
     else if (req.session.role == 2) {
-        res.redirect('/staff/home');
+        // res.redirect('/staff/home');
+        res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
     }
     else if (req.session.role == 3){
-        res.redirect('/confirm');
+        // res.redirect('/confirm');
+        res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
     }
     else {
         res.sendFile(path.join(__dirname, 'views/project/Login.html'));
