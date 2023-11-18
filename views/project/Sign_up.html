@@ -53,16 +53,22 @@
         <button id="submit" class="mt-3 btn btn-warning col-3">Register</button> <br>
     </div>
     <div class="container-fluid  d-flex justify-content-center">
-        <button class="mt-3 btn btn-danger ml-3 col-sm-3" id="cancel">Cancel</button>
+        <button class="mt-3 btn btn-danger ml-3 col-sm-3" id="cancel">Reset</button>
     </div>
 
     <script>
         const submitButton = document.getElementById('submit');
-        const cancelButton = document.getElementById('cancel');
-        cancelButton.onclick = function () {
-            // เปลี่ยนเส้นทางไปที่หน้าเข้าสู่ระบบ
-            window.location.replace('/');
-        };
+
+        const resetButton = document.getElementById('cancel');
+        resetButton.onclick = function () {
+            document.getElementById('mail').value = '';
+            document.getElementById('stuid').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('confirmpassword').value = '';
+            document.getElementById('ftname').value = '';
+            document.getElementById('ltname').value = '';
+            document.getElementById('phone').value = '';
+        }
 
         submitButton.onclick = async function () {
             try {

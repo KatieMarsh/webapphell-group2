@@ -16,14 +16,16 @@
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Rooms</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li> -->
+                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Home</a></li>
+                    
                     <!-- Dropdown for User -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px" width="40px"> John Doe
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px" width="28px"> <p class="d-inline" id="nav_username">Arjarn Surapong</p> 
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/account">Account</a></li>
                             <li><a class="dropdown-item" href="/logout">Logout</a></li>
                         </ul>
                     </li>
@@ -31,7 +33,7 @@
             </div>
         </div>
     </nav>
-    <div class="container-fluid p-3">
+    <div class="container-fluid p-3" id="info">
 
         <h1>Booking details</h1>
 
@@ -77,6 +79,7 @@
         const txt_roomName = document.getElementById("txt_room_name");
         const txt_userName = document.getElementById("txt_user_name");
         const agenda = document.querySelector('#txt_agenda');
+        const info = document.querySelector('#info');
         // Load the data
         getUser();
         loadRooms(room_id);
@@ -105,6 +108,9 @@
                 if (response.ok) {
                     const data = await response.json();
                     txt_userName.innerText = `Booking name: ${data.name}`;
+                    if(data.role!=1){
+                        info.innerHTML = `<h1>You are not a student this page is not available for you</h1>`;
+                    }
                 }
             } catch (err) {
                 console.error(err.message);
@@ -151,18 +157,16 @@
             const username = txt_userName.value;
             event.preventDefault(); // Prevent the form from submitting
             // Get the selected time
-            const selectedTime = timeSelect.value;
+            const selectedTime = document.getElementById("time").value;
             // console.log(selectedTime);
             // Check if the selected time is not booked
             if (selectedTime) {
-                // Perform the booking or other actions here
-                
-                // Insert booking into DB
+                console.log(selectedTime);
                 try {
                     const options = {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json',},
-                    body: JSON.stringify({"room_id":room_id,"selected_time":selectedTime,"agenda":txt_agenda, "username":username})
+                    body: JSON.stringify({"room_id":room_id,"selectedTime":selectedTime,"agenda":txt_agenda, "username":username})
                     };
                     const response = await fetch('/booking_details/add_booking', options);
                     if (response.ok) {
