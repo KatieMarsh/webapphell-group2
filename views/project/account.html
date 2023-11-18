@@ -71,6 +71,7 @@
 </body>
 
   <script>
+    
       const formaccount = document.querySelector('#formaccount');
       async function getUser() {
         try {
@@ -78,10 +79,10 @@
           if(response.ok) {
             const data = await response.json();
             data.forEach(function (user) {
-              document.getElementById('stid').innerText = "Student ID :" + user.user_id;
-              document.getElementById('email').innerText = "Email :" + user.email;
-              document.getElementById('flname').innerText = "Name :" + user.name;
-              document.getElementById('phon').innerText = "Phone :" + user.phone;
+              document.getElementById('stid').innerText = 'Student ID :' + user.user_id;
+              document.getElementById('email').innerText = 'Email :' + user.email;
+              document.getElementById('flname').innerText = 'Name :' + user.name;
+              document.getElementById('phon').innerText = 'Phone :' + user.phone;
             })
           }
         } catch (err) {
