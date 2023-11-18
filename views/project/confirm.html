@@ -16,12 +16,12 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="#">My Booking</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Rooms/Confirm</a></li>
                     
                     <!-- Dropdown for User -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px"> Arjarn Surapong
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px"> <p class="d-inline" id="nav_username">Arjarn Surapong</p> 
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="/logout">Logout</a></li>
@@ -62,9 +62,23 @@
     <script>
         // calling functions
         getConfirmTable();
+        getUser();
         // selecting table
         const table_approve = document.querySelector('#table_approve');
-
+        // nav username
+        const nav_username = document.querySelector('#nav_username');
+        async function getUser() {
+            try {
+                const response = await fetch('/user');
+                if (response.ok) {
+                    const data = await response.json();
+                    nav_username.innerText = `${data.name}`;
+                }
+            } catch (err) {
+                console.error(err.message);
+                Notiflix.Report.failure('Error', err.message, 'Close');
+            }
+        }
         // confirm table
         function getConfirmTable(){
         fetch('/confirm/getconfirm')
@@ -77,29 +91,34 @@
             .then(function(data){
                 // console.log(data)
         let rows = '';
+        let time_slot = '';
         data.forEach(function (d) {
             rows += `<tr>`;
             rows += `<td>${d.room_name}</td>`;
             rows += `<td>${d.agenda}</td>`;
             rows += `<td>${d.formatted_date}</td>`;
             if (d.time_slot_1 == "1") {
+                time_slot = 'time_slot_1';
                 rows += `<td>08:00 - 10:00</td>`;
             }
             else if (d.time_slot_2 == "1") {
+                time_slot = 'time_slot_2';
                 rows += `<td>10:00 - 12:00</td>`;
             }
             else if (d.time_slot_3 == "1") {
+                time_slot = 'time_slot_3';
                 rows += `<td>13:00 - 15:00</td>`;
             }
             else if (d.time_slot_4 == "1") {
+                time_slot = 'time_slot_4';
                 rows += `<td>15:00 - 17:00</td>`;
             }
             else {
                 rows += `<td>Error</td>`;
             }
             rows += `<td>${d.whoBook}</td>`;
-            rows += `<td><button class="btn btn-success me-3" onclick=updateBooking(${d.booking_id},'${encodeURIComponent("Arjarn Surapong")}',"approved")>Approve</button>
-                <button class="btn btn-danger" onclick=updateBooking(${d.booking_id},'${encodeURIComponent("Arjarn Surapong")}',"rejected")>Reject</button></td>`
+            rows += `<td><button class="btn btn-success me-3" onclick=updateBooking(${d.booking_id},"approved",${d.room_id},"${time_slot}")>Approve</button>
+                <button class="btn btn-danger" onclick=updateBooking(${d.booking_id},"rejected",${d.room_id},"${time_slot}")>Reject</button></td>`
             rows += `</tr>`;
         });
         table_approve.innerHTML = rows;
@@ -109,12 +128,13 @@
                 alert(err);
             });
         }
-        async function updateBooking(booking_id,whoApprove,status){
+        async function updateBooking(booking_id,status,room_id,time_slot){
+            // update booking
             try {
                 const options = {
                     method: 'POST',
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ "booking_id": booking_id, "whoApprove": whoApprove, "status":status }),
+                    body: JSON.stringify({ "booking_id": booking_id, "status":status }),
                 };
                 const response = await fetch('/confirm/update_booking_status', options);
                 if (response.ok) {
@@ -130,10 +150,36 @@
                 else {
                     throw Error('Connection error');
                 }
-            } catch (err) {
-                console.error(err.message);
-                // alert(err.message);
-                Notiflix.Report.failure('Error', err.message, 'Close');
+                } catch (err) {
+                    console.error(err.message);
+                    // alert(err.message);
+                    Notiflix.Report.failure('Error', err.message, 'Close');
+                }
+            // update room
+            if(status == "rejected"){
+                try {
+                const options = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "room_id": room_id, "time_slot":time_slot}),
+                };
+                const response = await fetch('/confirm/update_room_time_slot', options);
+                if (response.ok) {
+                    const data = await response.text();
+                    
+                }
+                else if (response.status == 401) {
+                    const data = await response.text();
+                    throw Error(data);
+                }
+                else {
+                    throw Error('Connection error');
+                }
+                } catch (err) {
+                    console.error(err.message);
+                    // alert(err.message);
+                    Notiflix.Report.failure('Error', err.message, 'Close');
+                }
             }
         }
 
