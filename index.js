@@ -668,8 +668,7 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Login.html'));
 });
 // Register service
-app.get('/sign-up', function (req, res) {
-
+app.get('/sign-up', function (_req, res) {
     res.sendFile(path.join(__dirname, 'views/project/Sign_up.html'));
 });
 
