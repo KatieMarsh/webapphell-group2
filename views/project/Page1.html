@@ -5,29 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/js/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/css/project/layout.css">
+    <link rel="stylesheet" href="/public/css/project/dashboard.css">
     <script src="/public/js/bootstrap.bundle.min.js"></script>
     <title>Home</title>
 </head>
 
 <body>
+    <nav class="navbar navbar-expand navbar-dark bg-danger">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
 
-
-
-    <body>
-        <nav class="navbar navbar-expand navbar-dark bg-danger">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link active" href="/staff/home/dashboard">Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="/home">Rooms</a></li>
-
+                        <!-- <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li> -->
+                        <li class="nav-item"><a class="nav-link active" href="/staff/home"><p>Home</p></a></li>
+                        
                         <!-- Dropdown for User -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px"
-                                    width="40px"> John Doe
+                            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px"> <p class="d-inline" id="nav_username">Arjarn Surapong</p> 
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/account">Account</a></li>
@@ -35,10 +30,11 @@
                             </ul>
                         </li>
                     </ul>
-                </div>
+
             </div>
-        </nav>
-        <a href="/staff/home/dashboard">Dashboard</a> /
+        </div>
+    </nav>
+        <!-- <a href="/staff/home/dashboard">Dashboard</a> / -->
         <a href="/home">Bookroom</a><br>
         <div class="container text-center mt-5">
 
@@ -52,7 +48,7 @@
             </div>
 
 
-            <div class="container ">
+            <div class="container">
                 <div class="row" id="room-container">
                 </div>
 
@@ -69,12 +65,14 @@
             try {
                 const response = await fetch('/user');
                 if (response.ok) {
+                    const data = await response.json();
+                    nav_username.innerText = `${data.name}`;
                 }
             } catch (err) {
                 console.error(err.message);
                 Notiflix.Report.failure('Error', err.message, 'Close');
             }
-            }
+        }
 
             function searchClicked() {
                 const room_name = document.querySelector('#search').value;

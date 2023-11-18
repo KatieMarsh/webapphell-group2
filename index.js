@@ -246,7 +246,7 @@ app.post('/staff/home/enableroom', function (req, res) {
 // ---------- Page routes -----------
 app.get('/account/my-booking', function (req, res) {
     if (req.session.role != 1) {
-        res.redirect('/');
+        res.redirect('/account');
     }
     else {
         res.sendFile(path.join(__dirname, 'views/project/My_Booking.html'));
