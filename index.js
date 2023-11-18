@@ -29,18 +29,9 @@ app.use(session({
 }));
 // Get user info
 app.get('/user', function (req, res) {
-    res.json({ 'user_id': req.session.user_id, 'username': req.session.username, 'role': req.session.role, 'name':req.session.name});
+    res.json({ 'user_id': req.session.user_id, 'username': req.session.username, 'role': req.session.role, 'name':req.session.name, 'phone':req.session.phone});
 });
 
-// Get user account info
-app.get('/get_user',function(req,res) {
-    if(req.session.user) {
-        res.json({'user_id' : req.session.user_id, 'email': req.session.email, 'name': req.session.name, 'phone':req.session.phone});
-    }
-    else {
-        res.status(401).send("No user info");
-    }
-})
 
 // ------------- Logout --------------
 app.get("/logout", function (req, res) {
@@ -61,7 +52,7 @@ app.get("/logout", function (req, res) {
 // ---------- login -----------
 app.post('/login', function (req, res) {
     const { username, password } = req.body;
-    const sql = 'SELECT user_id, email, password, name, role FROM user WHERE email=?';
+    const sql = 'SELECT user_id, email, password, name, role, phone FROM user WHERE email=?';
     con.query(sql, [username], function (err, results) {
         if (err) {
             console.error(err);
@@ -83,6 +74,7 @@ app.post('/login', function (req, res) {
                         req.session.username = username;
                         req.session.role = results[0].role;
                         req.session.name = results[0].name;
+                        req.session.phone = results[0].phone
                         console.log(req.session.user_id);
                         console.log(req.session.role);
                         userid = results[0].user_id;
