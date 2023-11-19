@@ -107,7 +107,9 @@
                 const response = await fetch('/user');
                 if (response.ok) {
                     const data = await response.json();
+                    document.querySelector('#nav_username').innerText = `${data.name}`;
                     txt_userName.innerText = `Booking name: ${data.name}`;
+
                     if(data.role!=1){
                         info.innerHTML = `<h1>You are not a student this page is not available for you</h1>`;
                     }
