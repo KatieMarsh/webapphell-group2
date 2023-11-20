@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,153 +8,177 @@
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <script src="/public/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="/public/css/project/acc.css">
-<style>
-    .border {
-    border-collapse: collapse;
-    width: 100%;
-    border-radius: 15px; 
-    overflow: hidden; 
-    }
-     #footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: #9A1212;
-    height: 256px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-}
+    <style>
+        .border {
+            border-collapse: collapse;
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+        }
 
+        #footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #9A1212;
+            height: 256px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+        }
 
+        .navbar-nav .nav-link.my-account {
+            margin-right: 300px;
+        }
 
-</style>
+        .navbar-light .navbar-nav .nav-link {
+            color: white;
+            font-size: 24px;
+        }
+
+        .bg-custom {
+            background-color: #9A1212;
+        }
+
+        .navbar-light .navbar-nav .nav-link::before {
+            content: "|";
+            color: gold;
+            margin-right: 5px;
+        }
+    </style>
 </head>
+
 <body>
 
-            <nav class="navbar navbar-expand-sm navbar d-flex justify-content-center shadow">     
-                <h3 class="text-danger ms-auto">|</h3>
-                <h3 class="navbar-brand">My account</h3>
-                <a href="/home" class="ms-auto nav-link pe-3">Back</a>
-            </nav>
-
-    
-        
-            <div class="row">
-            <div class="col-sm-4 mt-3 ms-5">
-                <div class="pt-5 pb-4 px-5 d-flex align-items-center mb-0">
-
-                    <img src="/public/img/Group.png" alt="" >
-
-                    <a class="mb-0 ml-2 ms-2 nav-item nav-link active" href="/account">My account</a>
-                </div>
-                <div class="ps-5 pb-4 d-flex align-items-center">
-                    <img src="/public/img/🦆 icon _lock key_.png" alt="">
-
-
-                    <a class="mb-0 ml-2 ms-2 nav-item nav-link active" href="/account/change_password">Change password</a>
-                </div>
-                <div class="ps-5 pb-4 d-flex align-items-center">
-                    <img src="/public/external/c icon _paste clipboard_ (1).svg" alt="">
-                    <a class="mb-0 ml-2 ms-3 nav-item nav-link active" href="#" style="color: #9A1212;">My booking</a>
-
-                    
-                </div>
-                <div class="ps-5 pb-4 d-flex align-items-center">
-                    <img  src="/public/img/🦆 icon _log out_.png" alt="">
-
-                    <a class="mb-0 ml-2 ms-3 nav-item nav-link active" href="/logout">Logout</a>
-
-                </div>
-            </div>
-            <div class="col-sm-5 pt-5 ">
-                <table class="table border">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Date</th>
-                            <th>Room</th>
-                            <th>Time</th>
-                            <th>Status</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="table_booking">
-                        <tr class="table-secondary ">
-                            <td>7/12/2023</td>
-                            <td>XL101</td>
-                            <td>09:00 - 12:00</td>
-                            <td>Pending</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
+    <nav class="navbar navbar-expand navbar-light bg-custom">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto text-end">
+                    <h1 class="nav-link my-account text-white"> My account</h1>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="javascript:history.back()">
+                            < Back</a>
+                    </li>
+                </ul>
             </div>
         </div>
-        <footer class="container-fluid" id="footer">
-            <div class="">
-                <h5 class="text-white">Address</h3> 
+    </nav>
+
+
+
+    <div class="row">
+        <div class="col-sm-4 mt-3 ms-5">
+            <div class="pt-5 pb-4 px-5 d-flex align-items-center mb-0">
+
+                <img src="/public/external/Group (1).svg" alt="">
+
+                <a class="mb-0 ml-2 ms-2 nav-item nav-link active" href="/account">My account</a>
+            </div>
+            <div class="ps-5 pb-4 d-flex align-items-center">
+                <img src="/public/img/🦆 icon _lock key_.png" alt="">
+
+
+                <a class="mb-0 ml-2 ms-2 nav-item nav-link active" href="/account/change_password">Change password</a>
+            </div>
+            <div class="ps-5 pb-4 d-flex align-items-center">
+                <img src="/public/external/c icon _paste clipboard_ (1).svg" alt="">
+                <a class="mb-0 ml-2 ms-3 nav-item nav-link active" href="#" style="color: #9A1212;">My booking</a>
+
+
+            </div>
+            <div class="ps-5 pb-4 d-flex align-items-center">
+                <img src="/public/img/🦆 icon _log out_.png" alt="">
+
+                <a class="mb-0 ml-2 ms-3 nav-item nav-link active" href="/logout">Logout</a>
+
+            </div>
+        </div>
+        <div class="col-sm-5 pt-5 ">
+            <table class="table border">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Date</th>
+                        <th>Room</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="table_booking">
+                    <tr class="table-secondary ">
+                        <td>7/12/2023</td>
+                        <td>XL101</td>
+                        <td>09:00 - 12:00</td>
+                        <td>Pending</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer class="container-fluid" id="footer">
+        <div class="">
+            <h5 class="text-white">Address</h3>
                 <p class="text-white"> 333 Moo1, Thasud, Muang, Chiang Rai 57100</p>
-            </div>
-            <div class="">
-                <h5 class="text-white">Contact</h3> 
-                    <p class="text-white">Phone : 0-5391-6000</p>
-                    <p class="text-white">Email : surapong@mfu.ac.th</p>
-            </div>
-          </footer>
-        
+        </div>
+        <div class="">
+            <h5 class="text-white">Contact</h3>
+                <p class="text-white">Phone : 0-5391-6000</p>
+                <p class="text-white">Email : surapong@mfu.ac.th</p>
+        </div>
+    </footer>
+
 
 
     <script>
-         postBooking();
-         const table_booking = document.querySelector('#table_booking');
-         function postBooking(){
-        fetch('/my-booking/getbooking')
-            .then(function(response){
-                if (response.ok) {
-                    return response.json();
-                }
-                throw Error('Bad response');
-            })
-            .then(function(data){
-                console.log(data);
-                let rows = '';
-                data.forEach(function (room){
-                    rows += '<tr>';
-                    rows += `<td>${room.formatted_date}</td>`;
-                    rows += `<td>${room.room_name}</td>`;
-                    if(room.time_slot_1 == "1"){
-                        rows += `<td>08:00 - 10:00</td>`;
+        postBooking();
+        const table_booking = document.querySelector('#table_booking');
+        function postBooking() {
+            fetch('/my-booking/getbooking')
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json();
                     }
-                    else if (room.time_slot_2 == "1")
-                    {
-                        rows += `<td>10:00 - 12:00</td>`;
-                    }
-                    else if (room.time_slot_3 == "1")
-                    {
-                        rows += `<td>13:00 - 15:00</td>`;
-                    }
-                    else if (room.time_slot_4 == "1")
-                    {
-                        rows += `<td>15:00 - 17:00</td>`;
-                    }
-                    else{
-                        rows += `<td>Error</td>`;
-                    }
-                    rows += `<td>${room.status}</td>`;
-                    rows += '</tr>';
-                });    
-                table_booking.innerHTML = rows;
-            })
-            .catch(function(err){
-                console.error(err);
-                alert(err);
-            });
+                    throw Error('Bad response');
+                })
+                .then(function (data) {
+                    console.log(data);
+                    let rows = '';
+                    data.forEach(function (room) {
+                        rows += '<tr>';
+                        rows += `<td>${room.formatted_date}</td>`;
+                        rows += `<td>${room.room_name}</td>`;
+                        if (room.time_slot_1 == "1") {
+                            rows += `<td>08:00 - 10:00</td>`;
+                        }
+                        else if (room.time_slot_2 == "1") {
+                            rows += `<td>10:00 - 12:00</td>`;
+                        }
+                        else if (room.time_slot_3 == "1") {
+                            rows += `<td>13:00 - 15:00</td>`;
+                        }
+                        else if (room.time_slot_4 == "1") {
+                            rows += `<td>15:00 - 17:00</td>`;
+                        }
+                        else {
+                            rows += `<td>Error</td>`;
+                        }
+                        rows += `<td>${room.status}</td>`;
+                        rows += '</tr>';
+                    });
+                    table_booking.innerHTML = rows;
+                })
+                .catch(function (err) {
+                    console.error(err);
+                    alert(err);
+                });
         }
     </script>
 
 </body>
+
 </html>

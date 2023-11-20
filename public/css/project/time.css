@@ -1,0 +1,16 @@
+#currentDate {
+    text-align: center;
+    padding: 20px;
+    border: 5px solid rgb(255, 255, 255);
+    border-radius: 30px;
+    background-color: #0eb406;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 15%;
+    margin: 26px auto;
+    color: #fff; /* สีข้อความขาว */
+}
+
+.styled-text {
+    font-size: 30px; /* เพิ่มขนาดตัวอักษรให้ใหญ่ขึ้น */
+    margin: 0;
+}
