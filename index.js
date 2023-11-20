@@ -375,7 +375,7 @@ app.get('/my-booking/getbooking', function (_req, res) {
       res.status(403).json({ error: 'Unauthorized' });
     } else {
       const userId = userid;
-      const query = `SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = ?; ORDER BY booking_id DESC;`;
+      const query = `SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = ? ORDER BY booking_id DESC;`;
   
       con.query(query, [userId], (err, results) => {
         if (err) {
