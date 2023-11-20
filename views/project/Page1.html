@@ -11,9 +11,12 @@
     <script src="/public/js/notiflix-aio-3.2.6.min.js"></script>
     <link rel="stylesheet" href="/public/css/project/time.css">
 </head>
+<style>
+
+</style>
 
 <body>
-    <nav class="navbar navbar-expand navbar-dark bg-danger">
+    <nav class="navbar navbar-expand navbar-dark custom-bg-red">
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
@@ -40,9 +43,14 @@
             </div>
         </div>
     </nav>
+
     <br>
-    <p id="currentDate"></p>
-    <script src="/public/js/time.js"></script>
+    <div class="row" style="text-align: center;">
+        <p id="currentDate" class="text-start" style="display: inline-block;"></p>
+        <script src="/public/js/time.js"></script>
+    </div>
+    
+    
 
 
 
@@ -54,10 +62,13 @@
 
             <div class="input-group mb-3 mt-5 align-items-stretch">
                 <input type="text" class="form-control mt-2" id="search" placeholder="Search for rooms">
-                <div class="input-group-append mb-2">
+                <div class="input-group-append mb-2" style="margin-left: 10px;">
                     <button class="btn btn-outline-secondary" onclick="searchClicked()">Search</button>
                 </div>
             </div>
+
+
+
 
         </div>
 
