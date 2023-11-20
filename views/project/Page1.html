@@ -45,7 +45,7 @@
                 
                 <div class="input-group mb-3 mt-5 align-items-stretch">
                     <input type="text" class="form-control mt-2" id="search" placeholder="Search for rooms">
-                    <div class="input-group-append mb-2">
+                    <div class="input-group-append ms-2">
                         <button class="btn btn-outline-secondary" onclick="searchClicked()">Search</button>
                     </div>
                 </div>
@@ -172,24 +172,24 @@
 
             // show facilities
             function createfacilitiesHtml(room) {
-                const timeSlotLabels = {
-                    "audio": "audio",
-                    "video": "video",
-                    "plug": "plug",
-                    "speakerphone": "speakerphone",
-                    "TV": "TV",
-                    "webcam": "webcam"
-                };
-                let html = '';
-                const isDisabled = room.status === 'disabled';
+            const timeSlotLabels = {
+                "audio": "audio",
+                "video": "video",
+                "plug": "plug",
+                "speakerphone": "speakerphone",
+                "TV": "TV",
+                "webcam": "webcam"
+            };
+            let html = '';
 
-                for (const key in timeSlotLabels) {
-                    if (room.hasOwnProperty(key)) {
-                        const color = isDisabled || room[key] === 1 ? 'bg-danger' : 'bg-success';
-                        html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
-                    }
+
+            for (const key in timeSlotLabels) {
+                if (room.hasOwnProperty(key)) {
+                    const color = room[key] === 0 ? 'bg-danger' : 'bg-success';
+                    html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
                 }
-                return html;
+            }
+            return html;
             }
 
             // show time slots
