@@ -202,13 +202,13 @@ app.post('/account/change_password/reset', function (req, res) {
 });
 app.get('/home', function (req, res) {
     if (req.session.role == 1) {
-    res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
+        res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
     }
     else if (req.session.role == 2){
         res.redirect('/staff/home');
     }
     else if (req.session.role == 3){
-        res.redirect('/home');
+        res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
     }
     else{
         res.redirect('/');
@@ -388,9 +388,6 @@ app.get('/my-booking/getbooking', function (_req, res) {
     }
   });
 //---------------------------------------------------------------------
-app.get('/account/my-booking', function (req, res) {
-    res.sendFile(path.join(__dirname, 'views/project/My_Booking.html'));
-});
 
 // ===== Dasboard =====
 // Dashboard service
