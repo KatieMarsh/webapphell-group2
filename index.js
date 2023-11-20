@@ -368,21 +368,6 @@ app.post("/addroom/insert_room", function (req, res) {
         
     });
 });
-// ---------- Upload image to the server ---------------
-// upload
-// app.post('/addroom/insert_room/uploading', function(req,res){
-//     upload(req, res, function(err){
-//         if(err){
-//             console.error(err);
-//             return res.status(500).send('upload error');
-//         }
-//         // do anything after the upload
-
-        
-//         res.send('Upload done');
-//     })
-
-// });
 
 // ---------- My Booking -----------
 app.get('/my-booking/getbooking', function (_req, res) {
@@ -390,7 +375,7 @@ app.get('/my-booking/getbooking', function (_req, res) {
       res.status(403).json({ error: 'Unauthorized' });
     } else {
       const userId = userid;
-      const query = `SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = ?;`;
+      const query = `SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = ?; ORDER BY booking_id DESC;`;
   
       con.query(query, [userId], (err, results) => {
         if (err) {
@@ -402,19 +387,6 @@ app.get('/my-booking/getbooking', function (_req, res) {
       });
     }
   });
-// app.get("/my-booking/getbooking", function (req, res) {
-//     const {user_id} = req.body;
-//     const sql = "SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = ?;";
-//     con.query(sql, [user_id],function (err, results) {
-//         if (err) {
-//             console.error(err);
-//             res.status(500).send('DB error');
-//         }
-//         else {
-//             res.send(results);
-//         }
-//     })
-// });
 //---------------------------------------------------------------------
 app.get('/account/my-booking', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/My_Booking.html'));
