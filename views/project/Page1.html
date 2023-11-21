@@ -60,10 +60,12 @@
         <div class="container text-center mt-5">
             <h4>Rooms Availibility</h4>
 
+
             <div class="input-group mb-3 mt-5 align-items-stretch">
-                <input type="text" class="form-control mt-2" id="search" placeholder="Search for rooms">
+                <input type="text" class="form-control mt-2" id="search" placeholder="Enter room name">
                 <div class="input-group-append mb-2" style="margin-left: 10px;">
                     <button class="btn btn-outline-secondary" onclick="searchClicked()">Search</button>
+
                 </div>
             </div>
 
@@ -153,6 +155,7 @@
                     card.appendChild(bookButton);
                 }
 
+
                 col.appendChild(card);
                 roomContainer.appendChild(col);
             });
@@ -192,6 +195,7 @@
 
         // show facilities
         function createfacilitiesHtml(room) {
+
             const timeSlotLabels = {
                 "audio": "audio",
                 "video": "video",
@@ -201,13 +205,12 @@
                 "webcam": "webcam"
             };
             let html = '';
-            const isDisabled = room.status === 'disabled';
-
             for (const key in timeSlotLabels) {
                 if (room.hasOwnProperty(key)) {
-                    const color = isDisabled || room[key] === 1 ? 'bg-danger' : 'bg-success';
+                    const color = room[key] === 0 ? 'bg-danger' : 'bg-success';
                     html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
                 }
+
             }
             return html;
         }
