@@ -340,7 +340,6 @@ app.get('/addroom', function (_req, res) {
 // ------------- Insert new room into database --------------
 app.post("/addroom/insert_room", function (req, res) {
     const {room_name, building, capacity, audio, video, plug, speakerphone, TV, webcam} = req.body;
-    // const image = req.body.room_name;
     const sql = "INSERT INTO room (room_name, status, time_slot_1, time_slot_2, time_slot_3, time_slot_4, audio, video, plug, speakerphone, TV, webcam, image, building, capacity) VALUES(?,'available',0,0,0,0,?,?,?,?,?,?,'OIP.jpg',?,?)";
     con.query(sql, [room_name, audio, video, plug, speakerphone, TV, webcam, building, capacity], async function (err) {
         if (err) {
@@ -534,17 +533,14 @@ app.get('/booking_details', function (req, res) {
         res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
     }
     else if (req.session.role == 2) {
-        // res.redirect('/staff/home');
         res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
     }
     else if (req.session.role == 3){
-        // res.redirect('/confirm');
         res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
     }
     else {
         res.sendFile(path.join(__dirname, 'views/project/Login.html'));
     }
-    // res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
 });
 
 // Array to store booked times
@@ -560,7 +556,6 @@ app.post('/booking_details/add_booking', function (req, res) {
     // get datetime info
     const currentDate = new Date();
     date = currentDate.toLocaleString('sv');
-    // const image = req.body.room_name;
     const sql = "INSERT INTO booking (user_id, room_id, date, time_slot_1, time_slot_2, time_slot_3, time_slot_4, status, agenda, whoApprove, whoBook) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
     con.query(sql, [req.session.user_id,room_id,date,time_slot_1,time_slot_2,time_slot_3,time_slot_4,'pending',agenda,'',req.session.name], async function (err) {
         if (err) {
@@ -568,7 +563,6 @@ app.post('/booking_details/add_booking', function (req, res) {
             return res.status(500).send("Database server error");
         }                    
         else {
-            // console.log('Pass check point 2!');
             res.status(200).send("Add successfully");
             }
         
