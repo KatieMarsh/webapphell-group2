@@ -62,8 +62,6 @@ app.post('/login', function (req, res) {
             res.status(401).send('Username not found');
         }
         else {
-            // raw: password
-            // hash: results[0].password
             bcrypt.compare(password, results[0].password, function (err, same) {
                 if (err) {
                     res.status(500).send('Password compare error');
@@ -153,9 +151,7 @@ app.get('/account/change_password', function (req, res) {
 app.post('/account/change_password/reset', function (req, res) {
     const {old_password, new_password} = req.body;
     const find_old_password = `SELECT password FROM user WHERE user_id = ?`;
-    // console.log('User ID from session:', userid);
     con.query(find_old_password, [req.session.user_id], function (err, result) {
-        // console.log('Query result:', result);
         if (err) {
             console.error(err);
             res.status(500).send("Server error insert data!");
@@ -343,16 +339,6 @@ app.get('/addroom', function (_req, res) {
 
 // ------------- Insert new room into database --------------
 app.post("/addroom/insert_room", function (req, res) {
-    // console.log('Pass check point 0!');
-    // // insert image into server
-    // upload(req, res, function(err){
-    //     if(err){
-    //         console.error(err);
-    //         return res.status(500).send('upload error');
-    //     }
-    // });
-    // console.log('Pass check point 1!');
-    // insert data into database
     const {room_name, building, capacity, audio, video, plug, speakerphone, TV, webcam} = req.body;
     // const image = req.body.room_name;
     const sql = "INSERT INTO room (room_name, status, time_slot_1, time_slot_2, time_slot_3, time_slot_4, audio, video, plug, speakerphone, TV, webcam, image, building, capacity) VALUES(?,'available',0,0,0,0,?,?,?,?,?,?,'OIP.jpg',?,?)";
@@ -459,9 +445,6 @@ app.get("/confirm/getconfirm", function (_req, res) {
 // Update booking status service
 app.post('/confirm/update_booking_status', function (req, res) {
     const { booking_id, status } = req.body;
-    // const  booking_id = req.params.id;
-    // const status = req.params.status;
-    // UPDATE `booking` SET `status` = 'approved' WHERE `booking`.`booking_id` = 1
     const sql = `UPDATE booking SET status = ?, whoApprove = ? WHERE booking.booking_id = ?`;
     con.query(sql, [status, req.session.name, booking_id], function (err, results) {
         if (err) {
@@ -477,9 +460,6 @@ app.post('/confirm/update_booking_status', function (req, res) {
 // Update room time_slot
 app.post('/confirm/update_room_time_slot', function (req, res) {
     const { room_id, time_slot } = req.body;
-    // const  booking_id = req.params.id;
-    // const status = req.params.status;
-    // UPDATE `booking` SET `status` = 'approved' WHERE `booking`.`booking_id` = 1
     const sql = `UPDATE room SET ${time_slot} = 0 WHERE room.room_id = ?`;
     con.query(sql, [room_id], function (err, results) {
         if (err) {
