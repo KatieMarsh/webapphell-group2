@@ -29,7 +29,7 @@ app.use(session({
 }));
 // Get user info
 app.get('/user', function (req, res) {
-    res.json({ 'user_id': req.session.user_id, 'username': req.session.username, 'role': req.session.role, 'name':req.session.name, 'phone':req.session.phone});
+    res.json({ 'user_id': req.session.user_id, 'username': req.session.username, 'role': req.session.role, 'name': req.session.name, 'phone': req.session.phone });
 });
 
 
@@ -104,40 +104,40 @@ app.post('/login', function (req, res) {
 // ================================== RESET time_slots ==================================
 con.connect(err => {
     if (err) {
-      console.error('error connecting to database:', err);
-      return;
+        console.error('error connecting to database:', err);
+        return;
     }
-  
-    console.log('connected to database');
-  
-    const checkTime = () => {
-      const date = new Date();
-      const hours = date.getHours();
-      const minutes = date.getMinutes();
-  
-      if (hours === 0 && minutes === 0) {
-        con.query(`UPDATE room SET time_slot_1=0, time_slot_2=0, time_slot_3=0, time_slot_4=0`, err => {
-          if (err) {
-            console.error('error updating room:', err);
-            return;
-          }
-  
-          console.log('room updated successfully');
-        });
-        con.query(`UPDATE booking SET status='rejected' where status='pending'`, err => {
-          if (err) {
-            console.error('error updating room:', err);
-            return;
-          }
-  
-          console.log('booking updated successfully');
-        });
 
-      }
+    console.log('connected to database');
+
+    const checkTime = () => {
+        const date = new Date();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+
+        if (hours === 0 && minutes === 0) {
+            con.query(`UPDATE room SET time_slot_1=0, time_slot_2=0, time_slot_3=0, time_slot_4=0`, err => {
+                if (err) {
+                    console.error('error updating room:', err);
+                    return;
+                }
+
+                console.log('room updated successfully');
+            });
+            con.query(`UPDATE booking SET status='rejected' where status='pending'`, err => {
+                if (err) {
+                    console.error('error updating room:', err);
+                    return;
+                }
+
+                console.log('booking updated successfully');
+            });
+
+        }
     };
-  
+
     setInterval(checkTime, 60000); // Check the time every minute
-  });
+});
 
 // ================================== ACCOUNT ===========================================
 app.get('/account', function (req, res) {
@@ -148,8 +148,8 @@ app.get('/account/change_password', function (req, res) {
     res.sendFile(path.join(__dirname, 'views/project/change_password.html'));
 });
 //  ================================== RESET PASSWORD ====================================
-app.post('/account/change_password/reset', function (req, res) {
-    const {old_password, new_password} = req.body;
+app.post('/account/change_password/reset', function (wreq, res) {
+    const { old_password, new_password } = req.body;
     const find_old_password = `SELECT password FROM user WHERE user_id = ?`;
     con.query(find_old_password, [req.session.user_id], function (err, result) {
         if (err) {
@@ -200,13 +200,13 @@ app.get('/home', function (req, res) {
     if (req.session.role == 1) {
         res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
     }
-    else if (req.session.role == 2){
+    else if (req.session.role == 2) {
         res.redirect('/staff/home');
     }
-    else if (req.session.role == 3){
+    else if (req.session.role == 3) {
         res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
     }
-    else{
+    else {
         res.redirect('/');
     }
 
@@ -215,13 +215,13 @@ app.get('/staff/home', function (req, res) {
     if (req.session.role == 2) {
         res.sendFile(path.join(__dirname, 'views/project/Page2.html'));
     }
-    else if (req.session.role == 3){
+    else if (req.session.role == 3) {
         res.redirect('/confirm');
     }
-    else if (req.session.role == 1){
+    else if (req.session.role == 1) {
         res.redirect('/home');
     }
-    else{
+    else {
         res.redirect('/');
     }
 });
@@ -287,7 +287,7 @@ app.get('/', function (req, res) {
     else if (req.session.role == 2) {
         res.redirect('/staff/home');
     }
-    else if (req.session.role == 3){
+    else if (req.session.role == 3) {
         res.redirect('/confirm');
     }
     else {
@@ -339,39 +339,39 @@ app.get('/addroom', function (_req, res) {
 
 // ------------- Insert new room into database --------------
 app.post("/addroom/insert_room", function (req, res) {
-    const {room_name, building, capacity, audio, video, plug, speakerphone, TV, webcam} = req.body;
+    const { room_name, building, capacity, audio, video, plug, speakerphone, TV, webcam } = req.body;
     const sql = "INSERT INTO room (room_name, status, time_slot_1, time_slot_2, time_slot_3, time_slot_4, audio, video, plug, speakerphone, TV, webcam, image, building, capacity) VALUES(?,'available',0,0,0,0,?,?,?,?,?,?,'OIP.jpg',?,?)";
     con.query(sql, [room_name, audio, video, plug, speakerphone, TV, webcam, building, capacity], async function (err) {
         if (err) {
             console.error(err);
             return res.status(500).send("Database server error");
-        }                    
+        }
         else {
             console.log('Pass check point 2!');
             res.status(200).send("Add successfully");
-            }
-        
+        }
+
     });
 });
 
 // ---------- My Booking -----------
 app.get('/my-booking/getbooking', function (_req, res) {
     if (userrole != 1) {
-      res.status(403).json({ error: 'Unauthorized' });
+        res.status(403).json({ error: 'Unauthorized' });
     } else {
-      const userId = userid;
-      const query = `SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = ? ORDER BY booking_id DESC;`;
-  
-      con.query(query, [userId], (err, results) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Internal Server Error' });
-        } else {
-            res.json(results);
-        }
-      });
+        const userId = userid;
+        const query = `SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = ? ORDER BY booking_id DESC;`;
+
+        con.query(query, [userId], (err, results) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+                res.json(results);
+            }
+        });
     }
-  });
+});
 //---------------------------------------------------------------------
 
 // ===== Dasboard =====
@@ -421,7 +421,7 @@ app.get('/confirm', function (req, res) {
     else if (req.session.role == 2) {
         res.redirect('/staff/home');
     }
-    else if (req.session.role == 3){
+    else if (req.session.role == 3) {
         res.sendFile(path.join(__dirname, 'views/project/confirm.html'));
     }
     else {
@@ -535,7 +535,7 @@ app.get('/booking_details', function (req, res) {
     else if (req.session.role == 2) {
         res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
     }
-    else if (req.session.role == 3){
+    else if (req.session.role == 3) {
         res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
     }
     else {
@@ -545,31 +545,31 @@ app.get('/booking_details', function (req, res) {
 
 // Array to store booked times
 app.post('/booking_details/add_booking', function (req, res) {
-    const {room_id,selectedTime,agenda,username} = req.body;
-    let time_slot_1=0, time_slot_2=0, time_slot_3=0, time_slot_4=0;
+    const { room_id, selectedTime, agenda, username } = req.body;
+    let time_slot_1 = 0, time_slot_2 = 0, time_slot_3 = 0, time_slot_4 = 0;
     console.log(selectedTime);
-    if(selectedTime == 'time_slot_1'){time_slot_1 = 1;}
-    else if(selectedTime == 'time_slot_2'){time_slot_2 = 1;}
-    else if(selectedTime == 'time_slot_3'){time_slot_3 = 1;}
-    else if(selectedTime == 'time_slot_4'){time_slot_4 = 1;}
-    else{}
+    if (selectedTime == 'time_slot_1') { time_slot_1 = 1; }
+    else if (selectedTime == 'time_slot_2') { time_slot_2 = 1; }
+    else if (selectedTime == 'time_slot_3') { time_slot_3 = 1; }
+    else if (selectedTime == 'time_slot_4') { time_slot_4 = 1; }
+    else { }
     // get datetime info
     const currentDate = new Date();
     date = currentDate.toLocaleString('sv');
     const sql = "INSERT INTO booking (user_id, room_id, date, time_slot_1, time_slot_2, time_slot_3, time_slot_4, status, agenda, whoApprove, whoBook) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-    con.query(sql, [req.session.user_id,room_id,date,time_slot_1,time_slot_2,time_slot_3,time_slot_4,'pending',agenda,'',req.session.name], async function (err) {
+    con.query(sql, [req.session.user_id, room_id, date, time_slot_1, time_slot_2, time_slot_3, time_slot_4, 'pending', agenda, '', req.session.name], async function (err) {
         if (err) {
             console.error(err);
             return res.status(500).send("Database server error");
-        }                    
+        }
         else {
             res.status(200).send("Add successfully");
-            }
-        
+        }
+
     });
 });
-app.post('/booking_details/update_time_slot', function(req, res){
-    const {room_id, selectedTime} = req.body;
+app.post('/booking_details/update_time_slot', function (req, res) {
+    const { room_id, selectedTime } = req.body;
     // update the room according to the booking
     const sql = `UPDATE room SET ${selectedTime} = 1 WHERE room_id = ?`;
     con.query(sql, [room_id], function (err, results) {
