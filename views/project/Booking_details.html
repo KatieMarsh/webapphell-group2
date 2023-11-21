@@ -11,8 +11,9 @@
     <script src="/public/js/notiflix-aio-3.2.6.min.js"></script>
 </head>
 
+
 <body>
-    <nav class="navbar navbar-expand navbar-dark bg-danger">
+    <nav class="navbar navbar-expand navbar-dark custom-bg-red">
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
@@ -33,6 +34,7 @@
             </div>
         </div>
     </nav>
+    
     <div class="container-fluid p-3" id="info">
 
         <h1>Booking details</h1>
@@ -42,6 +44,8 @@
             <form id="register-form" class="form-inline">
 
                 <div class="form-group">
+                    <p  class="fw-bold"id="currentDate"></p>
+                    <script src="/public/js/time.js"></script>
 
                     <p class="fw-bold" id="txt_user_name">Booking name: John Doe</p>
                     <p class="fw-bold" id="txt_room_name">Room:</p>
