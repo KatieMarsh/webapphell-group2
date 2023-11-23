@@ -42,7 +42,7 @@
           <h1 class="nav-link my-account text-white"> My account</h1>
           <li class="nav-item">
             <a class="nav-link text-white" href="javascript:history.back()">
-              < Back</a>
+               Back</a>
           </li>
         </ul>
       </div>
@@ -101,18 +101,25 @@
   </div>
 </body>
 
-<script>
-  getUser();
-  const formaccount = document.querySelector('#formaccount');
-  async function getUser() {
-    try {
-      const response = await fetch('/user')
-      if (response.ok) {
-        const data = await response.json();
-        document.getElementById('stid').innerText = "Student ID :" + data.user_id;
-        document.getElementById('email').innerText = "Email :" + data.username;
-        document.getElementById('flname').innerText = "Name :" + data.name;
-        document.getElementById('phon').innerText = "Phone :" + data.phone;
+
+  <script>
+      const formaccount = document.querySelector('#formaccount');
+      async function getUser() {
+        try {
+          const response = await fetch('/user')
+          if(response.ok) {
+            const data = await response.json();
+            data.forEach(function (user) {
+              document.getElementById('stid').innerText = "Student ID :" + user.user_id;
+              document.getElementById('email').innerText = "Email :" + user.email;
+              document.getElementById('flname').innerText = "Name :" + user.name;
+              document.getElementById('phon').innerText = "Phone :" + user.phone;
+            })
+          }
+        } catch (err) {
+          console.error(err);
+          alert(err);
+        }
 
       }
     } catch (err) {
