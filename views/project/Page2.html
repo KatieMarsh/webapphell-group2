@@ -4,30 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/js/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/css/project/layout.css">
+    <title>PAGE 2</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/project/Booking_details.css">
     <script src="/public/js/bootstrap.bundle.min.js"></script>
     <script src="/public/js/notiflix-aio-3.2.6.min.js"></script>
-
-    <title>PAGE 2</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand navbar-dark bg-danger">
+    <nav class="navbar navbar-expand navbar-dark custom-bg-red">
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Rooms</a></li>
 
                     <!-- Dropdown for User -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px"
-                                width="40px"> John Doe
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px"
+                                width="28px"> <p class="d-inline" id="nav_username">Arjarn Surapong</p> 
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/account">Account</a></li>
                             <li><a class="dropdown-item" href="/logout">Logout</a></li>
                         </ul>
                     </li>
@@ -35,14 +33,16 @@
             </div>
         </div>
     </nav>
-    <a href="/dashboard">Dashboard</a> /
-    <a href="Link">Bookroom</a><br>
+    <!-- <a href="/dashboard">Dashboard</a> /
+    <a href="Link">Bookroom</a><br> -->
     <div class="container text-center mt-5">
-        <h4>Rooms Availibility</h4>
-        <div class="input-group mb-3 mt-3">
-            <input type="text" class="form-control" id="search" placeholder="Search for rooms"
-                >
-            <button class="btn btn-outline-secondary" onclick="searchClicked()">Search</button>
+        <h4>Rooms Management</h4>
+
+        <div class="input-group mb-3 mt-5 align-items-stretch">
+            <input type="text" class="form-control mt-2" id="search" placeholder="Enter room name">
+            <div class="input-group-append ms-2">
+                <button class="btn btn-outline-secondary" onclick="searchClicked()">Search</button>
+            </div>
         </div>
     </div>
 
@@ -64,14 +64,28 @@
 
         // document.addEventListener('DOMContentLoaded', function () {
             loadRooms();
+            getUser();
         // });
+
+        async function getUser() {
+            try {
+                const response = await fetch('/user');
+                if (response.ok) {
+                    const data = await response.json();
+                    nav_username.innerText = `${data.name}`;
+                }
+                } catch (err) {
+                    console.error(err.message);
+                    Notiflix.Report.failure('Error', err.message, 'Close');
+                }
+            }
 
         function searchClicked(){
             // alert('hello');
             const room_name = document.querySelector('#search').value;
             // console.log(room_name);
             searchRooms(room_name);
-        }
+            }
 
 
         // define functions

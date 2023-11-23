@@ -8,22 +8,25 @@
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="/public/css/project/dashboard.css"> -->
     <script src="/public/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/public/css/project/Booking_details.css">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand navbar-dark bg-danger">
+    <nav class="navbar navbar-expand navbar-dark bg-danger custom-bg-red">
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Rooms/Confirm</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/home">Rooms</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Confirm</a></li>
                     
                     <!-- Dropdown for User -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px"> <p class="d-inline" id="nav_username">Arjarn Surapong</p> 
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px" width="28px"> <p class="d-inline" id="nav_username">Arjarn Surapong</p> 
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/account">Account</a></li>
                             <li><a class="dropdown-item" href="/logout">Logout</a></li>
                         </ul>
                     </li>

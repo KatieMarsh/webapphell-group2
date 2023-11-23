@@ -6,26 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/css/project/dashboard.css">
+    <!-- <link rel="stylesheet" href="/public/css/project/dashboard.css"> -->
     <script src="/public/js/bootstrap.bundle.min.js"></script>
     <!-- Custom styles for this template-->
     <link href="/public/css/project/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/project/Booking_details.css">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand navbar-dark bg-danger">
+    <nav class="navbar navbar-expand navbar-dark bg-danger  custom-bg-red ">
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Rooms/Confirm</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/home">Rooms</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Confirm</a></li>
                     
                     <!-- Dropdown for User -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px" width="40px"> John Doe
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px" width="28px"> <p class="d-inline" id="nav_username">Arjarn Surapong</p> 
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/account">Account</a></li>
                             <li><a class="dropdown-item" href="/logout">Logout</a></li>
                         </ul>
                     </li>
@@ -70,24 +73,24 @@
         getTime();
         getDashboard();
         getHistory();
+        getUser();
         // Select tables
         const table_dashboard = document.querySelector('#table_dashboard');
         const table_history = document.querySelector('#table_history');
         const datetime = document.querySelector('#datetime');
 
-        // document.getElementById('logoutButton').addEventListener('click', function() {
-        // fetch('/logout').then(function(response) {
-        //     if (response.ok) {
-        //         return response.text().then(function(text) {
-        //             alert("Logged out successfully"); // Or redirect to login page
-        //         });
-        //     }
-        //     throw Error('Logout Error');
-        // }).catch(function(error) {
-        //     alert(error.message);
-        // });
-        //  });
-
+        async function getUser() {
+            try {
+                const response = await fetch('/user');
+                if (response.ok) {
+                    const data = await response.json();
+                    nav_username.innerText = `${data.name}`;
+                }
+            } catch (err) {
+                console.error(err.message);
+                Notiflix.Report.failure('Error', err.message, 'Close');
+            }
+        }
         // Date Time
         function getTime(){
             fetch('/now').then(function(response){

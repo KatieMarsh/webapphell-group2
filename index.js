@@ -29,8 +29,10 @@ app.use(session({
 }));
 // Get user info
 app.get('/user', function (req, res) {
-    res.json({ 'user_id': req.session.user_id, 'username': req.session.username, 'role': req.session.role, 'name':req.session.name});
+    res.json({ 'user_id': req.session.user_id, 'username': req.session.username, 'role': req.session.role, 'name':req.session.name, 'phone':req.session.phone});
 });
+
+
 // ------------- Logout --------------
 app.get("/logout", function (req, res) {
     // clear session
@@ -50,7 +52,7 @@ app.get("/logout", function (req, res) {
 // ---------- login -----------
 app.post('/login', function (req, res) {
     const { username, password } = req.body;
-    const sql = 'SELECT user_id, email, password, name, role FROM user WHERE email=?';
+    const sql = 'SELECT user_id, email, password, name, role, phone FROM user WHERE email=?';
     con.query(sql, [username], function (err, results) {
         if (err) {
             console.error(err);
@@ -72,6 +74,7 @@ app.post('/login', function (req, res) {
                         req.session.username = username;
                         req.session.role = results[0].role;
                         req.session.name = results[0].name;
+                        req.session.phone = results[0].phone
                         console.log(req.session.user_id);
                         console.log(req.session.role);
                         userid = results[0].user_id;
@@ -197,8 +200,20 @@ app.post('/account/change_password/reset', function (req, res) {
 
     })
 });
-app.get('/home', function (_req, res) {
-    res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
+app.get('/home', function (req, res) {
+    if (req.session.role == 1) {
+        res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
+    }
+    else if (req.session.role == 2){
+        res.redirect('/staff/home');
+    }
+    else if (req.session.role == 3){
+        res.sendFile(path.join(__dirname, 'views/project/Page1.html'));
+    }
+    else{
+        res.redirect('/');
+    }
+
 });
 app.get('/staff/home', function (req, res) {
     if (req.session.role == 2) {
@@ -246,7 +261,7 @@ app.post('/staff/home/enableroom', function (req, res) {
 // ---------- Page routes -----------
 app.get('/account/my-booking', function (req, res) {
     if (req.session.role != 1) {
-        res.redirect('/');
+        res.sendFile(path.join(__dirname, 'views/project/My_Booking_not_student.html'));
     }
     else {
         res.sendFile(path.join(__dirname, 'views/project/My_Booking.html'));
@@ -353,21 +368,6 @@ app.post("/addroom/insert_room", function (req, res) {
         
     });
 });
-// ---------- Upload image to the server ---------------
-// upload
-// app.post('/addroom/insert_room/uploading', function(req,res){
-//     upload(req, res, function(err){
-//         if(err){
-//             console.error(err);
-//             return res.status(500).send('upload error');
-//         }
-//         // do anything after the upload
-
-        
-//         res.send('Upload done');
-//     })
-
-// });
 
 // ---------- My Booking -----------
 app.get('/my-booking/getbooking', function (_req, res) {
@@ -375,7 +375,7 @@ app.get('/my-booking/getbooking', function (_req, res) {
       res.status(403).json({ error: 'Unauthorized' });
     } else {
       const userId = userid;
-      const query = `SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = ?;`;
+      const query = `SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = ? ORDER BY booking_id DESC;`;
   
       con.query(query, [userId], (err, results) => {
         if (err) {
@@ -387,23 +387,7 @@ app.get('/my-booking/getbooking', function (_req, res) {
       });
     }
   });
-// app.get("/my-booking/getbooking", function (req, res) {
-//     const {user_id} = req.body;
-//     const sql = "SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = ?;";
-//     con.query(sql, [user_id],function (err, results) {
-//         if (err) {
-//             console.error(err);
-//             res.status(500).send('DB error');
-//         }
-//         else {
-//             res.send(results);
-//         }
-//     })
-// });
 //---------------------------------------------------------------------
-app.get('/account/my-booking', function (req, res) {
-    res.sendFile(path.join(__dirname, 'views/project/My_Booking.html'));
-});
 
 // ===== Dasboard =====
 // Dashboard service
@@ -570,10 +554,12 @@ app.get('/booking_details', function (req, res) {
         res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
     }
     else if (req.session.role == 2) {
-        res.redirect('/staff/home');
+        // res.redirect('/staff/home');
+        res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
     }
     else if (req.session.role == 3){
-        res.redirect('/confirm');
+        // res.redirect('/confirm');
+        res.sendFile(path.join(__dirname, 'views/project/Booking_details.html'));
     }
     else {
         res.sendFile(path.join(__dirname, 'views/project/Login.html'));
