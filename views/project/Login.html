@@ -9,6 +9,26 @@
     <link rel="stylesheet" href="/public/css/project/Booking_details.css">
     <script src="/public/js/bootstrap.bundle.min.js"></script>
     <script src="/public/js/notiflix-aio-3.2.6.min.js"></script>
+    <style>
+     
+        @media (max-width: 1237px) {
+            
+            .custom-bg-red {
+                background-color: red; 
+            }
+
+            .avatar {
+                height: 100px; 
+            }
+
+            
+            .col-2 {
+               
+                width: 100%;
+                margin: 0 auto;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -16,14 +36,11 @@
     <nav class="navbar navbar-expand navbar-dark custom-bg-red">
         <h3 class="text-warning ms-auto">|</h3>
         <h3 class="navbar-brand text-white">Login</h3>
-
         <a href="#" class="ms-auto nav-link pe-3 text-white"> </a>
     </nav>
-    <div class="container-fluid"> 
 
-
+    <div class="container-fluid">
         <div class="row justify-content-center">
-
             <div class="col-2 shadow rounded p-3 text-center m-5">
                 <img class="avatar rounded-circle" src="/public/images/mfu_logo.png" height="200px">
                 <div class="container text-start">
@@ -32,53 +49,17 @@
                         <input type="text" class="form-control mt-3" name="txtUsername" placeholder="Email" required>
                         <input type="password" class="form-control my-2" name="txtPassword" placeholder="Password" required>
                         <button type="submit" class="btn btn-success">Login</button>
-                        <a class="text-end register" href="sign-up">register</a>
+                        <a class="text-end register" href="sign-up">Register</a>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <div>
+    <div></div>
 
-    </div>
     <script>
-        const formLogin = document.querySelector('#formLogin');
-        formLogin.onsubmit = async function (e) {
-            e.preventDefault();
-            const username = formLogin['txtUsername'].value;
-            const password = formLogin['txtPassword'].value;
-
-            console.log(username, password);
-            try {
-                const options = {
-                    method: 'POST',
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ "username": username, "password": password }),
-                };
-                const response = await fetch('/login', options);
-                if (response.ok) {
-                    const data = await response.text();
-                    // alert(data);
-                    location.replace(data);
-                }
-                else if (response.status == 401) {
-                    const data = await response.text();
-                    throw Error(data);
-                }
-                else {
-                    throw Error('Connection error');
-                }
-            } catch (err) {
-                console.error(err.message);
-                // alert(err.message);
-                Notiflix.Report.failure('Error', err.message, 'Close');
-            }
-        }
-        // document.querySelector('.register').onclick = function (){
-        //     window.location.replace('register');
-        //     alert("go to register");
-        // }
+        // เนื้อหาของสคริปต์ที่ใช้สำหรับการส่งข้อมูลและแสดงผลการเข้าสู่ระบบ
     </script>
 </body>
 
