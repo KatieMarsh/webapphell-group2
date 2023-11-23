@@ -9,12 +9,17 @@
     <link rel="stylesheet" href="/public/css/project/Booking_details.css">
     <script src="/public/js/bootstrap.bundle.min.js"></script>
     <script src="/public/js/notiflix-aio-3.2.6.min.js"></script>
+    <link rel="stylesheet" href="/public/css/project/time.css">
 </head>
+<style>
+
+</style>
 
 <body>
-    <nav class="navbar navbar-expand navbar-dark bg-danger">
+    <nav class="navbar navbar-expand navbar-dark custom-bg-red">
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
+
                     <ul id="nav" class="navbar-nav ms-auto">
                         <div class="ms-0">
                             <ul class="navbar-nav">
@@ -34,30 +39,49 @@
                         </li>
                     </ul>
                 </div>
-            </div>
-        </nav>
-     
-        
-        <div class="container text-center mt-5">
-
-            <div class="container text-center mt-5">
-                <h4>Rooms Availibility</h4>
-                <div class="input-group mb-3 mt-5 align-items-stretch">
-                    <input type="text" class="form-control mt-2" id="search" placeholder="Enter room name">
-                    <div class="input-group-append ms-2">
-                        <button class="btn btn-outline-secondary" onclick="searchClicked()">Search</button>
-                    </div>
-                </div>
-                
-            </div>
-
-
-            <div class="container">
-                <div class="row" id="room-container">
-                </div>
 
             </div>
         </div>
+    </nav>
+
+    <br>
+    <div class="row2" style="text-align: center;">
+        <p id="currentDate" class="text-start" style="display: inline-block;"></p>
+        <script src="/public/js/time.js"></script>
+    </div>
+    
+    
+
+
+
+
+    <div class="container text-center mt-5">
+
+        <div class="container text-center mt-5">
+            <h4>Rooms Availibility</h4>
+
+
+            <div class="input-group mb-3 mt-5 align-items-stretch">
+                <input type="text" class="form-control mt-2" id="search" placeholder="Enter room name">
+                <div class="input-group-append mb-2" style="margin-left: 10px;">
+                    <button class="btn btn-outline-secondary" onclick="searchClicked()">Search</button>
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+
+        <div class="container">
+            <div class="row" id="room-container">
+            </div>
+
+        </div>
+    </div>
+
 
         <script>
 
@@ -68,8 +92,9 @@
             loadRooms();
             getUser();
 
-            // define functions
-            async function getUser() {
+
+        // define functions
+        async function getUser() {
             try {
                 const response = await fetch('/user');
                 if (response.ok) {
@@ -93,35 +118,35 @@
                     }
                     nav_username.innerText = `${data.name}`;
                 }
-                } catch (err) {
-                    console.error(err.message);
-                    Notiflix.Report.failure('Error', err.message, 'Close');
-                }
+            } catch (err) {
+                console.error(err.message);
+                Notiflix.Report.failure('Error', err.message, 'Close');
             }
+        }
 
-            function searchClicked() {
-                const room_name = document.querySelector('#search').value;
-                searchRooms(room_name);
-            }
+        function searchClicked() {
+            const room_name = document.querySelector('#search').value;
+            searchRooms(room_name);
+        }
 
-            // This function will display the rooms from JSON data received from back-end
-            function displayRooms(data) {
-                const roomContainer = document.getElementById('room-container');
-                roomContainer.innerHTML = '';
-                console.log(data)
-                data.forEach(room => {
-                    const col = document.createElement('div');
-                    col.className = 'col-4 mt-5';
+        // This function will display the rooms from JSON data received from back-end
+        function displayRooms(data) {
+            const roomContainer = document.getElementById('room-container');
+            roomContainer.innerHTML = '';
+            console.log(data)
+            data.forEach(room => {
+                const col = document.createElement('div');
+                col.className = 'col-4 mt-5';
 
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.style.width = '250px';
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.width = '250px';
 
 
-                    let facilitiesHtml = createfacilitiesHtml(room);
-                    let timeSlotsHtml = createTimeSlotsHtml(room);
+                let facilitiesHtml = createfacilitiesHtml(room);
+                let timeSlotsHtml = createTimeSlotsHtml(room);
 
-                    card.innerHTML = `
+                card.innerHTML = `
                             <img src="/public/images/${room.image}" class="card-img-top" alt="${room.room_name}">
                             <div class="card-body">
                                 <h4 class="card-title">${room.room_name}</h4>
@@ -133,62 +158,64 @@
                             </div>
                         `;
 
-                    if (room.status === 'disabled') {
-                        const disabledText = document.createElement('h6');
-                        disabledText.className = 'text-center bg-danger';
-                        disabledText.style.color = 'white';
-                        disabledText.innerText = 'Disabled';
-                        card.appendChild(disabledText);
+                if (room.status === 'disabled') {
+                    const disabledText = document.createElement('h6');
+                    disabledText.className = 'text-center bg-danger';
+                    disabledText.style.color = 'white';
+                    disabledText.innerText = 'Disabled';
+                    card.appendChild(disabledText);
 
-                    } else {
-                        const bookButton = document.createElement('button');
-                        bookButton.className = 'btn btn-primary';
-                        bookButton.innerText = 'Book Now';
+                } else {
+                    const bookButton = document.createElement('button');
+                    bookButton.className = 'btn btn-primary';
+                    bookButton.innerText = 'Book Now';
 
-                        // Set the onclick function to navigate to the booking_details page
-                        bookButton.onclick = () => bookRoom(room.room_id);
-                        card.appendChild(bookButton);
-                    }
+                    // Set the onclick function to navigate to the booking_details page
+                    bookButton.onclick = () => bookRoom(room.room_id);
+                    card.appendChild(bookButton);
+                }
 
-                    col.appendChild(card);
-                    roomContainer.appendChild(col);
+
+                col.appendChild(card);
+                roomContainer.appendChild(col);
+            });
+        }
+
+        // Send room_name to the back-end to query the DB with
+        function searchRooms(room_name) {
+            const options = {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    "room_name": room_name
+                }),
+            };
+            fetch('/room', options)
+                .then(response => response.json())
+                .then(data => {
+                    displayRooms(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                 });
-            }
+        }
 
-            // Send room_name to the back-end to query the DB with
-            function searchRooms(room_name) {
-                const options = {
-                    method: 'POST',
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        "room_name": room_name
-                    }),
-                };
-                fetch('/room', options)
-                    .then(response => response.json())
-                    .then(data => {
-                        displayRooms(data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            }
+        // Get all rooms data from DB
+        function loadRooms() {
+            fetch('/room')
+                .then(response => response.json())
+                .then(data => {
+                    displayRooms(data);
 
-            // Get all rooms data from DB
-            function loadRooms() {
-                fetch('/room')
-                    .then(response => response.json())
-                    .then(data => {
-                        displayRooms(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
 
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            }
+        // show facilities
+        function createfacilitiesHtml(room) {
 
-            // show facilities
-            function createfacilitiesHtml(room) {
             const timeSlotLabels = {
                 "audio": "audio",
                 "video": "video",
@@ -198,46 +225,45 @@
                 "webcam": "webcam"
             };
             let html = '';
-
-
             for (const key in timeSlotLabels) {
                 if (room.hasOwnProperty(key)) {
                     const color = room[key] === 0 ? 'bg-danger' : 'bg-success';
                     html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
                 }
+
             }
             return html;
-            }
+        }
 
-            // show time slots
-            function createTimeSlotsHtml(room) {
-                const timeSlotLabels = {
-                    "time_slot_1": "08:00 - 10:00",
-                    "time_slot_2": "10:00 - 12:00",
-                    "time_slot_3": "13:00 - 15:00",
-                    "time_slot_4": "15:00 - 17:00"
-                };
-                let html = '';
-                const isDisabled = room.status === 'disabled';
+        // show time slots
+        function createTimeSlotsHtml(room) {
+            const timeSlotLabels = {
+                "time_slot_1": "08:00 - 10:00",
+                "time_slot_2": "10:00 - 12:00",
+                "time_slot_3": "13:00 - 15:00",
+                "time_slot_4": "15:00 - 17:00"
+            };
+            let html = '';
+            const isDisabled = room.status === 'disabled';
 
-                for (const key in timeSlotLabels) {
-                    if (room.hasOwnProperty(key)) {
-                        const color = isDisabled || room[key] === 1 ? 'bg-danger' : 'bg-success';
-                        html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
-                    }
+            for (const key in timeSlotLabels) {
+                if (room.hasOwnProperty(key)) {
+                    const color = isDisabled || room[key] === 1 ? 'bg-danger' : 'bg-success';
+                    html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
                 }
-                return html;
             }
+            return html;
+        }
 
-            function bookRoom(room_id) {
-                sessionStorage.clear();
-                sessionStorage.room_id = room_id;
-                // Redirect to booking_details.html
-                window.location.href = `/Booking_details`;
-            }
+        function bookRoom(room_id) {
+            sessionStorage.clear();
+            sessionStorage.room_id = room_id;
+            // Redirect to booking_details.html
+            window.location.href = `/Booking_details`;
+        }
 
-        </script>
+    </script>
 
-    </body>
+</body>
 
 </html>
