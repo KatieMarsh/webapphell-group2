@@ -59,7 +59,42 @@
     <div></div>
 
     <script>
-        // เนื้อหาของสคริปต์ที่ใช้สำหรับการส่งข้อมูลและแสดงผลการเข้าสู่ระบบ
+        const formLogin = document.querySelector('#formLogin');
+        formLogin.onsubmit = async function (e) {
+            e.preventDefault();
+            const username = formLogin['txtUsername'].value;
+            const password = formLogin['txtPassword'].value;
+
+            console.log(username, password);
+            try {
+                const options = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "username": username, "password": password }),
+                };
+                const response = await fetch('/login', options);
+                if (response.ok) {
+                    const data = await response.text();
+                    // alert(data);
+                    location.replace(data);
+                }
+                else if (response.status == 401) {
+                    const data = await response.text();
+                    throw Error(data);
+                }
+                else {
+                    throw Error('Connection error');
+                }
+            } catch (err) {
+                console.error(err.message);
+                // alert(err.message);
+                Notiflix.Report.failure('Error', err.message, 'Close');
+            }
+        }
+        // document.querySelector('.register').onclick = function (){
+        //     window.location.replace('register');
+        //     alert("go to register");
+        // }
     </script>
 </body>
 
