@@ -16,7 +16,7 @@
     <nav class="navbar navbar-expand navbar-dark custom-bg-red">
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto" id="nav">
                     <!-- <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li> -->
                     <li class="nav-item"><a class="nav-link active" href="/staff/home">Home</a></li>
                     
@@ -111,9 +111,26 @@
                 const response = await fetch('/user');
                 if (response.ok) {
                     const data = await response.json();
+                    if (data.role == 3) {
+                        const nav = document.querySelector('#nav');
+                        nav.innerHTML = `<li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/home">Rooms</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Confirm</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px"
+                                width="28px">
+                            <p class="d-inline" id="nav_username">Arjarn Surapong</p>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/account">Account</a></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>`
+                    }
                     document.querySelector('#nav_username').innerText = `${data.name}`;
                     txt_userName.innerText = `Booking name: ${data.name}`;
-
                     if(data.role!=1){
                         info.innerHTML = `<h1>You are not a student this page is not available for you</h1>`;
                     }
