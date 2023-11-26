@@ -12,11 +12,28 @@
     <link rel="stylesheet" href="/public/css/project/time.css">
 </head>
 <style>
-
-</style>
+    .navbar-nav .nav-link.my-account {
+      margin-right: 200px;
+    }
+  
+    .navbar-light .navbar-nav .nav-link {
+      color: white;
+      font-size: 16px;
+    }
+  
+    .bg-custom {
+      background-color: #9A1212;
+    }
+  
+    .navbar-light .navbar-nav .nav-link::before {
+      content: "|";
+      color: gold;
+      margin-right: 5px;
+    }
+  </style>
 
 <body>
-    <nav class="navbar navbar-expand navbar-dark custom-bg-red">
+    <nav class="navbar navbar-expand navbar-light bg-custom">
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
@@ -32,7 +49,7 @@
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px"
                                 width="28px">
-                            <p class="d-inline" id="nav_username">Arjarn Surapong</p>
+                            <p class="d-inline" id="nav_username"> Arjarn Surapong</p>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="/account">account</a></li>

@@ -10,9 +10,28 @@
     <script src="/public/js/bootstrap.bundle.min.js"></script>
     <script src="/public/js/notiflix-aio-3.2.6.min.js"></script>
 </head>
-
+<style>
+    .navbar-nav .nav-link.my-account {
+      margin-right: 200px;
+    }
+  
+    .navbar-light .navbar-nav .nav-link {
+      color: white;
+      font-size: 16px;
+    }
+  
+    .bg-custom {
+      background-color: #9A1212;
+    }
+  
+    .navbar-light .navbar-nav .nav-link::before {
+      content: "|";
+      color: gold;
+      margin-right: 5px;
+    }
+  </style>
 <body>
-    <nav class="navbar navbar-expand navbar-dark custom-bg-red">
+    <nav class="navbar navbar-expand navbar-light bg-custom">
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
