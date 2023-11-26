@@ -9,6 +9,26 @@
     <link rel="stylesheet" href="/public/css/project/Booking_details.css">
     <script src="/public/js/bootstrap.bundle.min.js"></script>
     <script src="/public/js/notiflix-aio-3.2.6.min.js"></script>
+    <style>
+     
+        @media (max-width: 1237px) {
+            
+            .custom-bg-red {
+                background-color: #9A1212; 
+            }
+
+            .avatar {
+                height: 100px; 
+            }
+
+            
+            .col-2 {
+               
+                width: 100%;
+                margin: 0 auto;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -16,14 +36,11 @@
     <nav class="navbar navbar-expand navbar-dark custom-bg-red">
         <h3 class="text-warning ms-auto">|</h3>
         <h3 class="navbar-brand text-white">Login</h3>
-
         <a href="#" class="ms-auto nav-link pe-3 text-white"> </a>
     </nav>
-    <div class="container-fluid"> 
 
-
+    <div class="container-fluid">
         <div class="row justify-content-center">
-
             <div class="col-2 shadow rounded p-3 text-center m-5">
                 <img class="avatar rounded-circle" src="/public/images/mfu_logo.png" height="200px">
                 <div class="container text-start">
@@ -32,16 +49,15 @@
                         <input type="text" class="form-control mt-3" name="txtUsername" placeholder="Email" required>
                         <input type="password" class="form-control my-2" name="txtPassword" placeholder="Password" required>
                         <button type="submit" class="btn btn-success">Login</button>
-                        <a class="text-end register" href="sign-up">register</a>
+                        <a class="text-end register" href="sign-up">Register</a>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <div>
+    <div></div>
 
-    </div>
     <script>
         const formLogin = document.querySelector('#formLogin');
         formLogin.onsubmit = async function (e) {
