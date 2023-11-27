@@ -61,6 +61,7 @@
             overflow-y: auto;
             /* ทำให้ตารางสามารถเลื่อนได้ในแนวดิ่ง */
         }
+      
     </style>
 </head>
 
@@ -153,6 +154,7 @@
 
     <script>
         postBooking();
+
         const table_booking = document.querySelector('#table_booking');
 
         function postBooking() {
@@ -169,10 +171,14 @@
                     data.forEach(function (room) {
 
                         let statusClass = '';
+
+                        // Update statusClass based on room.status
                         if (room.status === 'approved') {
                             statusClass = 'table-success';
+                        } else if (room.status === 'pending') {
+                            statusClass = 'table-warning'; // Change to yellow for "Pending" status
                         } else if (room.status === 'rejected') {
-                            statusClass = 'table-warning';
+                            statusClass = 'table-danger'; // Change to red for "Rejected" status
                         }
 
                         rows += `<tr class="${statusClass}">`;
@@ -200,6 +206,7 @@
                     alert(err);
                 });
         }
+
     </script>
 
 </body>
