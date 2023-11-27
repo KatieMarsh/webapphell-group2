@@ -16,7 +16,7 @@
             overflow: hidden;
         }
 
-        
+
 
         .navbar-nav .nav-link.my-account {
             margin-right: 200px;
@@ -35,6 +35,24 @@
             content: "|";
             color: gold;
             margin-right: 5px;
+        }
+
+        
+
+        .table-success {
+            background-color: #08f940;
+            
+        }
+
+        .table-warning {
+            background-color: #f7bb08;
+            
+        }
+
+        /* เพิ่มสไตล์ใหม่เพื่อทำให้แถวมีความยาวเท่ากับคอลัมน์ status */
+        .equal-status {
+            display: flex;
+            align-items: center;
         }
     </style>
 </head>
@@ -92,8 +110,7 @@
                         <th>Room</th>
                         <th>Time</th>
                         <th>Status</th>
-                        <th></th>
-                        <th></th>
+                        
                     </tr>
                 </thead>
                 <tbody id="table_booking">
@@ -127,6 +144,7 @@
     <script>
         postBooking();
         const table_booking = document.querySelector('#table_booking');
+
         function postBooking() {
             fetch('/my-booking/getbooking')
                 .then(function (response) {
@@ -139,28 +157,33 @@
                     console.log(data);
                     let rows = '';
                     data.forEach(function (room) {
-                        rows += '<tr>';
+
+                        let statusClass = '';
+                        if (room.status === 'approved') {
+                            statusClass = 'table-success';
+                        } else if (room.status === 'rejected') {
+                            statusClass = 'table-warning';
+                        }
+
+                        rows += `<tr class="${statusClass}">`;
                         rows += `<td>${room.formatted_date}</td>`;
                         rows += `<td>${room.room_name}</td>`;
                         if (room.time_slot_1 == "1") {
                             rows += `<td>08:00 - 10:00</td>`;
-                        }
-                        else if (room.time_slot_2 == "1") {
+                        } else if (room.time_slot_2 == "1") {
                             rows += `<td>10:00 - 12:00</td>`;
-                        }
-                        else if (room.time_slot_3 == "1") {
+                        } else if (room.time_slot_3 == "1") {
                             rows += `<td>13:00 - 15:00</td>`;
-                        }
-                        else if (room.time_slot_4 == "1") {
+                        } else if (room.time_slot_4 == "1") {
                             rows += `<td>15:00 - 17:00</td>`;
-                        }
-                        else {
+                        } else {
                             rows += `<td>Error</td>`;
                         }
                         rows += `<td>${room.status}</td>`;
                         rows += '</tr>';
                     });
                     table_booking.innerHTML = rows;
+
                 })
                 .catch(function (err) {
                     console.error(err);
