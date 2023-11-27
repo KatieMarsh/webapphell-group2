@@ -37,22 +37,29 @@
             margin-right: 5px;
         }
 
-        
+
 
         .table-success {
             background-color: #08f940;
-            
+
         }
 
         .table-warning {
             background-color: #f7bb08;
-            
+
         }
 
         /* เพิ่มสไตล์ใหม่เพื่อทำให้แถวมีความยาวเท่ากับคอลัมน์ status */
         .equal-status {
             display: flex;
             align-items: center;
+        }
+
+        .table-container {
+            max-height: 300px;
+            /* ตั้งค่าสูงสุดของตารางที่สามารถเลื่อนได้ */
+            overflow-y: auto;
+            /* ทำให้ตารางสามารถเลื่อนได้ในแนวดิ่ง */
         }
     </style>
 </head>
@@ -103,28 +110,31 @@
             </div>
         </div>
         <div class="col-sm-5 pt-5 ">
-            <table class="table border">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Date</th>
-                        <th>Room</th>
-                        <th>Time</th>
-                        <th>Status</th>
-                        
-                    </tr>
-                </thead>
-                <tbody id="table_booking">
-                    <tr class="table-secondary ">
-                        <td>7/12/2023</td>
-                        <td>XL101</td>
-                        <td>09:00 - 12:00</td>
-                        <td>Pending</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+            <div class="table-container">
 
-                </tbody>
-            </table>
+                <table class="table border">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Date</th>
+                            <th>Room</th>
+                            <th>Time</th>
+                            <th>Status</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="table_booking">
+                        <tr class="table-secondary ">
+                            <td>7/12/2023</td>
+                            <td>XL101</td>
+                            <td>09:00 - 12:00</td>
+                            <td>Pending</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <footer class="container-fluid" id="footer">
