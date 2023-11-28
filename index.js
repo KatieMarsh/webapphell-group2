@@ -377,7 +377,17 @@ app.get('/my-booking/getbooking', function (_req, res) {
 // ===== Dasboard =====
 // Dashboard service
 app.get('/staff/home/dashboard', function (req, res) {
-    res.sendFile(path.join(__dirname, 'views/project/dashboard.html'));
+    if (req.session.role == 1) {
+        res.redirect('/home');
+    }
+    else if (req.session.role == 2 || req.session.role == 3)
+    {
+        res.sendFile(path.join(__dirname, 'views/project/dashboard.html'));
+    }
+    else
+    {
+        res.redirect('/');
+    }
 });
 // Datetime service
 app.get("/now", function (_req, res) {
@@ -398,8 +408,15 @@ app.get('/dashboard/getdashboard', function (_req, res) {
     })
 });
 // GET history info
-app.get("/dashboard/gethistory", function (_req, res) {
-    const sql = "SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.status = 'approved' ORDER BY booking_id DESC;";
+app.get("/dashboard/gethistory", function (req, res) {
+    let sql = '';
+    if (req.session.role == 2) {
+    sql = `SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.status = 'approved' ORDER BY booking_id DESC;`;
+    } else if(req.session.role == 3)
+    {
+    // const sql = `SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.status = 'approved' ORDER BY booking_id DESC;`; 
+    sql = `SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.status = 'approved' AND booking.whoApprove = '${req.session.name}' ORDER BY booking_id DESC;`;
+    }
     con.query(sql, function (err, results) {
         if (err) {
             console.error(err);
