@@ -1,4 +1,3 @@
-
 var currentDate = new Date();
 
 
@@ -8,3 +7,4 @@ var year = currentDate.getFullYear();
 
 var currentDateElement = document.getElementById('currentDate');
 currentDateElement.textContent = "Today : " +" "+ day + " " + month + " " + year;
+

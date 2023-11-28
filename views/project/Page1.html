@@ -25,34 +25,51 @@
       background-color: #9A1212;
     }
   
-   
-  </style>
+  
+    @media (max-width: 1237px) {
+        
+        .custom-bg-red {
+            background-color: #9a1212; 
+        }
+
+        .avatar {
+            height: 100px; 
+        }
+
+        
+        .col-2 {
+           
+            width: 100%;
+            margin: 0 auto;
+        }
+    }
+</style>
 
 <body>
     <nav class="navbar navbar-expand navbar-light bg-custom">
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
-                    <div class="ms-0">
-                        <ul class="navbar-nav">
-                            <!-- <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li> -->
-                            <li class="nav-item"><a class="nav-link active" href="/staff/home">Rooms</a></li>
-                        </ul>
-                    </div>
-                    <!-- Dropdown for User -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px"
-                                width="28px">
-                            <p class="d-inline" id="nav_username"> Arjarn Surapong</p>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/account">account</a></li>
-                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
+
+                    <ul id="nav" class="navbar-nav ms-auto">
+                        <div class="ms-0">
+                            <ul class="navbar-nav">
+                                <!-- <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li> -->
+                                <li class="nav-item"><a class="nav-link active" href="/staff/home">Rooms</a></li>
+                            </ul>
+                        </div>
+                        <!-- Dropdown for User -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px" width="28px"> <p class="d-inline" id="nav_username">Arjarn Surapong</p> 
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/account">account</a></li>
+                                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
         </div>
     </nav>
@@ -60,7 +77,6 @@
     <br>
     <div class="row2" style="text-align: center;">
         <p id="currentDate" class="text-start" style="display: inline-block;"></p>
-        <script src="/public/js/time.js"></script>
     </div>
     
     
@@ -95,13 +111,16 @@
         </div>
     </div>
 
-    <script>
-        //Global variable
-        role = 0;
 
-        // call the functions
-        loadRooms();
-        getUser();
+        <script>
+
+            //Global variable
+            role = 0;
+            const nav = document.querySelector('#nav');
+            // call the functions
+            loadRooms();
+            getUser();
+
 
         // define functions
         async function getUser() {
@@ -109,6 +128,23 @@
                 const response = await fetch('/user');
                 if (response.ok) {
                     const data = await response.json();
+                    if (data.role == 3) {
+                        nav.innerHTML = `<li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/home">Rooms</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Confirm</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px"
+                                width="28px">
+                            <p class="d-inline" id="nav_username">Arjarn Surapong</p>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/account">Account</a></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>`
+                    }
                     nav_username.innerText = `${data.name}`;
                 }
             } catch (err) {
@@ -153,7 +189,7 @@
 
                 if (room.status === 'disabled') {
                     const disabledText = document.createElement('h6');
-                    disabledText.className = 'text-center bg-danger';
+                    disabledText.className = 'text-center bg-secondary';
                     disabledText.style.color = 'white';
                     disabledText.innerText = 'Disabled';
                     card.appendChild(disabledText);
@@ -255,8 +291,9 @@
             window.location.href = `/Booking_details`;
         }
 
-    </script>
 
+    </script>
+    <script src="/public/js/time.js"></script>
 </body>
 
 </html>

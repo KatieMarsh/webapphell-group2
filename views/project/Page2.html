@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/public/css/project/Booking_details.css">
     <script src="/public/js/bootstrap.bundle.min.js"></script>
     <script src="/public/js/notiflix-aio-3.2.6.min.js"></script>
+    <link rel="stylesheet" href="/public/css/project/time.css">
 </head>
 <style>
     .navbar-nav .nav-link.my-account {
@@ -30,7 +31,7 @@
     <nav class="navbar navbar-expand navbar-light bg-custom">
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
+                <ul id="nav" class="navbar-nav ms-auto">
 
                     <!-- Dropdown for User -->
                     <li class="nav-item dropdown">
@@ -48,6 +49,12 @@
             </div>
         </div>
     </nav>
+
+    <br>
+    <div class="row2" style="text-align: center;">
+        <p id="currentDate" class="text-start" style="display: inline-block;"></p>
+    </div>
+
     <!-- <a href="/dashboard">Dashboard</a> /
     <a href="Link">Bookroom</a><br> -->
     <div class="container text-center mt-5">
@@ -76,6 +83,7 @@
     <script>
         // call functions
         // Event listener for DOMContentLoaded
+        const nav = document.querySelector('#nav');
 
         // document.addEventListener('DOMContentLoaded', function () {
             loadRooms();
@@ -87,6 +95,39 @@
                 const response = await fetch('/user');
                 if (response.ok) {
                     const data = await response.json();
+                    if (data.role == 2) {
+                        nav.innerHTML = ` <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/home">Rooms</a></li>
+                   <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px"
+                                width="28px">
+                            <p class="d-inline" id="nav_username">Arjarn Surapong</p>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/account">Account</a></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>`
+                    }
+                    else if (data.role == 3) {
+                        nav.innerHTML = `<li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/home">Rooms</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Confirm</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px"
+                                width="28px">
+                            <p class="d-inline" id="nav_username">Arjarn Surapong</p>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/account">Account</a></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>`
+                    }
                     nav_username.innerText = `${data.name}`;
                 }
                 } catch (err) {
@@ -297,7 +338,7 @@
         }
 
     </script>
-
+    <script src="/public/js/time.js"></script>
 </body>
 
 </html>
