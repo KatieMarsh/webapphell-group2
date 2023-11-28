@@ -49,7 +49,7 @@
 
         }
 
-        /* เพิ่มสไตล์ใหม่เพื่อทำให้แถวมีความยาวเท่ากับคอลัมน์ status */
+        
         .equal-status {
             display: flex;
             align-items: center;
@@ -57,9 +57,9 @@
 
         .table-container {
             max-height: 300px;
-            /* ตั้งค่าสูงสุดของตารางที่สามารถเลื่อนได้ */
+            
             overflow-y: auto;
-            /* ทำให้ตารางสามารถเลื่อนได้ในแนวดิ่ง */
+            
         }
       
     </style>
@@ -129,8 +129,7 @@
                             <td>XL101</td>
                             <td>09:00 - 12:00</td>
                             <td>Pending</td>
-                            <td></td>
-                            <td></td>
+                            
                         </tr>
 
                     </tbody>
@@ -172,13 +171,13 @@
 
                         let statusClass = '';
 
-                        // Update statusClass based on room.status
+                        
                         if (room.status === 'approved') {
                             statusClass = 'table-success';
                         } else if (room.status === 'pending') {
-                            statusClass = 'table-warning'; // Change to yellow for "Pending" status
+                            statusClass = 'table-warning'; 
                         } else if (room.status === 'rejected') {
-                            statusClass = 'table-danger'; // Change to red for "Rejected" status
+                            statusClass = 'table-danger'; 
                         }
 
                         rows += `<tr class="${statusClass}">`;
