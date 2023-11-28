@@ -146,17 +146,31 @@
                 let facilitiesHtml = createfacilitiesHtml(room);
                 let timeSlotsHtml = createTimeSlotsHtml(room);
 
-                card.innerHTML = `
-                                <img src="/public/images/${room.image}" class="card-img-top" alt="${room.room_name}">
-                                <div class="card-body">
-                                    <h4 class="card-title">${room.room_name}</h4>
-                                    <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
-                                    <hr>
-                                    <h6 class="card-subtitle text-muted">Location: ${room.building}</h6>
-                                    <h6>Facilities:</h6> ${facilitiesHtml}
-                                    <h6>Timeslots:</h6> ${timeSlotsHtml}
-                                </div>
-                            `;
+                if (room.status === 'disabled') {
+                    card.innerHTML = `
+                            <img src="/public/images/${room.image}" class="card-img-top" alt="${room.room_name}">
+                            <div class="card-body bg-secondary">
+                                <h4 class="card-title">${room.room_name}</h4>
+                                <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
+                                <hr>
+                                <h6 class="card-subtitle text-muted">Location: ${room.building}</h6>
+                                <h6>Facilities:</h6> ${facilitiesHtml}
+                                <h6>Timeslots:</h6> ${timeSlotsHtml}
+                            </div>
+                        `;
+                } else {
+                    card.innerHTML = `
+                            <img src="/public/images/${room.image}" class="card-img-top" alt="${room.room_name}">
+                            <div class="card-body">
+                                <h4 class="card-title">${room.room_name}</h4>
+                                <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
+                                <hr>
+                                <h6 class="card-subtitle text-muted">Location: ${room.building}</h6>
+                                <h6>Facilities:</h6> ${facilitiesHtml}
+                                <h6>Timeslots:</h6> ${timeSlotsHtml}
+                            </div>
+                        `;
+                }
 
                 if (room.status === 'disabled') {
                     const enableButton = document.createElement('button');
