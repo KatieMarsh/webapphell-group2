@@ -178,11 +178,11 @@
                 if (room.status === 'disabled') {
                     card.innerHTML = `
                             <img src="/public/images/${room.image}" class="card-img-top" alt="${room.room_name}">
-                            <div class="card-body bg-secondary">
+                            <div class="card-body bg-dark text-white">
                                 <h4 class="card-title">${room.room_name}</h4>
-                                <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
+                                <h6 class="card-subtitle">Seating Capacity: ${room.capacity}</h6>
                                 <hr>
-                                <h6 class="card-subtitle text-muted">Location: ${room.building}</h6>
+                                <h6 class="card-subtitle">Location: ${room.building}</h6>
                                 <h6>Facilities:</h6> ${facilitiesHtml}
                                 <h6>Timeslots:</h6> ${timeSlotsHtml}
                             </div>
