@@ -50,8 +50,36 @@
         background-color: rgb(242, 226, 249); 
     }
 
-
+    #table_history th:nth-child(1),
+    #table_history td:nth-child(1) {
+        background-color: #f8d7da; /* เปลี่ยนเป็นสีที่ต้องการ */
+    }
     
+    #table_history th:nth-child(2),
+    #table_history td:nth-child(2) {
+        background-color: #cce5ff; /* เปลี่ยนเป็นสีที่ต้องการ */
+    }
+
+    #table_history th:nth-child(3),
+    #table_history td:nth-child(3) {
+        background-color: #d4edda; /* เปลี่ยนเป็นสีที่ต้องการ */
+    }
+
+    #table_history th:nth-child(4),
+    #table_history td:nth-child(4) {
+        background-color: #fff3cd; /* เปลี่ยนเป็นสีที่ต้องการ */
+    }
+    
+    #table_history th:nth-child(5),
+    #table_history td:nth-child(5) {
+        background-color: #d1ecf1; /* เปลี่ยนเป็นสีที่ต้องการ */
+    }
+
+    #table_history th:nth-child(6),
+    #table_history td:nth-child(6) {
+        background-color: rgb(242, 226, 249); /* เปลี่ยนเป็นสีที่ต้องการ */
+    }
+
 </style>
 
 
@@ -106,7 +134,7 @@
             <table class="table table-hover table-striped">
                 <thead class="table-light">
                     <tr>
-                        <th>Room</th>
+                        <th class="table-primary">Room</th>
                         <th>Meeting Agenda</th>
                         <th>Date</th>
                         <th>Time</th>
@@ -114,7 +142,7 @@
                         <th>Who Approved</th>
                     </tr>
                 </thead>
-                <tbody class="table-light" id="table_history">
+                <tbody id="table_history">
                 </tbody>
             </table>
         </div>
