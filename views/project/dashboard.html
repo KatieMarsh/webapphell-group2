@@ -96,7 +96,21 @@
     }
 
 
+    #table_history th:nth-child(4),
+    #table_history td:nth-child(4) {
+        background-color: #fff3cd; 
+    }
     
+    #table_history th:nth-child(5),
+    #table_history td:nth-child(5) {
+        background-color: #d1ecf1; 
+    }
+
+    #table_history th:nth-child(6),
+    #table_history td:nth-child(6) {
+        background-color: rgb(242, 226, 249); 
+    }
+
 </style>
 
 
@@ -151,7 +165,7 @@
             <table class="table table-hover table-striped">
                 <thead class="table-light">
                     <tr>
-                        <th>Room</th>
+                        <th class="table-primary">Room</th>
                         <th>Meeting Agenda</th>
                         <th>Date</th>
                         <th>Time</th>
@@ -159,7 +173,7 @@
                         <th>Who Approved</th>
                     </tr>
                 </thead>
-                <tbody class="table-light" id="table_history">
+                <tbody id="table_history">
                 </tbody>
             </table>
         </div>
