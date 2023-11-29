@@ -75,20 +75,26 @@
         background-color: rgb(242, 226, 249); 
     }
 
-    #table_history th:nth-child(1),
-    #table_history td:nth-child(1) {
-        background-color: #f8d7da; 
-    }
-    
-    #table_history th:nth-child(2),
-    #table_history td:nth-child(2) {
-        background-color: #cce5ff; 
+    .table-colors th:nth-child(1)
+    {
+        background-color: #f8f8fa;
     }
 
-    #table_history th:nth-child(3),
-    #table_history td:nth-child(3) {
-        background-color: #d4edda; 
+    .table-colors th:nth-child(2)
+    {
+        background-color: #d4edda;
     }
+    
+    .table-colors th:nth-child(3)
+    {
+        background-color: #fff3cd;
+    }
+
+    .table-colors th:nth-child(4)
+    {
+        background-color: #f8d7da;
+    }
+
 
     #table_history th:nth-child(4),
     #table_history td:nth-child(4) {
@@ -140,7 +146,7 @@
         <h1 class="text-black">Dashboard</h1>
         <h3 id="datetime">Date & Time</h3>
         <table class="table table-striped">
-            <thead>
+            <thead class="table-colors">
                 <tr>
                     <th>Time slot</th>
                     <th>Available</th>
@@ -148,7 +154,7 @@
                     <th>Disabled</th>
                 </tr>
             </thead>
-            <tbody id="table_dashboard">
+            <tbody id="table_dashboard" class="table-colors">
             </tbody>
         </table>
 
