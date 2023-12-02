@@ -162,10 +162,8 @@
 
                 if (response.ok) {
                     const data = await response.text();
-                    // document.getElementById('/sign-up').reset();
-                    // uncomment this to make it go to the next page
-                    // window.location.replace(data);
-                    alert('OK');
+                    // this to make it go to the next page
+                    window.location.replace(data);
                 } else if (response.status == 401) {
                     const data = await response.text();
                     throw Error(data);

@@ -14,9 +14,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-let userid = '';
-let userrole = '';
-let name = '';
 
 
 // ---------- for session -----------
@@ -42,8 +39,6 @@ app.get("/logout", function (req, res) {
             res.status(500).send('Cannot logout');
         }
         else {
-            userid = '';
-            userrole = '';
             res.redirect('/');
         }
     });
@@ -73,11 +68,8 @@ app.post('/login', function (req, res) {
                         req.session.role = results[0].role;
                         req.session.name = results[0].name;
                         req.session.phone = results[0].phone
-                        console.log(req.session.user_id);
-                        console.log(req.session.role);
-                        userid = results[0].user_id;
-                        userrole = req.session.role;
-                        name = req.session.name;
+                        // console.log(req.session.user_id);
+                        // console.log(req.session.role);
                         // If you want to foward the user to the next page put it here
                         // Student
                         if (results[0].role == 1) {
@@ -140,15 +132,16 @@ con.connect(err => {
 });
 
 // ================================== ACCOUNT ===========================================
-app.get('/account', function (req, res) {
+app.get('/account', function (_req, res) {
     res.sendFile(path.join(__dirname, 'views/project/account.html'));
 });
 // ================================== RESET PASSWORD PAGE====================================
-app.get('/account/change_password', function (req, res) {
+app.get('/account/change_password', function (_req, res) {
     res.sendFile(path.join(__dirname, 'views/project/change_password.html'));
 });
 //  ================================== RESET PASSWORD ====================================
-app.post('/account/change_password/reset', function (wreq, res) {
+app.post('/account/change_password/reset', function (req, res) {
+    const userid = req.session.user_id;
     const { old_password, new_password } = req.body;
     const find_old_password = `SELECT password FROM user WHERE user_id = ?`;
     con.query(find_old_password, [req.session.user_id], function (err, result) {
@@ -279,21 +272,7 @@ app.get('/dashboard', function (req, res) {
     }
 });
 
-// root service
-app.get('/', function (req, res) {
-    if (req.session.role == 1) {
-        res.redirect('/home');
-    }
-    else if (req.session.role == 2) {
-        res.redirect('/staff/home');
-    }
-    else if (req.session.role == 3) {
-        res.redirect('/confirm');
-    }
-    else {
-        res.sendFile(path.join(__dirname, 'views/project/Login.html'));
-    }
-});
+
 
 // ---------- Register -----------
 
@@ -322,7 +301,8 @@ app.post('/register', function (req, res) {
                         res.status(500).send("Server error insert data!");
                     }
                     else {
-                        res.send("project")
+                        res.send("/")
+                        // res.redirect('/');
                     }
 
                 })
@@ -347,7 +327,7 @@ app.post("/addroom/insert_room", function (req, res) {
             return res.status(500).send("Database server error");
         }
         else {
-            console.log('Pass check point 2!');
+            // console.log('Pass check point 2!');
             res.status(200).send("Add successfully");
         }
 
@@ -355,11 +335,11 @@ app.post("/addroom/insert_room", function (req, res) {
 });
 
 // ---------- My Booking -----------
-app.get('/my-booking/getbooking', function (_req, res) {
-    if (userrole != 1) {
+app.get('/my-booking/getbooking', function (req, res) {
+    if (req.session.role != 1) {
         res.status(403).json({ error: 'Unauthorized' });
     } else {
-        const userId = userid;
+        const userId = req.session.user_id;
         const query = `SELECT booking.*,room.room_name, DATE_FORMAT(booking.date, '%Y-%m-%d') AS formatted_date FROM booking JOIN room ON booking.room_id = room.room_id  WHERE booking.user_id = ? ORDER BY booking_id DESC;`;
 
         con.query(query, [userId], (err, results) => {
@@ -374,21 +354,6 @@ app.get('/my-booking/getbooking', function (_req, res) {
 });
 //---------------------------------------------------------------------
 
-// ===== Dasboard =====
-// Dashboard service
-app.get('/staff/home/dashboard', function (req, res) {
-    if (req.session.role == 1) {
-        res.redirect('/home');
-    }
-    else if (req.session.role == 2 || req.session.role == 3)
-    {
-        res.sendFile(path.join(__dirname, 'views/project/dashboard.html'));
-    }
-    else
-    {
-        res.redirect('/');
-    }
-});
 // Datetime service
 app.get("/now", function (_req, res) {
     const dt = new Date().toLocaleString();
@@ -564,7 +529,7 @@ app.get('/booking_details', function (req, res) {
 app.post('/booking_details/add_booking', function (req, res) {
     const { room_id, selectedTime, agenda, username } = req.body;
     let time_slot_1 = 0, time_slot_2 = 0, time_slot_3 = 0, time_slot_4 = 0;
-    console.log(selectedTime);
+    // console.log(selectedTime);
     if (selectedTime == 'time_slot_1') { time_slot_1 = 1; }
     else if (selectedTime == 'time_slot_2') { time_slot_2 = 1; }
     else if (selectedTime == 'time_slot_3') { time_slot_3 = 1; }
@@ -640,9 +605,21 @@ app.put("/editroom/update/:id", function (req, res) {
     });
 });
 
-// Root service
+
+// root service
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, 'views/project/Login.html'));
+    if (req.session.role == 1) {
+        res.redirect('/home');
+    }
+    else if (req.session.role == 2) {
+        res.redirect('/staff/home');
+    }
+    else if (req.session.role == 3) {
+        res.redirect('/confirm');
+    }
+    else {
+        res.sendFile(path.join(__dirname, 'views/project/Login.html'));
+    }
 });
 // Register service
 app.get('/sign-up', function (_req, res) {
