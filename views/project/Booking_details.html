@@ -8,26 +8,50 @@
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/css/project/Booking_details.css">
     <script src="/public/js/bootstrap.bundle.min.js"></script>
+    <script src="/public/js/notiflix-aio-3.2.6.min.js"></script>
 </head>
+<style>
+    .navbar-nav .nav-link.my-account {
+      margin-right: 200px;
+    }
+  
+    .navbar-light .navbar-nav .nav-link {
+      color: white;
+      font-size: 16px;
+    }
+  
+    .bg-custom {
+      background-color: #9A1212;
+    }
+  
+   
+  </style>
+
 
 <body>
-    <nav class="navbar navbar-expand navbar-dark bg-danger ">
+    <nav class="navbar navbar-expand navbar-light bg-custom">
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto"> <!-- Added ms-auto class here -->
-                    <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link active" href="#">My Booking</a>
-                    </li>
-                    <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px">
-                    <li class="nav-item"><a class="nav-link active" href="#">John Doe
+                <ul class="navbar-nav ms-auto" id="nav">
+                    <!-- <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li> -->
+                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Home</a></li>
+                    
+                    <!-- Dropdown for User -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px" width="28px"> <p class="d-inline" id="nav_username">Arjarn Surapong</p> 
                         </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/account">Account</a></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="container-fluid p-3">
+    
+    <div class="container-fluid p-3" id="info">
 
         <h1>Booking details</h1>
 
@@ -36,10 +60,13 @@
             <form id="register-form" class="form-inline">
 
                 <div class="form-group">
+                    <p  class="fw-bold"id="currentDate"></p>
+                    <script src="/public/js/time.js"></script>
 
-                    <p class="fw-bold">Booking name: John Doe</p>
-                    <div class="inputwrapper my-4">Time <input value=" " type="time" id="time" class="form-control form-control-inline" required /></div>
-                    
+                    <p class="fw-bold" id="txt_user_name">Booking name: John Doe</p>
+                    <p class="fw-bold" id="txt_room_name">Room:</p>
+                    <p id="roomID"></p>
+
                     <label for="time">Choose your time :</label>
 
                     <select name="time" id="time">
@@ -49,7 +76,8 @@
                         <option value="">15:00-17:00</option>
                     </select>
 
-                    <div class="inputwrapper my-4">Meeting Agenda <input value=" " type="text" class="form-control form-control-inline" required /></div>
+                    <div class="inputwrapper my-4">Meeting Agenda 
+                        <input value=" " type="text" class="form-control form-control-inline" id="txt_agenda" required /></div>
 
 
                 </div>
@@ -64,6 +92,165 @@
         </div>
     </div>
 
+
+    <script>
+        const room_id = sessionStorage.room_id;
+        const timeSelect = document.getElementById("time");
+        const txt_roomName = document.getElementById("txt_room_name");
+        const txt_userName = document.getElementById("txt_user_name");
+        const agenda = document.querySelector('#txt_agenda');
+        const info = document.querySelector('#info');
+        // Load the data
+        getUser();
+        loadRooms(room_id);
+        // Load room data
+        async function loadRooms(room_id) {
+            const options = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        "room_id": room_id
+                    }),
+                };
+                await fetch('/get_room_by_id',options)
+                    .then(response => response.json())
+                    .then(data => {
+                        displayRoom(data);
+                        // console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+        }
+        async function getUser() {
+            try {
+                const response = await fetch('/user');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.role == 3) {
+                        const nav = document.querySelector('#nav');
+                        nav.innerHTML = `<li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/home">Rooms</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Confirm</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px"
+                                width="28px">
+                            <p class="d-inline" id="nav_username">Arjarn Surapong</p>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/account">Account</a></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>`
+                    }
+                    document.querySelector('#nav_username').innerText = `${data.name}`;
+                    txt_userName.innerText = `Booking name: ${data.name}`;
+                    if(data.role!=1){
+                        info.innerHTML = `<h1>You are not a student this page is not available for you</h1>`;
+                    }
+                }
+            } catch (err) {
+                console.error(err.message);
+                Notiflix.Report.failure('Error', err.message, 'Close');
+            }
+        }
+        // Display the room data
+        function displayRoom(data){
+            
+            txt_roomName.innerText = `Room : ${data[0].room_name}`;
+            let rows = `<option value=''>Select a time</option>`;
+            if(data[0].time_slot_1===0) rows += `<option value='time_slot_1'>8:00-10:00</option>`;
+            if(data[0].time_slot_2===0) rows += `<option value='time_slot_2'>10:00-12:00</option>`;
+            if(data[0].time_slot_3===0) rows += `<option value='time_slot_3'>13:00-15:00</option>`;
+            if(data[0].time_slot_4===0) rows += `<option value='time_slot_4'>15:00-17:00</option>`;
+            timeSelect.innerHTML = rows;
+        }
+
+        // Function to fetch available times from the API
+        // function fetchAvailableTimes() {
+        //     fetch('/api/available-times')
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             const availableTimes = data.availableTimes;
+        //             updateDropdown(availableTimes);
+        //         })
+        //         .catch(error => console.error('Error:', error));
+        // }
+
+        // Function to update the dropdown with available times
+        // function updateDropdown(times) {
+        //     timeSelect.innerHTML = "<option value=''>Select a time</option>";
+        //     times.forEach(time => {
+        //         const option = document.createElement("option");
+        //         option.value = time;
+        //         option.text = time;
+        //         timeSelect.appendChild(option);
+        //     });
+        // }
+
+        // Event listener for the form submission
+        document.getElementById("register-form").addEventListener("submit", async function (event) {
+            const txt_agenda = agenda.value;
+            const username = txt_userName.value;
+            event.preventDefault(); // Prevent the form from submitting
+            // Get the selected time
+            const selectedTime = document.getElementById("time").value;
+            // console.log(selectedTime);
+            // Check if the selected time is not booked
+            if (selectedTime) {
+                console.log(selectedTime);
+                try {
+                    const options = {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json',},
+                    body: JSON.stringify({"room_id":room_id,"selectedTime":selectedTime,"agenda":txt_agenda, "username":username})
+                    };
+                    const response = await fetch('/booking_details/add_booking', options);
+                    if (response.ok) {
+                        // const data = await response.text();
+                        // Notiflix.Report.success('Success', data, 'OK');
+                    }
+                    else {
+                        throw Error('Insert error');
+                    }
+                } catch (err) {
+                    console.error(err.message);
+                    Notiflix.Report.failure('Error', err.message, 'Close');
+                }
+                // update time slot in the room
+                try {
+                const options = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({"room_id":room_id,"selectedTime":selectedTime}),
+                };
+                const response = await fetch('/booking_details/update_time_slot', options);
+                if (response.ok) {
+                    const data = await response.text();
+                        Notiflix.Report.success('Success', data, 'OK');
+                        window.location.href = '/home';
+                }
+                else if (response.status == 401) {
+                    const data = await response.text();
+                    throw Error(data);
+                }
+                else {
+                    throw Error('Connection error');
+                }
+                } catch (err) {
+                    console.error(err.message);
+                    Notiflix.Report.failure('Error', err.message, 'Close');
+                    
+                }
+
+            } else {
+                alert("Please select a time.");
+            }
+        });
+
+    </script>
 
 </body>
 

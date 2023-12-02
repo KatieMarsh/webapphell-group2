@@ -6,27 +6,168 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/css/project/dashboard.css">
+    <!-- <link rel="stylesheet" href="/public/css/project/dashboard.css"> -->
     <script src="/public/js/bootstrap.bundle.min.js"></script>
     <!-- Custom styles for this template-->
     <link href="/public/css/project/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/project/Booking_details.css">
 </head>
+<style>
+    .navbar-nav .nav-link.my-account {
+      margin-right: 200px;
+    }
+  
+    .navbar-light .navbar-nav .nav-link {
+      color: white;
+      font-size: 16px;
+    }
+  
+    .bg-custom {
+      background-color: #9A1212;
+    }
+  
+   
+    .navbar-nav .nav-link,
+    .navbar-nav .nav-item.dropdown .nav-link {
+        color: white !important;
+    }
+
+    .navbar-nav .nav-item.dropdown .dropdown-menu .dropdown-item {
+        color: black; /* Change the color of dropdown items if needed */
+    }
+  </style>
+
+
+<style>
+    
+    .table-light th,
+    .table-light td {
+        transition: background-color 0.3s ease;
+    }
+
+    .table-light th:nth-child(1),
+    .table-light td:nth-child(1) {
+        background-color: #f8d7da; 
+    }
+
+    .table-light th:nth-child(2),
+    .table-light td:nth-child(2) {
+        background-color: #cce5ff; 
+    }
+
+    .table-light th:nth-child(3),
+    .table-light td:nth-child(3) {
+        background-color: #d4edda; 
+    }
+
+    .table-light th:nth-child(4),
+    .table-light td:nth-child(4) {
+        background-color: #fff3cd; 
+    }
+
+    .table-light th:nth-child(5),
+    .table-light td:nth-child(5) {
+        background-color: #d1ecf1; 
+    }
+
+    .table-light th:nth-child(6),
+    .table-light td:nth-child(6) {
+        background-color: rgb(242, 226, 249); 
+    }
+
+    .table-colors th:nth-child(1)
+    {
+        background-color: #f8f8fa;
+    }
+
+    .table-colors th:nth-child(2)
+    {
+        background-color: #d4edda;
+    }
+    
+    .table-colors th:nth-child(3)
+    {
+        background-color: #fff3cd;
+    }
+
+    .table-colors th:nth-child(4)
+    {
+        background-color: #f8d7da;
+    }
+    
+    #table_dashboard td:nth-child(2) {
+        background-color: #d4edda; 
+    }
+
+    
+    #table_dashboard td:nth-child(3) {
+        background-color: #fff3cd; 
+    }
+
+    
+    #table_dashboard td:nth-child(4) {
+        background-color: #f8d7da; 
+    }
+
+
+    #table_history th:nth-child(1),
+    #table_history td:nth-child(1) {
+        background-color: #f8d8da; 
+    }
+
+    #table_history th:nth-child(2),
+    #table_history td:nth-child(2) {
+        background-color: #cce5ff; 
+    }
+
+    #table_history th:nth-child(3),
+    #table_history td:nth-child(3) {
+        background-color: #d3eddb; 
+    }
+
+    #table_history th:nth-child(4),
+    #table_history td:nth-child(4) {
+        background-color: #fff3cd; 
+    }
+    
+    #table_history th:nth-child(5),
+    #table_history td:nth-child(5) {
+        background-color: #d1ecf1; 
+    }
+
+    #table_history th:nth-child(6),
+    #table_history td:nth-child(6) {
+        background-color: rgb(242, 226, 249); 
+    }
+
+</style>
+
+
+
 
 <body>
-    <nav class="navbar navbar-expand navbar-dark bg-danger ">
+    <nav class="navbar navbar-expand navbar-light bg-custom">
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto"> <!-- Added ms-auto class here -->
-                    <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link active" href="#">My Booking</a>
-                    </li>
-                    <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="40px">
-                    <li class="nav-item"><a class="nav-link active" href="#">| John Doe
+                <ul id="nav" class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/home">Rooms</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Confirm</a></li>
+
+                    <!-- Dropdown for User -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px"
+                                width="28px">
+                            <p class="d-inline" id="nav_username">Arjarn Surapong</p>
                         </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/account">Account</a></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
                     </li>
                 </ul>
-
             </div>
         </div>
     </nav>
@@ -34,21 +175,26 @@
         <h1 class="text-black">Dashboard</h1>
         <h3 id="datetime">Date & Time</h3>
         <table class="table table-striped">
-            <thead>
-                <tr><th>Time slot</th> <th>Available</th> <th>Reserved</th> <th>Disabled</th></tr>
+            <thead class="table-colors">
+                <tr>
+                    <th>Time slot</th>
+                    <th>Available</th>
+                    <th>Reserved</th>
+                    <th>Disabled</th>
+                </tr>
             </thead>
-            <tbody id="table_dashboard">
+            <tbody id="table_dashboard" >
             </tbody>
         </table>
 
         <!-- History -->
-        <h1 class="text-black">History</h1>
+        <h1 class="text-black">Approval History</h1>
         <hr class="border border-dark border-2 opacity-50">
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <thead class="table-light">
                     <tr>
-                        <th>Room</th>
+                        <th class="table-primary">Room</th>
                         <th>Meeting Agenda</th>
                         <th>Date</th>
                         <th>Time</th>
@@ -56,7 +202,7 @@
                         <th>Who Approved</th>
                     </tr>
                 </thead>
-                <tbody class="table-light" id="table_history">
+                <tbody id="table_history">
                 </tbody>
             </table>
         </div>
@@ -67,122 +213,159 @@
         getTime();
         getDashboard();
         getHistory();
+        getUser();
         // Select tables
         const table_dashboard = document.querySelector('#table_dashboard');
         const table_history = document.querySelector('#table_history');
         const datetime = document.querySelector('#datetime');
+        const nav = document.querySelector('#nav');
 
-        // mock-up data
-        // const json_data = '[{"time":"08:00-10:00","free_rooms_time_slot_1":"10","reserved_rooms_time_slot_1":"10","disabled_rooms_time_slot_1":"2"},]';
-        
-        // Parse JSON to JS objects
-        // const data = JSON.parse(json_data);
-        // const history = JSON.parse(json_history);
-
+        async function getUser() {
+            try {
+                const response = await fetch('/user');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.role == 2) {
+                        nav.innerHTML = ` <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/home">Rooms</a></li>
+                   <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px"
+                                width="28px">
+                            <p class="d-inline" id="nav_username">Arjarn Surapong</p>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/account">Account</a></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>`
+                    }
+                    else if (data.role == 3) {
+                        nav.innerHTML = `<li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/home">Rooms</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Confirm</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px"
+                                width="28px">
+                            <p class="d-inline" id="nav_username">Arjarn Surapong</p>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/account">Account</a></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>`
+                    }
+                    nav_username.innerText = `${data.name}`;
+                }
+            } catch (err) {
+                console.error(err.message);
+                Notiflix.Report.failure('Error', err.message, 'Close');
+            }
+        }
         // Date Time
-        function getTime(){
-            fetch('/now').then(function(response){
-                if(response.ok){
+        function getTime() {
+            fetch('/now').then(function (response) {
+                if (response.ok) {
                     return response.text();
                 }
                 throw Error('Server Time error');
             })
-            .then(function(data){
-                datetime.innerText = data;
-            })
-            .catch(function(error){
-                console.error(error);
-            });
+                .then(function (data) {
+                    datetime.innerText = data;
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
         }
         // Dashboard
-        function getDashboard(){
-        fetch('/dashboard/getdashboard')
-            .then(function(response){
-                if (response.ok) {
-                    return response.json();
-                }
-                throw Error('Bad response');
-            })
-            .then(function(data){
-                let rows = '';
-                data.forEach(function (d){
-                    rows += `<tr>`;
-                    rows += `<td>"08:00-10:00"</td>`;
-                    rows += `<td>${d.free_rooms_time_slot_1}</td>`;
-                    rows += `<td>${d.reserved_rooms_time_slot_1}</td>`;
-                    rows += `<td>${d.disabled_rooms_time_slot_1}</td>`;
-                    rows += `</tr>`;
-                    rows += `<tr>`;
-                    rows += `<td>"10:00-12:00"</td>`;
-                    rows += `<td>${d.free_rooms_time_slot_2}</td>`;
-                    rows += `<td>${d.reserved_rooms_time_slot_2}</td>`;
-                    rows += `<td>${d.disabled_rooms_time_slot_2}</td>`;
-                    rows += `</tr>`;
-                    rows += `<tr>`;
-                    rows += `<td>"13:00-15:00"</td>`;
-                    rows += `<td>${d.free_rooms_time_slot_3}</td>`;
-                    rows += `<td>${d.reserved_rooms_time_slot_3}</td>`;
-                    rows += `<td>${d.disabled_rooms_time_slot_3}</td>`;
-                    rows += `</tr>`;
-                    rows += `<tr>`;
-                    rows += `<td>"15:00-17:00"</td>`;
-                    rows += `<td>${d.free_rooms_time_slot_4}</td>`;
-                    rows += `<td>${d.reserved_rooms_time_slot_4}</td>`;
-                    rows += `<td>${d.disabled_rooms_time_slot_4}</td>`;
-                    rows += `</tr>`;
-                });    
-        table_dashboard.innerHTML = rows;
-            })
-            .catch(function(err){
-                console.error(err);
-                alert(err);
-            });
+        function getDashboard() {
+            fetch('/dashboard/getdashboard')
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw Error('Bad response');
+                })
+                .then(function (data) {
+                    let rows = '';
+                    data.forEach(function (d) {
+                        rows += `<tr>`;
+                        rows += `<td>"08:00-10:00"</td>`;
+                        rows += `<td>${d.free_rooms_time_slot_1}</td>`;
+                        rows += `<td>${d.reserved_rooms_time_slot_1}</td>`;
+                        rows += `<td>${d.disabled_rooms_time_slot_1}</td>`;
+                        rows += `</tr>`;
+                        rows += `<tr>`;
+                        rows += `<td>"10:00-12:00"</td>`;
+                        rows += `<td>${d.free_rooms_time_slot_2}</td>`;
+                        rows += `<td>${d.reserved_rooms_time_slot_2}</td>`;
+                        rows += `<td>${d.disabled_rooms_time_slot_2}</td>`;
+                        rows += `</tr>`;
+                        rows += `<tr>`;
+                        rows += `<td>"13:00-15:00"</td>`;
+                        rows += `<td>${d.free_rooms_time_slot_3}</td>`;
+                        rows += `<td>${d.reserved_rooms_time_slot_3}</td>`;
+                        rows += `<td>${d.disabled_rooms_time_slot_3}</td>`;
+                        rows += `</tr>`;
+                        rows += `<tr>`;
+                        rows += `<td>"15:00-17:00"</td>`;
+                        rows += `<td>${d.free_rooms_time_slot_4}</td>`;
+                        rows += `<td>${d.reserved_rooms_time_slot_4}</td>`;
+                        rows += `<td>${d.disabled_rooms_time_slot_4}</td>`;
+                        rows += `</tr>`;
+                    });
+                    table_dashboard.innerHTML = rows;
+                })
+                .catch(function (err) {
+                    console.error(err);
+                    alert(err);
+                });
         }
         // History
-        function getHistory(){
-        fetch('/dashboard/gethistory')
-            .then(function(response){
-                if (response.ok) {
-                    return response.json();
-                }
-                throw Error('Bad response');
-            })
-            .then(function(data){
-                console.log(data);
-                let rows_history = '';
-                data.forEach(function (h){
-                    rows_history += '<tr>';
-                    rows_history += `<td>${h.room_name}</td>`;
-                    rows_history += `<td>${h.agenda}</td>`;
-                    rows_history += `<td>${h.formatted_date}</td>`;
-                    if(h.time_slot_1 == "1"){
-                        rows_history += `<td>08:00 - 10:00</td>`;
+        function getHistory() {
+            fetch('/dashboard/gethistory')
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json();
                     }
-                    else if (h.time_slot_2 == "1")
-                    {
-                        rows_history += `<td>10:00 - 12:00</td>`;
-                    }
-                    else if (h.time_slot_3 == "1")
-                    {
-                        rows_history += `<td>13:00 - 15:00</td>`;
-                    }
-                    else if (h.time_slot_4 == "1")
-                    {
-                        rows_history += `<td>15:00 - 17:00</td>`;
-                    }
-                    else{
-                        rows_history += `<td>Error</td>`;
-                    }
-                    rows_history += `<td>${h.whoBook}</td>`;
-                    rows_history += `<td>${h.whoApprove}</td>`;
-                    rows_history += '</tr>';
-                });    
-                table_history.innerHTML = rows_history;
-            })
-            .catch(function(err){
-                console.error(err);
-                alert(err);
-            });
+                    throw Error('Bad response');
+                })
+                .then(function (data) {
+                    console.log(data);
+                    let rows_history = '';
+                    data.forEach(function (h) {
+                        rows_history += '<tr>';
+                        rows_history += `<td>${h.room_name}</td>`;
+                        rows_history += `<td>${h.agenda}</td>`;
+                        rows_history += `<td>${h.formatted_date}</td>`;
+                        if (h.time_slot_1 == "1") {
+                            rows_history += `<td>08:00 - 10:00</td>`;
+                        }
+                        else if (h.time_slot_2 == "1") {
+                            rows_history += `<td>10:00 - 12:00</td>`;
+                        }
+                        else if (h.time_slot_3 == "1") {
+                            rows_history += `<td>13:00 - 15:00</td>`;
+                        }
+                        else if (h.time_slot_4 == "1") {
+                            rows_history += `<td>15:00 - 17:00</td>`;
+                        }
+                        else {
+                            rows_history += `<td>Error</td>`;
+                        }
+                        rows_history += `<td>${h.whoBook}</td>`;
+                        rows_history += `<td>${h.whoApprove}</td>`;
+                        rows_history += '</tr>';
+                    });
+                    table_history.innerHTML = rows_history;
+                })
+                .catch(function (err) {
+                    console.error(err);
+                    alert(err);
+                });
         }
     </script>
 

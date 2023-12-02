@@ -4,259 +4,355 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/js/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/css/project/layout.css">
-    <script src="/public/js/bootstrap.bundle.min.js"></script>
     <title>PAGE 2</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/project/Booking_details.css">
+    <script src="/public/js/bootstrap.bundle.min.js"></script>
+    <script src="/public/js/notiflix-aio-3.2.6.min.js"></script>
+    <link rel="stylesheet" href="/public/css/project/time.css">
 </head>
-
+<style>
+    .navbar-nav .nav-link.my-account {
+      margin-right: 200px;
+    }
+  
+    .navbar-light .navbar-nav .nav-link {
+      color: white;
+      font-size: 16px;
+    }
+  
+    .bg-custom {
+      background-color: #9A1212;
+    }
+  
+    
+  </style>
 <body>
+    <nav class="navbar navbar-expand navbar-light bg-custom">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ul id="nav" class="navbar-nav ms-auto">
 
-    <body>
-        <!-- header -->
-
-        <!-- navbar -->
-        <nav class="navbar navbar-expand navbar-dark bg-danger ">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav ms-auto"> <!-- Added ms-auto class here -->
-                        <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link active" href="#">My Booking</a>
-                        </li>
-                        <img class="avatar rounded-circle" src="/public/images/fc2900d41b78b817.jpg">
-                        <li class="nav-item"><a class="nav-link active" href="#"> John Doe
-
-                            </a>
-                        </li>
-                    </ul>
-
-                </div>
-            </div>
-        </nav>
-        <a href="Link">Dashboard</a> /
-        <a href="Link">Bookroom</a><br>
-        <div class="container text-center mt-5">
-            <h4>Rooms Availibility</h4>
-            <div class="input-group mb-3 mt-3">
-                <input type="text" class="form-control" placeholder="Search for rooms" aria-label="Search for rooms"
-                    aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+                    <!-- Dropdown for User -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px"
+                                width="28px"> <p class="d-inline" id="nav_username">Arjarn Surapong</p> 
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/account">Account</a></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
+    </nav>
 
+    <br>
+    <div class="row2" style="text-align: center;">
+        <p id="currentDate" class="text-start" style="display: inline-block;"></p>
+    </div>
 
-        <!-- 2-column details -->
+    <!-- <a href="/dashboard">Dashboard</a> /
+    <a href="Link">Bookroom</a><br> -->
+    <div class="container text-center mt-5">
+        <h4>Rooms Management</h4>
 
-        <div class="container ">
-            <div class="row">
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                        </div>
-                        <button class="btn btn-success" onclick="redirectToEditroom()">Edit</button>
-                        <button class="btn btn-danger">Disable</button>
-                        
-                    </div>
-
-
-
-
-
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                        </div>
-                        <button class="btn btn-success" onclick="redirectToEditroom()">Edit</button>
-                        <button class="btn btn-danger">Disable</button>
-                    </div>
-
-
-
-
-
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                        </div>
-                        <button class="btn btn-success" onclick="redirectToEditroom()">Edit</button>
-                        <button class="btn btn-primary">Enable</button>
-                        
-                    </div>
-
-
-
-
-
-                </div>
-
+        <div class="input-group mb-3 mt-5 align-items-stretch">
+            <input type="text" class="form-control mt-2" id="search" placeholder="Enter room name">
+            <div class="input-group-append ms-2">
+                <button class="btn btn-outline-secondary" onclick="searchClicked()">Search</button>
             </div>
-
         </div>
-        <div class="container ">
-            <div class="row">
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                        </div>
-                        <button class="btn btn-success" onclick="redirectToEditroom()">Edit</button>
-                        <button class="btn btn-primary">Enable</button>
-                        
-                    </div>
+    </div>
 
-
-
-
-
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                        </div>
-                        <button class="btn btn-success" onclick="redirectToEditroom()">Edit</button>
-                        <button class="btn btn-primary">Enable</button>
-                        
-                    </div>
-
-
-
-
-
-                </div>
-                <div class="col-4 mt-5">
-                    <div class="card" style="width: 250px;">
-                        <img src="/public/images/OIP.jpg" class="card-img-top" alt="My Sneakers">
-                        <div class="card-body">
-                            <h4 class="card-title">BHAGIRATHI</h4>
-                            <h6 class="card-subtitle text-muted">Seating Capacity: 8</h6>
-                            <hr>
-                            <h6 class="card-subtitle text-muted">Location: Pune Hinjewadi</h6>
-                            <h6 class="card-subtitle text-muted">Facilities:
-                                <img class="avatar rounded-circle"
-                                src="/public/images/png-clipart-wireless-microphone-computer-icons-microphone-electronics-microphone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/png-clipart-phone-phone.png"
-                                alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/2.png" alt="user1">
-                            <img class="avatar rounded-circle" src="/public/images/1.jpg" alt="user1">
-                            </h6>
-                        </div>
-                        <button class="btn btn-success" onclick="redirectToEditroom()">Edit</button>
-                        <button class="btn btn-primary">Enable</button>
-                        
-                    </div>
-                    
-
-
-
-
-
-                </div>
-
-            </div>
-
-        </div>
-        <button class="btn btn-primary my-4 mx-4" style="float: right;" onclick="redirectToAddroom()">Addroom </button>
-
-
+    <div class="container ">
+        <div class="row" id="room-container">
+            <!-- Rooms will be loaded here -->
 
 
         </div>
+    </div>
+
+    <button class="btn btn-success ms-auto position-absolute bottom-0 end-0 m-5" onclick="redirectToAddRoom()">Add Room</button>
 
 
-        <script>
-            function redirectToAddroom() {
-                // ทำการเปลี่ยนหน้าไปยัง "book_detail.html" หรือไฟล์ที่คุณต้องการ
-                window.location.href = 'addroom.html';
+
+    <script>
+        // call functions
+        // Event listener for DOMContentLoaded
+        const nav = document.querySelector('#nav');
+
+        // document.addEventListener('DOMContentLoaded', function () {
+            loadRooms();
+            getUser();
+        // });
+
+        async function getUser() {
+            try {
+                const response = await fetch('/user');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.role == 2) {
+                        nav.innerHTML = ` <li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/home">Rooms</a></li>
+                   <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px"
+                                width="28px">
+                            <p class="d-inline" id="nav_username">Arjarn Surapong</p>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/account">Account</a></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>`
+                    }
+                    else if (data.role == 3) {
+                        nav.innerHTML = `<li class="nav-item"><a class="nav-link active" href="/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/home">Rooms</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/staff/home">Confirm</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar rounded-circle" src="/public/images/user_64px.png" height="28px"
+                                width="28px">
+                            <p class="d-inline" id="nav_username">Arjarn Surapong</p>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/account">Account</a></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>`
+                    }
+                    nav_username.innerText = `${data.name}`;
+                }
+                } catch (err) {
+                    console.error(err.message);
+                    Notiflix.Report.failure('Error', err.message, 'Close');
+                }
             }
-            function redirectToEditroom() {
-                // ทำการเปลี่ยนหน้าไปยัง "book_detail.html" หรือไฟล์ที่คุณต้องการ
-                window.location.href = 'editroom.html';
+
+        function searchClicked(){
+            // alert('hello');
+            const room_name = document.querySelector('#search').value;
+            // console.log(room_name);
+            searchRooms(room_name);
             }
-            
-        </script>
+
+
+        // define functions
+        function displayRooms(data) {
+            const roomContainer = document.getElementById('room-container');
+            roomContainer.innerHTML = '';
+            console.log(data)
+            data.forEach(room => {
+                const col = document.createElement('div');
+                col.className = 'col-4 mt-5';
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.width = '250px';
+
+
+                let facilitiesHtml = createfacilitiesHtml(room);
+                let timeSlotsHtml = createTimeSlotsHtml(room);
+
+                if (room.status === 'disabled') {
+                    card.innerHTML = `
+                            <img src="/public/images/${room.image}" class="card-img-top" alt="${room.room_name}">
+                            <div class="card-body bg-dark text-white">
+                                <h4 class="card-title">${room.room_name}</h4>
+                                <h6 class="card-subtitle">Seating Capacity: ${room.capacity}</h6>
+                                <hr>
+                                <h6 class="card-subtitle">Location: ${room.building}</h6>
+                                <h6>Facilities:</h6> ${facilitiesHtml}
+                                <h6>Timeslots:</h6> ${timeSlotsHtml}
+                            </div>
+                        `;
+                } else {
+                    card.innerHTML = `
+                            <img src="/public/images/${room.image}" class="card-img-top" alt="${room.room_name}">
+                            <div class="card-body">
+                                <h4 class="card-title">${room.room_name}</h4>
+                                <h6 class="card-subtitle text-muted">Seating Capacity: ${room.capacity}</h6>
+                                <hr>
+                                <h6 class="card-subtitle text-muted">Location: ${room.building}</h6>
+                                <h6>Facilities:</h6> ${facilitiesHtml}
+                                <h6>Timeslots:</h6> ${timeSlotsHtml}
+                            </div>
+                        `;
+                }
+
+                if (room.status === 'disabled') {
+                    const enableButton = document.createElement('button');
+                    enableButton.className = 'btn btn-primary';
+                    enableButton.innerText = 'Enable';
+                    enableButton.onclick = () => enableroom(room.room_id);
+                    card.appendChild(enableButton);
+                    const editButton = document.createElement('button');
+                    editButton.className = 'btn btn-warning text-white mt-1';
+                    editButton.innerText = 'Edit';
+                    editButton.onclick = () => redirectToEditroom(room.room_id);
+                    card.appendChild(editButton);
+                } else {
+                    const disableButton = document.createElement('button');
+                    disableButton.className = 'btn btn-danger';
+                    disableButton.innerText = 'Disable';
+                    disableButton.onclick = () => disableroom(room.room_id);
+                    card.appendChild(disableButton);
+                    const editButton = document.createElement('button');
+                    editButton.className = 'btn btn-warning text-white mt-1';
+                    editButton.innerText = 'Edit';
+                    editButton.onclick = () => redirectToEditroom(room.room_id);
+                    card.appendChild(editButton);
 
 
 
+                }
 
-    </body>
+                col.appendChild(card);
+                roomContainer.appendChild(col);
+            });
+        }
+
+        function searchRooms(room_name) {
+            const options = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        "room_name": room_name
+                    }),
+
+                };
+            fetch('/room',options)
+                .then(response => response.json())
+                .then(data => {
+                    displayRooms(data);
+
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function loadRooms() {
+            fetch('/room')
+                .then(response => response.json())
+                .then(data => {
+                    displayRooms(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // show facilities
+        function createfacilitiesHtml(room) {
+            const timeSlotLabels = {
+                "audio": "audio",
+                "video": "video",
+                "plug": "plug",
+                "speakerphone": "speakerphone",
+                "TV": "TV",
+                "webcam": "webcam"
+            };
+            let html = '';
+
+
+            for (const key in timeSlotLabels) {
+                if (room.hasOwnProperty(key)) {
+                    const color = room[key] === 0 ? 'bg-danger' : 'bg-success';
+                    html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
+                }
+            }
+            return html;
+        }
+        // show time slots
+        function createTimeSlotsHtml(room) {
+            const timeSlotLabels = {
+                "time_slot_1": "08:00 - 10:00",
+                "time_slot_2": "10:00 - 12:00",
+                "time_slot_3": "13:00 - 15:00",
+                "time_slot_4": "15:00 - 17:00"
+            };
+            let html = '';
+            const isDisabled = room.status === 'disabled';
+
+            for (const key in timeSlotLabels) {
+                if (room.hasOwnProperty(key)) {
+                    const color = isDisabled || room[key] === 1 ? 'bg-danger' : 'bg-success';
+                    html += `<span class="badge ${color}">${timeSlotLabels[key]}</span> `;
+                }
+            }
+            return html;
+        }
+
+        function redirectToEditroom(room_id) {
+            sessionStorage.clear();
+            sessionStorage.room_id = room_id;
+            window.location.href = `/editroom`;
+        }
+
+        async function disableroom(room_id) {
+            try {
+                const options = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "room_id": room_id }),
+                };
+                const response = await fetch('/staff/home/disableroom', options);
+                if (response.ok) {
+                    const data = await response.text();
+                    loadRooms();
+                }
+                else if (response.status == 401) {
+                    const data = await response.text();
+                    throw Error(data);
+                }
+                else {
+                    throw Error('Connection error');
+                }
+            } catch (err) {
+                console.error(err.message);
+                Notiflix.Report.failure('Error', err.message, 'Close');
+            }
+        }
+
+        async function enableroom(room_id) {
+            try {
+                const options = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "room_id": room_id }),
+                };
+                const response = await fetch('/staff/home/enableroom', options);
+                if (response.ok) {
+                    const data = await response.text();
+                    loadRooms();
+                }
+                else if (response.status == 401) {
+                    const data = await response.text();
+                    throw Error(data);
+                }
+                else {
+                    throw Error('Connection error');
+                }
+            } catch (err) {
+                console.error(err.message);
+                Notiflix.Report.failure('Error', err.message, 'Close');
+            }
+        }
+
+        function redirectToAddRoom() {
+            window.location.href = '/addroom';
+        }
+
+    </script>
+    <script src="/public/js/time.js"></script>
+</body>
 
 </html>

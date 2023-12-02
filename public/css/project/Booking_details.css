@@ -53,3 +53,13 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+.custom-bg-red {
+    background-color: #9A1212 !important;
+}
+
+
+.btn-outline-secondary {
+    height: calc(80% + 8px); /* เพิ่มความสูงขึ้น 5px */
+    
+}
+
